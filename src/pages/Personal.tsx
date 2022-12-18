@@ -55,6 +55,32 @@ export const Personal = () => {
 				</div>
 			</div>
 
+			<div className="public-info">
+				<h2>Публичные данные</h2>
+				<small className="tip">
+					Информация, которую вы укажете в этом разделе, публичная.
+					Она указывается рядом с отзывами и видна другим
+					пользователям сети Интернет. Размещая свои персональные
+					данные в данном разделе, вы раскрываете их неопределенному
+					кругу лиц.
+				</small>
+				<div className="list">
+					<div className="list-item">
+						<small className="title">имя</small>
+						<div className="value">Артём Г.</div>
+					</div>
+					<div className="list-item">
+						<small className="title">страна, город</small>
+						<div className="value">22 марта 1998</div>
+					</div>
+					<div className="list-item">
+						<small className="title">Возраст</small>
+						<div className="value">24</div>
+					</div>
+				</div>
+				<button className="change">Изменить публичные данные</button>
+			</div>
+
 			<div className="actions">
 				<button className="change">Выйти из аккаунта</button>
 				<button className="change">Удалить аккаунт</button>

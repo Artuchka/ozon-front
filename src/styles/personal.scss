@@ -55,7 +55,8 @@
 		}
 	}
 
-	.all-info {
+	.all-info,
+	.public-info {
 		padding: 2rem 0;
 		display: flex;
 		flex-direction: column;
@@ -63,29 +64,45 @@
 		h2 {
 			font-weight: 500;
 		}
-		small.tip {
-			font-size: 0.9rem;
-			color: var(--gray-text);
-		}
 		.grid {
 			display: grid;
 			grid-template-columns: repeat(2, 1fr);
 			gap: 3rem;
-			.grid-item {
-				display: flex;
-				flex-direction: column;
-				align-items: flex-start;
-				gap: 0.3rem;
-				.title {
-					text-transform: capitalize;
-					color: var(--gray-text);
-				}
-				button.change {
-					margin-top: 0.3rem;
-				}
-			}
 		}
 	}
+
+	.public-info {
+		.list {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
+		}
+		button.change {
+			margin-top: 1rem;
+			align-self: flex-start;
+		}
+	}
+	small.tip {
+		font-size: 0.9rem;
+		color: var(--gray-text);
+		margin-bottom: 1rem;
+	}
+	.grid-item,
+	.list-item {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.3rem;
+		.title {
+			text-transform: capitalize;
+			color: var(--gray-text);
+		}
+		button.change {
+			margin-top: 0.3rem;
+		}
+	}
+
 	.actions {
 		margin: 2rem 0;
 		display: flex;
