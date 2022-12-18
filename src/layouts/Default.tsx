@@ -1,7 +1,7 @@
 import React from "react"
 import { Outlet } from "react-router-dom"
-import { Header } from "../components/Header/index"
-import Footer from "../components/Footer"
+import { Header } from "../components/pageBlocks/Header"
+import Footer from "../components/pageBlocks/Footer"
 
 export const Default = () => {
 	return (

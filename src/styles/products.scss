@@ -1,0 +1,18 @@
+.products-page {
+	display: grid;
+	grid-template-areas: "stats stats" "filters products";
+	grid-template-columns: 200px auto;
+	gap: 1rem;
+	.products-grid {
+		grid-area: products;
+	}
+	.filters {
+		grid-area: filters;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+	.stats {
+		grid-area: stats;
+	}
+}

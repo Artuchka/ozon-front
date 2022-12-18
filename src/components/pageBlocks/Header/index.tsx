@@ -1,10 +1,10 @@
 import React from "react"
-import { Logo } from "../Logo"
 import styles from "./header.module.scss"
 import { AiOutlineSearch } from "react-icons/ai"
 import { BiFace } from "react-icons/bi"
 import { BsHandbag, BsBoxSeam } from "react-icons/bs"
-import { StatusLink } from "../StatusLink"
+import { StatusLink } from "../../StatusLink"
+import { Logo } from "../../Logo"
 
 export const Header = () => {
 	return (

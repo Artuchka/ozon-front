@@ -1,8 +1,10 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 export const Landing = () => {
 	return (
 		<div className="landing">
+			<Link to="/products">go shopping</Link>
 			<div className="bold" style={{ fontWeight: "200" }}>
 				200
 			</div>
