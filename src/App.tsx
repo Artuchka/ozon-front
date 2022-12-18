@@ -1,10 +1,18 @@
-import { useState } from "react"
-import reactLogo from "./assets/react.svg"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Default } from "./layouts/Default"
+import { Landing } from "./pages/Landing"
+import "./styles/main.scss"
 
 function App() {
-	const [count, setCount] = useState(0)
-
-	return <div className="App"></div>
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Default />}>
+					<Route index element={<Landing />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
+	)
 }
 
 export default App

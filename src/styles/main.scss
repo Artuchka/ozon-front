@@ -1,0 +1,20 @@
+@import url("./_normalize.scss");
+@import url("./_vars.scss");
+@import url("./_fonts.scss");
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-family: main;
+	font-weight: 400;
+}
+
+main.default-layout {
+	// outline: 1px solid red;
+	padding: 0 2rem;
+	max-width: 900px;
+	margin: 0 auto;
+}

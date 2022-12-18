@@ -1,0 +1,29 @@
+.statLink {
+	color: var(--text-color);
+}
+.statBody {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.data:not(:empty) {
+	position: absolute;
+	top: -0.5em;
+	right: -0.8em;
+	z-index: 1;
+	background-color: var(--stat-link-data-color-bg);
+	color: var(--stat-link-data-color-text);
+	width: 2.3rem;
+	padding: 0.03em 0;
+	// height: 1.2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 100vmax;
+}
+
+.icon {
+	font-size: clamp(20px, 3rem, 30px);
+}
