@@ -1,7 +1,8 @@
 .products-page {
 	display: grid;
-	grid-template-areas: "stats stats" "filters products";
+	grid-template-areas: "stats stats" "filters sort" "filters products";
 	grid-template-columns: 200px auto;
+	grid-template-rows: repeat(2, 50px) auto;
 	gap: 1rem;
 	.products-grid {
 		grid-area: products;
@@ -14,5 +15,8 @@
 	}
 	.stats {
 		grid-area: stats;
+	}
+	.sort {
+		grid-area: sort;
 	}
 }

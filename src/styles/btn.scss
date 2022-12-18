@@ -1,0 +1,18 @@
+.btn {
+	background: white;
+	border: none;
+	outline: none;
+	width: 100%;
+	padding: 0.5em 1.2em;
+
+	&--rounded {
+		border-radius: 0.5em;
+	}
+	&--contained {
+		background-color: var(--primary-color);
+		color: white;
+	}
+	&--content {
+		width: max-content;
+	}
+}
