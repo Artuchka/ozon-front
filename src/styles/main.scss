@@ -12,9 +12,15 @@
 	font-weight: 400;
 }
 
-main.default-layout {
+.default-layout {
 	// outline: 1px solid red;
+	min-height: 100vh;
 	padding: 0 2rem;
 	max-width: 900px;
 	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	main.main {
+		flex-grow: 1;
+	}
 }

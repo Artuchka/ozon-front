@@ -5,10 +5,12 @@ import Footer from "../components/Footer"
 
 export const Default = () => {
 	return (
-		<main className="default-layout">
+		<div className="default-layout">
 			<Header />
-			<Outlet />
+			<main className="main">
+				<Outlet />
+			</main>
 			<Footer />
-		</main>
+		</div>
 	)
 }
