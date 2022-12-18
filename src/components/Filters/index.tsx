@@ -14,7 +14,7 @@ export const Filters = () => {
 			<Switch title="Доставка" name="delivery" />
 			<SelectRadio name="radio" title="Срок доставки" items={[...data]} />
 			<SelectCheckbox title="бренды" items={[...data]} name="checkbox" />
-			<Range />
+			<Range name="price" title="Цена" min={20} max={4320} />
 		</form>
 	)
 }

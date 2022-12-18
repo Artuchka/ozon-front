@@ -16,7 +16,7 @@
 
 .default-layout {
 	// outline: 1px solid red;
-	min-height: 100vh;
+	min-height: 120vh;
 	padding: 0 2rem;
 	max-width: 900px;
 	margin: 0 auto;
@@ -24,5 +24,6 @@
 	flex-direction: column;
 	main.main {
 		flex-grow: 1;
+		padding-bottom: 5rem;
 	}
 }
