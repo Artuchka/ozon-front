@@ -14,7 +14,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.5.0"
+    "react-router-dom": "^6.5.0",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
