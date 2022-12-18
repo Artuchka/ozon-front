@@ -1,0 +1,55 @@
+.switch {
+	display: grid;
+	grid-template-columns: auto 100px;
+	.title {
+		font-weight: 500;
+	}
+
+	.toggle {
+		position: relative;
+		left: -100vmax;
+		--size: 1.8rem;
+		cursor: pointer;
+		&:hover {
+			&::after {
+				background-color: var(--primary-color-light);
+			}
+		}
+		&::after {
+			transition: background-color 0.2s linear;
+			background-color: var(--gray-text);
+			content: "";
+			position: absolute;
+			display: block;
+			top: 50%;
+			left: calc(100vmax + 50%);
+			translate: -50% -50%;
+			width: calc(2 * var(--size));
+			height: var(--size);
+			border-radius: 100vmax;
+		}
+		&::before {
+			transition: translate 0.3s linear;
+			background-color: white;
+			z-index: 2;
+			content: "";
+			position: absolute;
+			display: block;
+			top: 50%;
+			left: 100vmax;
+			translate: 120% -50%;
+			width: calc(var(--size) - 0.4rem);
+			aspect-ratio: 1/1;
+			border-radius: 100vmax;
+		}
+
+		&:checked {
+			&::after {
+				background-color: var(--primary-color);
+			}
+			&::before {
+				translate: 230% -50%;
+			}
+		}
+	}
+}

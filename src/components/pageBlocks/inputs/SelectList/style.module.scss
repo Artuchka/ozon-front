@@ -16,7 +16,13 @@
 
 	.row {
 		input {
-			display: none;
+			position: absolute;
+			left: -100vmax;
+			&:checked {
+				& + label {
+					color: var(--primary-color);
+				}
+			}
 		}
 		label {
 			text-transform: capitalize;

@@ -1,0 +1,51 @@
+.selectList {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	.list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.7rem;
+	}
+
+	.title {
+		font-weight: 500;
+		text-transform: capitalize;
+		letter-spacing: 0.05em;
+	}
+
+	.row {
+		input {
+			position: relative;
+			margin-right: 0.5rem;
+			&::after {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				translate: -50% -50%;
+				background-color: #fff;
+				border: 1px solid var(--gray-text);
+				content: "";
+				width: 1.2rem;
+				aspect-ratio: 1/1;
+				border-radius: 50%;
+			}
+			&:checked {
+				&::after {
+					border: 0.3rem solid var(--primary-color);
+				}
+				& + label {
+					color: var(--primary-color);
+				}
+			}
+		}
+		label {
+			text-transform: capitalize;
+			cursor: pointer;
+			&:hover {
+				color: var(--primary-color);
+			}
+		}
+	}
+}

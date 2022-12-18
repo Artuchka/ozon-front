@@ -1,6 +1,37 @@
-import React from "react"
+import React, { FC } from "react"
 import styles from "./style.module.scss"
 
-export const SelectCheckbox = () => {
-	return <div>SelectCheckbox</div>
+type PropTypes = {
+	className?: string
+	title: string
+	name: string
+	items: string[]
+}
+
+export const SelectCheckbox: FC<PropTypes> = ({
+	title = "title",
+	name = "different",
+	items = ["first", "second"],
+	className,
+}) => {
+	return (
+		<div className={`${className} ${styles.selectList}`}>
+			<h4 className={styles.title}>{title}</h4>
+			<ul className={styles.list}>
+				{items.map((value) => {
+					return (
+						<div className={styles.row} key={value}>
+							<input
+								type="checkbox"
+								id={`${name}${value}`}
+								value={value}
+								name={name}
+							/>
+							<label htmlFor={`${name}${value}`}>{value}</label>
+						</div>
+					)
+				})}
+			</ul>
+		</div>
+	)
 }
