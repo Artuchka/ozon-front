@@ -1,6 +1,14 @@
 .products-grid {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(1, 1fr);
 	grid-auto-rows: 250px;
 	gap: 0.5rem;
+	place-items: center;
+
+	@media (min-width: 700px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@media (min-width: 900px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }

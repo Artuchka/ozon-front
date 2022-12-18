@@ -14,7 +14,10 @@ export const Sort: FC<PropType> = ({ options = [] }) => {
 	useEffect(() => {
 		const func = (e: any) => {
 			let isInside = false
-			e.path.forEach((item: any) => {
+
+			const path = e.path || (e.composedPath && e.composedPath())
+
+			path.forEach((item: any) => {
 				const includes = Array.from(item.classList || []).includes(
 					"sort"
 				)

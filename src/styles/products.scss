@@ -4,9 +4,7 @@
 	grid-template-columns: 200px auto;
 	grid-template-rows: repeat(2, 50px) auto;
 	gap: 1rem;
-	.products-grid {
-		grid-area: products;
-	}
+
 	.filters {
 		grid-area: filters;
 		display: flex;

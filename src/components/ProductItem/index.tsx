@@ -12,7 +12,7 @@ export type ProductItemType = {
 export const ProductItem: FC<ProductItemType> = (props) => {
 	const { image, price, id, rating, name } = props
 	return (
-		<div className={style.product}>
+		<div className={`${style.product}`}>
 			<img src={image} alt="product image" />
 			<div className={style.price}>{price} ₽</div>
 			<div className={style.name}>{name}</div>
