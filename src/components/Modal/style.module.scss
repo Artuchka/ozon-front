@@ -1,9 +1,4 @@
 .modal {
-	// display: none;
-	// opacity: 0.3;
-	// transition: translate 0.3s ease;
-	// translate: -100vmax;
-
 	translate: -100vmax;
 	width: 0;
 	height: 0;
@@ -12,9 +7,10 @@
 	position: fixed;
 	z-index: 1000;
 	inset: 0;
+
 	&.open {
 		animation: modalGrow 0.1s ease forwards,
-			modalFadeIn 0.5s ease forwards 0.1s;
+			modalFadeIn 0.2s ease forwards 0.1s;
 	}
 	&-bg {
 		position: absolute;
@@ -87,5 +83,26 @@
 	}
 	100% {
 		opacity: 1;
+	}
+}
+
+@keyframes modalShrink {
+	0% {
+		translate: 0;
+		width: 100%;
+		height: 100%;
+	}
+	100% {
+		translate: -100vmax;
+		width: 0;
+		height: 0;
+	}
+}
+@keyframes modalFadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
 	}
 }
