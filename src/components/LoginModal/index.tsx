@@ -2,6 +2,9 @@ import React, { ChangeEvent, FC, useRef, useState } from "react"
 import { Modal } from "../Modal"
 import style from "./style.module.scss"
 import ozonIDImage from "./../../assets/images/ozon-id-v2.svg"
+import { useDispatch } from "react-redux"
+import { login } from "../../store/features/auth/thunks"
+import { AppDispatch } from "../../store/store"
 
 type PropType = {
 	open: boolean
@@ -11,13 +14,17 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 	const emailRef = useRef<HTMLInputElement>(null)
 	const passwordRef = useRef<HTMLInputElement>(null)
 
+	const dispatch = useDispatch<AppDispatch>()
+
 	const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		if (!emailRef.current || !passwordRef.current) return
 		const email = emailRef.current.value
 		const password = passwordRef.current.value
-		console.log({ email, password })
+		// console.log({ email, password })
+		dispatch(login({ email, password }))
 	}
+
 	return (
 		<Modal open={open} setOpen={setOpen}>
 			<form className={style.modal} onSubmit={handleSubmit}>
