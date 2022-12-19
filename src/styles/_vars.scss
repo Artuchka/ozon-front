@@ -1,4 +1,5 @@
 * {
+	// primary
 	--primary-color: #005bff;
 	--primary-color-light: #035bffa1;
 	--primary-color-lighter: #cadcff;
@@ -6,6 +7,12 @@
 	--gray-text: #7d7d7d;
 	--text-color: #001a34;
 	--text-color-dark: #031f3c;
+
+	// stat link on header
 	--stat-link-data-color-text: white;
 	--stat-link-data-color-bg: #f91155;
+
+	// states for inputs
+	--success-color: #82aaf2;
+	--error-color: #f91155;
 }

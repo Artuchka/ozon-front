@@ -1,0 +1,60 @@
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	inset: 0;
+	&.open {
+		display: block;
+	}
+	&-bg {
+		position: absolute;
+		inset: 0;
+		background-color: black;
+		opacity: 0.5;
+		z-index: 1;
+	}
+	&-inner {
+		position: absolute;
+		color: black;
+		z-index: 2;
+		background-color: #fff;
+		top: 50%;
+		left: 50%;
+		translate: -50% -50%;
+		padding: 3rem;
+		border-radius: 0.5em;
+		max-width: 350px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.close {
+		position: absolute;
+		top: 0.7rem;
+		right: 0.7rem;
+		align-self: flex-end;
+		border-radius: 50%;
+		width: 2rem;
+		height: 2rem;
+		transition: background-color 0.2s ease-in-out;
+		cursor: pointer;
+		span {
+			position: absolute;
+			background-color: black;
+			width: 1.5rem;
+			height: 2px;
+			translate: 0.25rem 0.95rem;
+			&:nth-child(1) {
+				rotate: 45deg;
+			}
+			&:nth-child(2) {
+				rotate: -45deg;
+			}
+		}
+
+		&:hover {
+			background-color: var(--primary-color-lighter);
+		}
+	}
+}
