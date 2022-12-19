@@ -6,8 +6,13 @@
 	max-width: 250px;
 	gap: 0.5rem;
 	padding: 0.9em;
-	img {
+	.image {
 		width: 100%;
 		height: 100px;
+		text-decoration: none;
+	}
+	.name {
+		text-decoration: none;
+		color: black;
 	}
 }

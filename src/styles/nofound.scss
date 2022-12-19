@@ -1,0 +1,18 @@
+.not-found-page {
+	display: flex;
+	flex-direction: column;
+	* {
+		margin: 0;
+	}
+	h1 {
+		font-size: 15rem;
+		font-weight: 900;
+		text-align: center;
+		background-image: url("./../assets/images/404bg.jpeg");
+		color: transparent;
+		background-size: contain;
+		background-position: 60%;
+		-webkit-background-clip: text;
+		// -moz-background-clip: text;
+	}
+}

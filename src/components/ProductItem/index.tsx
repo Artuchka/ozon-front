@@ -1,5 +1,6 @@
 import React, { FC } from "react"
 import style from "./style.module.scss"
+import { Link } from "react-router-dom"
 
 export type ProductItemType = {
 	name: string
@@ -13,9 +14,14 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 	const { image, price, id, rating, name } = props
 	return (
 		<div className={`${style.product}`}>
-			<img src={image} alt="product image" />
+			<Link to={`/products/${id}`} className={style.image}>
+				<img src={image} alt="product image" />
+			</Link>
 			<div className={style.price}>{price} ₽</div>
-			<div className={style.name}>{name}</div>
+
+			<Link to={`/products/${id}`} className={style.name}>
+				<div>{name}</div>
+			</Link>
 			<div className={style.rating}>{rating}</div>
 			<button className={"btn btn--rounded btn--contained btn--content"}>
 				В корзину
