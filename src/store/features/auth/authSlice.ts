@@ -64,12 +64,11 @@ export const authSlice = createSlice({
 			state.loading = true
 		})
 		builder.addCase(register.fulfilled, (state, action) => {
-			console.log(action)
 			const { msg } = action.payload
 			toast(msg)
 			return { ...initialState }
 		})
-		builder.addCase(register.rejected, (state, action) => {
+		builder.addCase(register.rejected, (state, action: any) => {
 			toast.error(action.payload)
 			state.loading = false
 		})
@@ -78,12 +77,11 @@ export const authSlice = createSlice({
 			state.loading = true
 		})
 		builder.addCase(updateUser.fulfilled, (state, action) => {
-			console.log(action)
 			const { msg } = action.payload
 			toast(msg)
 			return { ...initialState }
 		})
-		builder.addCase(updateUser.rejected, (state, action) => {
+		builder.addCase(updateUser.rejected, (state, action: any) => {
 			toast.error(action.payload)
 			state.loading = false
 		})

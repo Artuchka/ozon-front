@@ -1,19 +1,28 @@
-import React from "react"
+import React, { useState } from "react"
 import { BiFace } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
 import { selectAuth } from "../store/features/auth/selectors"
 import { getIntlDate } from "../utils/intl"
 import { AppDispatch } from "../store/store"
 import { logout } from "../store/features/auth/thunks"
+import { UpdateModal, typeVariants } from "../components/UpdateModal"
 
 export const Personal = () => {
 	const avatar = "/"
 	const dispatch = useDispatch<AppDispatch>()
+	const [open, setOpen] = useState(false)
+	const [type, setType] = useState<typeVariants>("phone")
+
+	const handleUpdateOpen = (type: typeVariants) => {
+		setType(type)
+		setOpen(true)
+	}
 
 	const { lastName, firstName, email, birthday, phone, location } =
 		useSelector(selectAuth)
 	return (
 		<div className="personal-page">
+			<UpdateModal open={open} setOpen={setOpen} type={type} />
 			<div className="main-info">
 				<div className="avatar">
 					{avatar == "/" ? (
@@ -30,7 +39,11 @@ export const Personal = () => {
 						<div className="bday">{getIntlDate(birthday)}</div>
 						<div className="gender">Пол не указан</div>
 					</div>
-					<button type="button" className="change">
+					<button
+						type="button"
+						className="change"
+						onClick={() => handleUpdateOpen("gender")}
+					>
 						Изменить
 					</button>
 				</div>

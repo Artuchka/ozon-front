@@ -1,4 +1,4 @@
-import React, { FC, ReactChild, ReactNode } from "react"
+import React, { FC, ReactNode, useEffect } from "react"
 import style from "./style.module.scss"
 
 type PropType = {
@@ -7,6 +7,33 @@ type PropType = {
 	children?: ReactNode
 }
 export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
+	console.log({ open })
+	useEffect(() => {
+		const closeIfOutside = (e: MouseEvent) => {
+			console.log("before checking = ", { open })
+
+			let outside = false
+			const path = e.composedPath && e.composedPath()
+
+			path.forEach((item: any) => {
+				const itemClasses = Array.from(item.classList || [])
+				itemClasses.forEach((cls: any) => {
+					if (cls && cls.toString().includes("modal-bg")) {
+						outside = true
+					}
+				})
+			})
+			console.log({ outside })
+
+			if (outside) {
+				setOpen(false)
+			}
+		}
+		window.addEventListener("click", closeIfOutside)
+
+		return () => window.removeEventListener("click", closeIfOutside)
+	}, [])
+
 	return (
 		<div className={`${style.modal} ${open ? style.open : ""}`}>
 			<div className={style["modal-inner"]}>
