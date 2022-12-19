@@ -91,10 +91,10 @@ export const Range: FC<proptype> = ({
 					/>
 				</div>
 				<div className={styles["number-wrapper"]}>
-					<label htmlFor="from">от</label>
+					<label htmlFor="to">до</label>
 					<input
 						type="text"
-						id="from"
+						id="to"
 						value={rightValueInput}
 						onChange={(e) => {
 							const right = Number(

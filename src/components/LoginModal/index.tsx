@@ -3,7 +3,7 @@ import { Modal } from "../Modal"
 import style from "./style.module.scss"
 import ozonIDImage from "./../../assets/images/ozon-id-v2.svg"
 import { useDispatch } from "react-redux"
-import { login } from "../../store/features/auth/thunks"
+import { getOrders, login, register } from "../../store/features/auth/thunks"
 import { AppDispatch } from "../../store/store"
 
 type PropType = {
@@ -13,6 +13,8 @@ type PropType = {
 export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 	const emailRef = useRef<HTMLInputElement>(null)
 	const passwordRef = useRef<HTMLInputElement>(null)
+	type methodType = "login" | "register"
+	const [method, setMethod] = useState<methodType>("login")
 
 	const dispatch = useDispatch<AppDispatch>()
 
@@ -21,8 +23,12 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 		if (!emailRef.current || !passwordRef.current) return
 		const email = emailRef.current.value
 		const password = passwordRef.current.value
-		// console.log({ email, password })
-		dispatch(login({ email, password }))
+
+		if (method === "login") {
+			dispatch(login({ email, password }))
+		} else {
+			dispatch(register({ email, password }))
+		}
 	}
 
 	return (
@@ -35,9 +41,7 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 						type="email"
 						placeholder="Введите почту"
 						className="input input--rounded input--tall"
-						// pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
 						required
-						// title="Введите корректную почту"
 						ref={emailRef}
 					/>
 					<input
@@ -53,12 +57,26 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 						type="submit"
 						className="btn btn--contained btn--rounded btn--tall"
 					>
-						Sign in
+						{method === "login" ? "Sign in" : "Sign up"}
 					</button>
 				</main>
 				<button
 					type="button"
+					className="btn btn--light"
+					onClick={() => {
+						setMethod((prev) =>
+							prev === "login" ? "register" : "login"
+						)
+					}}
+				>
+					{method === "login" ? "Зарегистирироваться" : "Войти"}
+				</button>
+				<button
+					type="button"
 					className="btn btn--black btn--contained btn--rounded btn--tall"
+					onClick={() => {
+						dispatch(getOrders())
+					}}
 				>
 					Sign in with username
 				</button>

@@ -1,11 +1,15 @@
 .statLink {
 	color: var(--text-color);
+	text-decoration: none;
 }
 .statBody {
+	cursor: pointer;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: column;
+	gap: 0;
 }
 
 .data:not(:empty) {
@@ -26,4 +30,8 @@
 
 .icon {
 	font-size: clamp(20px, 3rem, 30px);
+}
+
+.title {
+	margin-top: -0.5rem;
 }

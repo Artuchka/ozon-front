@@ -1,21 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { login } from "./thunks"
+import { login, loginJWT, logout, register, updateUser } from "./thunks"
+import { toast } from "react-toastify"
 
 const initialState = {
-	token: "",
-	_id: "empty",
-	username: "username",
-	firstName: "firstName",
-	lastName: "lastName",
-	email: "email@email.email",
-	phone: "+79217850937",
-	createdAt: "2022-12-17T11:33:00.494Z",
-	gender: "male",
-	role: "user",
-	birthday: "2002-03-27T11:33:00.494Z",
-	avatar: "/uploads/defaultAvatar.png",
-	location: "Los Angelos",
-	__v: 0,
+	token: null,
+	_id: null,
+	username: null,
+	firstName: null,
+	lastName: null,
+	email: null,
+	phone: null,
+	createdAt: null,
+	gender: null,
+	role: null,
+	birthday: null,
+	avatar: null,
+	location: null,
+	loading: false,
 }
 
 export const authSlice = createSlice({
@@ -24,13 +25,67 @@ export const authSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(login.pending, (state, action) => {
-			console.log("pending")
+			state.loading = true
 		})
 		builder.addCase(login.fulfilled, (state, action) => {
-			console.log("all is ok")
+			const { msg, user } = action.payload
+			toast(msg)
+			return { ...user, loading: false }
 		})
 		builder.addCase(login.rejected, (state, action) => {
-			console.log("kinda sucks")
+			state.loading = false
+		})
+		builder.addCase(loginJWT.pending, (state, action) => {
+			state.loading = true
+		})
+		builder.addCase(loginJWT.fulfilled, (state, action) => {
+			const { msg, user } = action.payload
+			toast(msg)
+			return { ...user, loading: false }
+		})
+		builder.addCase(loginJWT.rejected, (state, action) => {
+			state.loading = false
+			// only dev state
+			toast.error("couldnt auto login")
+		})
+		builder.addCase(logout.pending, (state, action) => {
+			state.loading = true
+		})
+		builder.addCase(logout.fulfilled, (state, action) => {
+			const { msg } = action.payload
+			toast(msg)
+			return { ...initialState }
+		})
+		builder.addCase(logout.rejected, (state) => {
+			state.loading = false
+		})
+
+		builder.addCase(register.pending, (state, action) => {
+			state.loading = true
+		})
+		builder.addCase(register.fulfilled, (state, action) => {
+			console.log(action)
+			const { msg } = action.payload
+			toast(msg)
+			return { ...initialState }
+		})
+		builder.addCase(register.rejected, (state, action) => {
+			toast.error(action.payload)
+			state.loading = false
+		})
+
+		builder.addCase(updateUser.pending, (state, action) => {
+			state.loading = true
+		})
+		builder.addCase(updateUser.fulfilled, (state, action) => {
+			console.log(action)
+			const { msg } = action.payload
+			toast(msg)
+			return { ...initialState }
+		})
+		builder.addCase(updateUser.rejected, (state, action) => {
+			toast.error(action.payload)
+			state.loading = false
 		})
 	},
 })

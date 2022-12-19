@@ -1,8 +1,17 @@
 import React from "react"
 import { BiFace } from "react-icons/bi"
+import { useDispatch, useSelector } from "react-redux"
+import { selectAuth } from "../store/features/auth/selectors"
+import { getIntlDate } from "../utils/intl"
+import { AppDispatch } from "../store/store"
+import { logout } from "../store/features/auth/thunks"
 
 export const Personal = () => {
 	const avatar = "/"
+	const dispatch = useDispatch<AppDispatch>()
+
+	const { lastName, firstName, email, birthday, phone, location } =
+		useSelector(selectAuth)
 	return (
 		<div className="personal-page">
 			<div className="main-info">
@@ -14,9 +23,11 @@ export const Personal = () => {
 					)}
 				</div>
 				<div className="desc">
-					<div className="full-name">Горбунов Артем</div>
+					<div className="full-name">
+						{lastName} {firstName}
+					</div>
 					<div className="submain">
-						<div className="bday">22 Марта 1998</div>
+						<div className="bday">{getIntlDate(birthday)}</div>
 						<div className="gender">Пол не указан</div>
 					</div>
 					<button type="button" className="change">
@@ -34,22 +45,24 @@ export const Personal = () => {
 				<div className="grid">
 					<div className="grid-item">
 						<small className="title">ФИО</small>
-						<div className="value">+79210681264</div>
+						<div className="value">
+							{lastName} {firstName}{" "}
+						</div>
 						<button className="change">Изменить</button>
 					</div>
 					<div className="grid-item">
 						<small className="title">телефон</small>
-						<div className="value">+79210681264</div>
+						<div className="value">{phone}</div>
 						<button className="change">Изменить</button>
 					</div>
 					<div className="grid-item">
 						<small className="title">дата рождения</small>
-						<div className="value">22 марта 1998</div>
+						<div className="value">{getIntlDate(birthday)}</div>
 						<button className="change">Изменить</button>
 					</div>
 					<div className="grid-item">
 						<small className="title">почта</small>
-						<div className="value">yandex949@gmail.com</div>
+						<div className="value">{email}</div>
 						<button className="change">Изменить</button>
 					</div>
 				</div>
@@ -67,11 +80,13 @@ export const Personal = () => {
 				<div className="list">
 					<div className="list-item">
 						<small className="title">имя</small>
-						<div className="value">Артём Г.</div>
+						<div className="value">
+							{firstName} {lastName?.[0]}.
+						</div>
 					</div>
 					<div className="list-item">
 						<small className="title">страна, город</small>
-						<div className="value">22 марта 1998</div>
+						<div className="value">{location}</div>
 					</div>
 					<div className="list-item">
 						<small className="title">Возраст</small>
@@ -82,7 +97,14 @@ export const Personal = () => {
 			</div>
 
 			<div className="actions">
-				<button className="change">Выйти из аккаунта</button>
+				<button
+					className="change"
+					onClick={() => {
+						dispatch(logout())
+					}}
+				>
+					Выйти из аккаунта
+				</button>
 				<button className="change">Удалить аккаунт</button>
 			</div>
 		</div>

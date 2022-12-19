@@ -22,4 +22,15 @@
 	&--black {
 		background-color: black;
 	}
+	&--light {
+		padding: 0;
+		transition: color 0.1s ease;
+		color: var(--primary-color-light);
+		text-decoration-thickness: 0;
+		text-decoration-line: underline;
+		text-decoration-style: dashed;
+		&:hover {
+			color: var(--primary-color);
+		}
+	}
 }

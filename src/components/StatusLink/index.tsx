@@ -3,6 +3,7 @@ import style from "./headerlink.module.scss"
 import { Link, To } from "react-router-dom"
 type PropType = {
 	data: String | Number
+	title?: String | Number
 	icon: any
 	link?: To
 	onClick?: MouseEventHandler
@@ -12,6 +13,7 @@ export const StatusLink: FC<PropType> = ({
 	data,
 	icon,
 	link,
+	title,
 	onClick = () => {},
 }) => {
 	const body = (
@@ -26,6 +28,7 @@ export const StatusLink: FC<PropType> = ({
 				</div>
 			)}
 			<div className={style.icon}>{icon}</div>
+			<div className={style.title}>{title?.toString()}</div>
 		</div>
 	)
 	if (link) {
