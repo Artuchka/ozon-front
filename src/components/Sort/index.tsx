@@ -10,6 +10,7 @@ type PropType = {
 export const Sort: FC<PropType> = ({ options = [] }) => {
 	const [active, setActive] = useState(options[0])
 	const [isOpen, setIsOpen] = useState(false)
+	console.log(options)
 
 	useEffect(() => {
 		const func = (e: any) => {

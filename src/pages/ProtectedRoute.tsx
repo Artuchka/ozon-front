@@ -1,16 +1,24 @@
 import React, { FC, ReactNode } from "react"
 import { Link } from "react-router-dom"
+import { AuthType } from "../store/features/auth/authSlice"
 
 export type ProtectedRouteProps = {
-	isAuthenticated: boolean
+	roles?: string[]
+	user: AuthType
 	outlet: JSX.Element
 }
 
 export const ProtectedRoute: FC<ProtectedRouteProps> = ({
-	isAuthenticated,
+	user,
 	outlet,
+	roles = [],
 }) => {
-	if (!isAuthenticated) {
+	const isAuthenticated = !!user.email
+	let isGoodRole = true
+	if (roles.length !== 0) {
+		isGoodRole = roles.includes(user.role || "")
+	}
+	if (!isAuthenticated || !isGoodRole) {
 		return (
 			<div>
 				<h1>you are not allowed here</h1>

@@ -18,6 +18,7 @@ const initialState = {
 	location: null,
 	loading: false,
 }
+export type AuthType = typeof initialState
 
 export const authSlice = createSlice({
 	name: "auth",

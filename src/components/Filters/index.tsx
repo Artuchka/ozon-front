@@ -7,12 +7,20 @@ import { SelectRadio } from "../pageBlocks/inputs/SelectRadio"
 
 export const Filters = () => {
 	const data = ["бытовуха", "красота"]
+	const dataComplex = [
+		{ label: "бытовуха", value: "bit" },
+		{ label: "красота", value: "pretty" },
+	]
 	return (
 		<form className="filters">
 			<SelectList name="list" title="Категория" items={[...data]} />
 			<Switch title="Рассрочка без доплаты" name="credit" />
 			<Switch title="Доставка" name="delivery" />
-			<SelectRadio name="radio" title="Срок доставки" items={[...data]} />
+			<SelectRadio
+				name="radio"
+				title="Срок доставки"
+				items={[...dataComplex]}
+			/>
 			<SelectCheckbox title="бренды" items={[...data]} name="checkbox" />
 			<Range name="price" title="Цена" min={20} max={4320} />
 		</form>

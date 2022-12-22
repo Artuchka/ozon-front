@@ -9,10 +9,10 @@ import { NotFound } from "./pages/NotFound"
 import { useDispatch, useSelector } from "react-redux"
 import { selectAuth } from "./store/features/auth/selectors"
 import { ProtectedRoute } from "./pages/ProtectedRoute"
+import { CreateNew } from "./pages/CreateNew"
 
 function App() {
-	const { email } = useSelector(selectAuth)
-	const isAuthenticated = !!email
+	const user = useSelector(selectAuth)
 	return (
 		<BrowserRouter>
 			<Routes>
@@ -21,9 +21,16 @@ function App() {
 					<Route
 						path="/my/main"
 						element={
+							<ProtectedRoute user={user} outlet={<Personal />} />
+						}
+					/>
+					<Route
+						path="/create-new"
+						element={
 							<ProtectedRoute
-								isAuthenticated={isAuthenticated}
-								outlet={<Personal />}
+								roles={["vendor"]}
+								user={user}
+								outlet={<CreateNew />}
 							/>
 						}
 					/>
