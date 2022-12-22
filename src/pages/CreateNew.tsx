@@ -3,6 +3,7 @@ import React, {
 	FormEvent,
 	FormEventHandler,
 	useEffect,
+	useRef,
 	useState,
 } from "react"
 import { useDispatch } from "react-redux"
@@ -10,15 +11,20 @@ import { AppDispatch } from "../store/store"
 import { createProduct } from "../store/features/product/thunks"
 
 export const CreateNew = () => {
+	const formRef = useRef<HTMLFormElement>(null)
 	const [values, setValues] = useState({
 		description: "",
 		title: "",
 		price: 100,
 	})
 	const dispatch = useDispatch<AppDispatch>()
+	const formData = new FormData(formRef.current || undefined)
 
 	const handleChange = (e: ChangeEvent<HTMLFormElement>) => {
 		const { name, value } = e.target
+
+		// formData.set("product-images", "test.pg")
+
 		setValues((prev) => ({ ...prev, [name]: value }))
 	}
 
@@ -34,6 +40,7 @@ export const CreateNew = () => {
 				className="inputs-container"
 				onChange={handleChange}
 				onSubmit={handleSubmit}
+				ref={formRef}
 			>
 				<input
 					className="input input--rounded"
@@ -52,6 +59,12 @@ export const CreateNew = () => {
 					className="input input--rounded"
 					placeholder="Введите цену"
 					name="price"
+				/>
+				<input
+					type="file"
+					className="input input--rounded"
+					multiple
+					name="file"
 				/>
 				<button
 					className="btn btn--contained btn--rounded btn--tall"

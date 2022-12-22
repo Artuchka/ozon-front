@@ -26,6 +26,7 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 
 		if (method === "login") {
 			dispatch(login({ email, password }))
+			setOpen(false)
 		} else {
 			dispatch(register({ email, password }))
 		}
