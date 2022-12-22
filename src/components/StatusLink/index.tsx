@@ -2,7 +2,7 @@ import React, { FC, MouseEventHandler } from "react"
 import style from "./headerlink.module.scss"
 import { Link, To } from "react-router-dom"
 type PropType = {
-	data: String | Number
+	data?: String | Number
 	title?: String | Number
 	icon: any
 	link?: To
@@ -10,7 +10,7 @@ type PropType = {
 }
 
 export const StatusLink: FC<PropType> = ({
-	data,
+	data = 0,
 	icon,
 	link,
 	title,

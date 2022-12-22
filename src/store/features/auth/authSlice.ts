@@ -33,6 +33,10 @@ export const authSlice = createSlice({
 			return { ...user, loading: false }
 		})
 		builder.addCase(login.rejected, (state, action) => {
+			if (typeof action.payload === "string") {
+				toast.error(action?.payload)
+			}
+
 			state.loading = false
 		})
 		builder.addCase(loginJWT.pending, (state, action) => {
@@ -77,9 +81,9 @@ export const authSlice = createSlice({
 			state.loading = true
 		})
 		builder.addCase(updateUser.fulfilled, (state, action) => {
-			const { msg } = action.payload
+			const { msg, user } = action.payload
 			toast(msg)
-			return { ...initialState }
+			return { ...state, ...user }
 		})
 		builder.addCase(updateUser.rejected, (state, action: any) => {
 			toast.error(action.payload)

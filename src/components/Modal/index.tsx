@@ -7,11 +7,8 @@ type PropType = {
 	children?: ReactNode
 }
 export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
-	console.log({ open })
 	useEffect(() => {
 		const closeIfOutside = (e: MouseEvent) => {
-			console.log("before checking = ", { open })
-
 			let outside = false
 			const path = e.composedPath && e.composedPath()
 
@@ -23,7 +20,6 @@ export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
 					}
 				})
 			})
-			console.log({ outside })
 
 			if (outside) {
 				setOpen(false)

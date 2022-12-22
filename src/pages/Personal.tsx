@@ -12,17 +12,25 @@ export const Personal = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const [open, setOpen] = useState(false)
 	const [type, setType] = useState<typeVariants>("phone")
+	const [defaultAns, setDefaultAns] = useState<{}>({})
 
-	const handleUpdateOpen = (type: typeVariants) => {
+	const handleUpdateOpen = (type: typeVariants, def: {}) => {
+		setDefaultAns(def)
 		setType(type)
 		setOpen(true)
 	}
 
-	const { lastName, firstName, email, birthday, phone, location } =
+	const { lastName, firstName, email, birthday, phone, location, gender } =
 		useSelector(selectAuth)
 	return (
 		<div className="personal-page">
-			<UpdateModal open={open} setOpen={setOpen} type={type} />
+			<UpdateModal
+				open={open}
+				setOpen={setOpen}
+				type={type}
+				defaultAnswer={defaultAns}
+				setDefaultAnswer={setDefaultAns}
+			/>
 			<div className="main-info">
 				<div className="avatar">
 					{avatar == "/" ? (
@@ -37,12 +45,12 @@ export const Personal = () => {
 					</div>
 					<div className="submain">
 						<div className="bday">{getIntlDate(birthday)}</div>
-						<div className="gender">Пол не указан</div>
+						<div className="gender">{gender}</div>
 					</div>
 					<button
 						type="button"
 						className="change"
-						onClick={() => handleUpdateOpen("gender")}
+						onClick={() => handleUpdateOpen("gender", { gender })}
 					>
 						Изменить
 					</button>
@@ -61,22 +69,49 @@ export const Personal = () => {
 						<div className="value">
 							{lastName} {firstName}{" "}
 						</div>
-						<button className="change">Изменить</button>
+						<button
+							className="change"
+							onClick={() =>
+								handleUpdateOpen("names", {
+									firstName,
+									lastName,
+								})
+							}
+						>
+							Изменить
+						</button>
 					</div>
 					<div className="grid-item">
 						<small className="title">телефон</small>
 						<div className="value">{phone}</div>
-						<button className="change">Изменить</button>
+						<button
+							className="change"
+							onClick={() => handleUpdateOpen("phone", { phone })}
+						>
+							Изменить
+						</button>
 					</div>
 					<div className="grid-item">
 						<small className="title">дата рождения</small>
 						<div className="value">{getIntlDate(birthday)}</div>
-						<button className="change">Изменить</button>
+						<button
+							className="change"
+							onClick={() =>
+								handleUpdateOpen("birthday", { birthday })
+							}
+						>
+							Изменить
+						</button>
 					</div>
 					<div className="grid-item">
 						<small className="title">почта</small>
 						<div className="value">{email}</div>
-						<button className="change">Изменить</button>
+						<button
+							className="change"
+							onClick={() => handleUpdateOpen("email", { email })}
+						>
+							Изменить
+						</button>
 					</div>
 				</div>
 			</div>

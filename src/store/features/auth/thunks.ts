@@ -3,7 +3,7 @@ import { ozonAPI } from "../../../axios/customFetch"
 import axios, { AxiosError } from "axios"
 
 type dataType = { email: string; password: string }
-type updateDataType = {
+export type updateDataType = {
 	lastName?: string
 	firstName?: string
 	phone?: string
@@ -11,11 +11,14 @@ type updateDataType = {
 	gender?: string
 	birthday?: string
 	location?: string
+	email?: string
 }
 
 export const updateUser = createAsyncThunk(
 	"users/updateUser",
 	async (updateData: updateDataType, thunkAPI) => {
+		console.log(updateData)
+
 		try {
 			const resp = await ozonAPI.patch("/users", updateData)
 			return thunkAPI.fulfillWithValue(resp.data)
@@ -49,6 +52,7 @@ export const login = createAsyncThunk(
 			return resp.data
 		} catch (error: any) {
 			console.log(error.response.data.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
