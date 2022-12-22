@@ -1,18 +1,14 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Filters } from "../components/Filters"
 import { ProductsGrid } from "../components/ProductsGrid"
 import { Sort } from "../components/Sort"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch } from "../store/store"
+import { getAllProducts } from "../store/features/product/thunks"
+import { selectProducts } from "../store/features/product/selectors"
 
 export const Products = () => {
-	const items = [
-		{ id: "1", name: "massage", price: 282, rating: 3, image: "/ " },
-		{ id: "2", name: "massage", price: 282, rating: 3, image: "/ " },
-		{ id: "3", name: "massage", price: 282, rating: 3, image: "/ " },
-		{ id: "4", name: "massage", price: 282, rating: 3, image: "/ " },
-		{ id: "5", name: "massage", price: 282, rating: 3, image: "/ " },
-		{ id: "6", name: "massage", price: 282, rating: 3, image: "/ " },
-		{ id: "7", name: "massage", price: 282, rating: 3, image: "/ " },
-	]
+	const dispatch = useDispatch<AppDispatch>()
 
 	const sortOptions = [
 		{ title: "Популярные", value: "popular" },
@@ -21,6 +17,10 @@ export const Products = () => {
 	]
 	const search = "мыло"
 	const amount = 1_083_585
+
+	useEffect(() => {
+		dispatch(getAllProducts())
+	}, [])
 	return (
 		<div className="products-page">
 			<div className="stats">
@@ -28,7 +28,7 @@ export const Products = () => {
 			</div>
 			<Filters />
 			<Sort options={sortOptions} />
-			<ProductsGrid items={items} />
+			<ProductsGrid />
 		</div>
 	)
 }

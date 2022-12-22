@@ -15,4 +15,16 @@
 		text-decoration: none;
 		color: black;
 	}
+	.rating {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		justify-content: flex-end;
+		font-size: 0.8rem;
+		.star {
+			position: relative;
+			top: -0.1rem;
+			color: var(--rating-color);
+		}
+	}
 }

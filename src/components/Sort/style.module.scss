@@ -1,7 +1,6 @@
 .sort {
 	max-width: 250px;
 	position: relative;
-	z-index: 10000;
 	.shown {
 		border: 2px solid var(--gray-text);
 		border-radius: 0.3em;
@@ -21,13 +20,11 @@
 		transition: opacity 0.1s ease-in-out;
 		opacity: 0;
 		position: relative;
-		z-index: -1000;
 		display: flex;
 		flex-direction: column;
 		gap: 0.05rem;
 		&.open {
 			opacity: 1;
-			z-index: 10;
 		}
 		li {
 			padding: 0.5em 1em;
