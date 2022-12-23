@@ -18,7 +18,7 @@ import { SelectRadio } from "../components/pageBlocks/inputs/SelectRadio"
 import { ozonAPI } from "../axios/customFetch"
 import { ReviewModal } from "../components/ReviewModal"
 import { setOpenReviewModal } from "../store/features/review/reviewSlice"
-import { AiFillStar } from "react-icons/ai"
+import { AiFillStar, AiOutlineHeart } from "react-icons/ai"
 import { getIntlDate } from "../utils/intl"
 
 export const SingleProduct = () => {
@@ -68,6 +68,26 @@ export const SingleProduct = () => {
 	return (
 		<div className="single-product-page">
 			<ReviewModal productId={id || ""} />
+			<div className="stats">
+				<div className="title">{title}</div>
+				<div className="substats">
+					<div className="reviews">
+						<div className="stars">
+							{Array.from(Array(averageRating)).map((item) => {
+								console.log(item)
+								return <AiFillStar />
+							})}
+						</div>
+						<a href="#reviews" className="numOfReviews">
+							{numOfReviews} отзывов
+						</a>
+					</div>
+					<div className="to-favorites">
+						<AiOutlineHeart />
+						<span>В избранное</span>
+					</div>
+				</div>
+			</div>
 			<VerticalScroll images={images} />
 			<img
 				src={activeImage ? serverURL + activeImage : defaultImg}
@@ -114,7 +134,7 @@ export const SingleProduct = () => {
 				</div>
 			</div>
 
-			<div className="reviews-wrapper">
+			<div className="reviews-wrapper" id="reviews">
 				<h3>Отзывы</h3>
 				<button
 					type="button"
@@ -136,7 +156,10 @@ export const SingleProduct = () => {
 							return (
 								<article className="review-item" key={_id}>
 									<div className="title">
-										{title} от {username}
+										{title}{" "}
+										<span className="username">
+											от {username}
+										</span>
 									</div>
 									<div className="comment">{comment}</div>
 									<div className="rating">

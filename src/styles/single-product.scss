@@ -1,14 +1,51 @@
+html {
+	scroll-behavior: smooth;
+}
+
 .single-product-page {
 	display: grid;
 	grid-template-areas:
+		"stats stats stats"
 		"scroll active-image info"
 		"all-specs all-specs all-specs"
 		"reviews reviews reviews";
 	grid-template-columns: 100px auto 250px;
-	grid-template-rows: 300px;
-	gap: 2rem;
+	grid-template-rows: 70px;
+	gap: 1rem;
 	.scroll {
 		grid-area: scroll;
+	}
+	.stats {
+		grid-area: stats;
+
+		.title {
+			font-weight: 500;
+			font-size: 2rem;
+			margin-bottom: 0.5rem;
+		}
+
+		.substats {
+			color: var(--primary-color);
+			font-size: 0.8rem;
+			display: flex;
+			gap: 1rem;
+			a {
+				text-decoration: none;
+				color: var(--primary-color);
+			}
+		}
+		.reviews,
+		.to-favorites {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			svg {
+				font-size: 1rem;
+			}
+		}
+		.reviews .stars {
+			color: var(--star-color);
+		}
 	}
 	.active-image {
 		grid-area: active-image;
@@ -29,7 +66,7 @@
 			gap: 0.5rem;
 			img {
 				border-radius: 50%;
-				width: 50px;
+				width: 30px;
 				aspect-ratio: 1/1;
 			}
 		}
@@ -83,9 +120,13 @@
 			.title {
 				grid-area: title;
 				font-weight: 500;
+				.username {
+					color: var(--gray-text);
+				}
 			}
 			.comment {
 				grid-area: comment;
+				font-weight: 300;
 			}
 			.rating {
 				grid-area: rating;
