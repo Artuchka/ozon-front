@@ -45,7 +45,7 @@ export const authSlice = createSlice({
 		})
 		builder.addCase(loginJWT.fulfilled, (state, action) => {
 			const { msg, user } = action.payload
-			toast(msg)
+			// toast(msg)
 			return { ...user, loading: false }
 		})
 		builder.addCase(loginJWT.rejected, (state, action) => {

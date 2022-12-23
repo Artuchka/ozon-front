@@ -3,14 +3,30 @@ import { ozonAPI } from "../../../axios/customFetch"
 
 export const createProduct = createAsyncThunk(
 	"product/create",
-	async (info: any, thunkAPI) => {
+	async (formData: any, thunkAPI) => {
 		try {
 			const resp = await ozonAPI("/products", {
-				data: info,
+				data: formData,
 				method: "post",
+				headers: { "content-type": "multipart/form-data" },
 			})
 			console.log("RESP = ", resp)
 			return resp
+		} catch (error: any) {
+			console.log("error caight = ", error)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
+export const uploadImages = createAsyncThunk(
+	"product/uploadImages",
+	async (formData: any, thunkAPI) => {
+		try {
+			const resp = await ozonAPI.post("/products/uploadImage", formData, {
+				headers: { "content-type": "multipart/form-data" },
+			})
+			console.log("RESP = ", resp)
+			return resp.data
 		} catch (error: any) {
 			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)

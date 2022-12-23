@@ -1,0 +1,46 @@
+.single-product-page {
+	display: grid;
+	grid-template-areas: "scroll active-image info";
+	grid-template-columns: 100px auto 250px;
+	grid-template-rows: 300px;
+	.scroll {
+		grid-area: scroll;
+	}
+	.active-image {
+		grid-area: active-image;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	.info {
+		grid-area: info;
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		.vendor {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			img {
+				border-radius: 50%;
+				width: 50px;
+				aspect-ratio: 1/1;
+			}
+		}
+		.specs-short {
+			font-size: 0.9rem;
+			display: flex;
+			flex-direction: column;
+			gap: 0.1rem;
+			.spec {
+				display: flex;
+				gap: 0.5rem;
+				.title {
+					color: var(--gray-text);
+				}
+			}
+		}
+	}
+}

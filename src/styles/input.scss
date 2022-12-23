@@ -11,9 +11,11 @@
 	&:valid {
 		border-color: var(--success-color);
 	}
-	&:not(:valid),
-	&:placeholder-shown {
-		border-color: var(--error-color);
+	&:not(&--not-required) {
+		&:not(:valid),
+		&:placeholder-shown {
+			border-color: var(--error-color);
+		}
 	}
 
 	&--rounded {

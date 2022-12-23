@@ -3,4 +3,19 @@
 		display: flex;
 		gap: 1rem;
 	}
+
+	.specs {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		.spec {
+			display: flex;
+			gap: 0.3rem;
+			align-items: center;
+			.close {
+				padding-left: 1rem;
+				color: var(--error-color);
+			}
+		}
+	}
 }

@@ -10,11 +10,15 @@ import { Loading } from "../Loading"
 // }
 
 export const ProductsGrid: FC = () => {
-	const { products } = useSelector(selectProducts)
+	const { products, isLoading } = useSelector(selectProducts)
 	console.log(products)
 
-	if (!products) {
+	if (isLoading) {
 		return <Loading />
+	}
+
+	if (products.length === 0) {
+		return <h1>Не нашлось товаров =/ </h1>
 	}
 
 	return (
