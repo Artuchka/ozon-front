@@ -4,6 +4,9 @@ import { Switch } from "../pageBlocks/inputs/Switch"
 import { Range } from "../pageBlocks/inputs/Range"
 import { SelectCheckbox } from "../pageBlocks/inputs/SelectCheckbox"
 import { SelectRadio } from "../pageBlocks/inputs/SelectRadio"
+import { useDispatch } from "react-redux"
+import { AppDispatch } from "../../store/store"
+import { getAllProducts } from "../../store/features/product/thunks"
 
 export const Filters = () => {
 	const data = ["бытовуха", "красота"]
@@ -11,8 +14,13 @@ export const Filters = () => {
 		{ label: "бытовуха", value: "bit" },
 		{ label: "красота", value: "pretty" },
 	]
+	const dispatch = useDispatch<AppDispatch>()
+
+	const handleChange = () => {
+		dispatch(getAllProducts())
+	}
 	return (
-		<form className="filters">
+		<form className="filters" onChange={handleChange}>
 			<SelectList name="list" title="Категория" items={[...data]} />
 			<Switch title="Рассрочка без доплаты" name="credit" />
 			<Switch title="Доставка" name="delivery" />
