@@ -1,8 +1,12 @@
 .single-product-page {
 	display: grid;
-	grid-template-areas: "scroll active-image info";
+	grid-template-areas:
+		"scroll active-image info"
+		"all-specs all-specs all-specs"
+		"reviews reviews reviews";
 	grid-template-columns: 100px auto 250px;
 	grid-template-rows: 300px;
+	gap: 2rem;
 	.scroll {
 		grid-area: scroll;
 	}
@@ -34,11 +38,68 @@
 			display: flex;
 			flex-direction: column;
 			gap: 0.1rem;
-			.spec {
+		}
+	}
+	.spec {
+		display: flex;
+		gap: 0.5rem;
+		.title {
+			color: var(--gray-text);
+		}
+	}
+
+	.specs-full-wrapper {
+		grid-area: all-specs;
+		h3 {
+			margin-bottom: 1rem;
+		}
+	}
+	.specs-full {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.reviews-wrapper {
+		grid-area: reviews;
+		.reviews {
+			padding-top: 1rem;
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+		}
+		.review-item {
+			display: grid;
+			grid-template-areas:
+				"avatar title rating"
+				"avatar comment comment";
+			grid-template-columns: 50px auto 300px;
+			gap: 1rem;
+			.avatar {
+				grid-area: avatar;
+				border-radius: 50%;
+				width: 50px;
+				aspect-ratio: 1/1;
+			}
+			.title {
+				grid-area: title;
+				font-weight: 500;
+			}
+			.comment {
+				grid-area: comment;
+			}
+			.rating {
+				grid-area: rating;
 				display: flex;
-				gap: 0.5rem;
-				.title {
+				gap: 1rem;
+				place-self: end;
+				.date {
 					color: var(--gray-text);
+					font-size: 0.9rem;
+				}
+				svg {
+					position: relative;
+					// top: 0.1rem;
+					color: var(--star-color);
 				}
 			}
 		}

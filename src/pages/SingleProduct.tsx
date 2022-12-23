@@ -16,6 +16,10 @@ import defaultImg from "./../assets/images/ozon-logo.png"
 import { setActiveImage } from "../store/features/product/productSlice"
 import { SelectRadio } from "../components/pageBlocks/inputs/SelectRadio"
 import { ozonAPI } from "../axios/customFetch"
+import { ReviewModal } from "../components/ReviewModal"
+import { setOpenReviewModal } from "../store/features/review/reviewSlice"
+import { AiFillStar } from "react-icons/ai"
+import { getIntlDate } from "../utils/intl"
 
 export const SingleProduct = () => {
 	const { id } = useParams()
@@ -63,6 +67,7 @@ export const SingleProduct = () => {
 
 	return (
 		<div className="single-product-page">
+			<ReviewModal productId={id || ""} />
 			<VerticalScroll images={images} />
 			<img
 				src={activeImage ? serverURL + activeImage : defaultImg}
@@ -81,9 +86,9 @@ export const SingleProduct = () => {
 					<SelectRadio name="type" title="Тип" items={radioTypes} />
 				</form>
 				<div className="specs-short">
-					{specs.slice(0, 2).map(({ title, value, link }) => {
+					{specs.slice(0, 2).map(({ title, value, link, id }) => {
 						return (
-							<div className="spec">
+							<div className="spec" id={id}>
 								<div className="title">{title}</div>
 								<div className="value">{value}</div>
 							</div>
@@ -98,14 +103,68 @@ export const SingleProduct = () => {
 			<div className="specs-full-wrapper" id="specs-full-wrapper">
 				<h3>Характеристики</h3>
 				<div className="specs-full">
-					{specs.slice(0, 2).map(({ title, value, link }) => {
+					{specs.map(({ title, value, link, id }) => {
 						return (
-							<div className="spec">
+							<div className="spec" id={id}>
 								<div className="title">{title}</div>
 								<div className="value">{value}</div>
 							</div>
 						)
 					})}
+				</div>
+			</div>
+
+			<div className="reviews-wrapper">
+				<h3>Отзывы</h3>
+				<button
+					type="button"
+					className="btn btn--rounded btn--contained btn--short btn--content"
+					onClick={() => dispatch(setOpenReviewModal(true))}
+				>
+					Добавить отзыв
+				</button>
+				<div className="reviews">
+					{reviews.map(
+						({
+							title,
+							comment,
+							rating,
+							author: { avatar, username },
+							createdAt,
+							_id,
+						}) => {
+							return (
+								<article className="review-item" key={_id}>
+									<div className="title">
+										{title} от {username}
+									</div>
+									<div className="comment">{comment}</div>
+									<div className="rating">
+										<div className="date">
+											{getIntlDate(createdAt)}
+										</div>
+										<div className="stars">
+											{Array.from(Array(rating)).map(
+												(item) => {
+													console.log(item)
+													return <AiFillStar />
+												}
+											)}
+										</div>
+									</div>
+									<img
+										className="avatar"
+										src={
+											avatar
+												? serverURL + avatar
+												: defaultImg
+										}
+										alt=""
+									/>
+								</article>
+							)
+						}
+					)}
 				</div>
 			</div>
 		</div>

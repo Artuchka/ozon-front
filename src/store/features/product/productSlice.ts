@@ -27,7 +27,16 @@ const initialState = {
 		images: [],
 		numOfReviews: null,
 		price: null,
-		reviews: [],
+		reviews: [
+			{
+				author: { avatar: "", email: "", username: "", _id: "" },
+				rating: "",
+				createdAt: "",
+				comment: "",
+				title: "",
+				_id: "",
+			},
+		],
 		specs: [],
 		tags: [],
 		title: null,
