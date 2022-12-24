@@ -118,6 +118,7 @@ export const SingleProduct = () => {
 						title="Тип"
 						items={radioTypes}
 						onChange={() => {}}
+						selected={radioTypes[0].value}
 					/>
 				</form>
 				<div className="specs-short">
