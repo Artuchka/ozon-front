@@ -3,7 +3,9 @@ import React, { ChangeEventHandler, FC, useCallback, useState } from "react"
 import styles from "./style.module.scss"
 import { useEffect } from "react"
 import { RangeType } from "../../../Filters"
-import debounce from "lodash.debounce"
+import { debounce } from "lodash"
+// import debounce from "lodash.debounce"
+
 type proptype = {
 	title: string
 	name: string
