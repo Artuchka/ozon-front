@@ -1,21 +1,15 @@
-import React, {
-	ChangeEvent,
-	FormEvent,
-	FormEventHandler,
-	useEffect,
-	useRef,
-} from "react"
+import React, { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { AppDispatch } from "../store/store"
 import { getSingleProduct } from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
 import { Loading } from "../components/Loading"
-import { VerticalScroll, serverURL } from "../components/VerticalScroll"
+import { VerticalScroll } from "../components/VerticalScroll"
 import defaultImg from "./../assets/images/ozon-logo.png"
 import { setActiveImage } from "../store/features/product/productSlice"
 import { SelectRadio } from "../components/pageBlocks/inputs/SelectRadio"
-import { ozonAPI } from "../axios/customFetch"
+import { serverURL } from "../axios/customFetch"
 import { ReviewModal } from "../components/ReviewModal"
 import { setOpenReviewModal } from "../store/features/review/reviewSlice"
 import { AiFillStar, AiOutlineHeart } from "react-icons/ai"

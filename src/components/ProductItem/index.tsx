@@ -3,6 +3,7 @@ import style from "./style.module.scss"
 import defaultImage from "./../../assets/images/ozon-logo.png"
 import { Link } from "react-router-dom"
 import { AiOutlineStar } from "react-icons/ai"
+import { serverURL } from "../../axios/customFetch"
 
 export type ProductItemType = {
 	images: string[]
@@ -12,7 +13,6 @@ export type ProductItemType = {
 	numOfReviews: number
 	_id: string
 }
-const serverURL = "http://localhost:3000"
 // crossorigin=anonymos should work for images
 
 export const ProductItem: FC<ProductItemType> = (props) => {

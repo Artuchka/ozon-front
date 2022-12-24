@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { setActiveImage } from "../../store/features/product/productSlice"
 import { selectProducts } from "../../store/features/product/selectors"
-export const serverURL = "http://localhost:3000"
+import { serverURL } from "../../axios/customFetch"
 
 export const VerticalScroll: FC<{ images: string[] }> = ({ images }) => {
 	const {
