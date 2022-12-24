@@ -7,6 +7,7 @@ import { AppDispatch } from "../store/store"
 import { getAllProducts } from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
 import { selectFilters } from "../store/features/filter/selector"
+import { Pagination } from "../components/Pagination"
 
 export const Products = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -27,6 +28,7 @@ export const Products = () => {
 			<Filters />
 			<Sort />
 			<ProductsGrid />
+			<Pagination />
 		</div>
 	)
 }

@@ -70,6 +70,7 @@ export const SingleProduct = () => {
 	return (
 		<div className="single-product-page">
 			<ReviewModal productId={id || ""} />
+
 			<div className="stats">
 				<div className="title">{title}</div>
 				<div className="substats">
@@ -94,12 +95,15 @@ export const SingleProduct = () => {
 					</div>
 				</div>
 			</div>
+
 			<VerticalScroll images={images} />
+
 			<img
 				src={activeImage ? serverURL + activeImage : defaultImg}
 				alt=""
 				className="active-image"
 			/>
+
 			<div className="info">
 				<div className="vendor">
 					<img
@@ -109,12 +113,17 @@ export const SingleProduct = () => {
 					<div className="username">{username}</div>
 				</div>
 				<form className="types" ref={orderConfigRef}>
-					<SelectRadio name="type" title="Тип" items={radioTypes} />
+					<SelectRadio
+						name="type"
+						title="Тип"
+						items={radioTypes}
+						onChange={() => {}}
+					/>
 				</form>
 				<div className="specs-short">
 					{specs.slice(0, 2).map(({ title, value, link, id }) => {
 						return (
-							<div className="spec" id={id}>
+							<div className="spec" id={id} key={id}>
 								<div className="title">{title}</div>
 								<div className="value">{value}</div>
 							</div>
@@ -136,7 +145,7 @@ export const SingleProduct = () => {
 				<div className="specs-full">
 					{specs.map(({ title, value, link, id }) => {
 						return (
-							<div className="spec" id={id}>
+							<div className="spec" id={id} key={id}>
 								<div className="title">{title}</div>
 								<div className="value">{value}</div>
 							</div>
@@ -179,9 +188,10 @@ export const SingleProduct = () => {
 										</div>
 										<div className="stars">
 											{Array.from(Array(rating)).map(
-												(item) => {
-													console.log(item)
-													return <AiFillStar />
+												(_, ind) => {
+													return (
+														<AiFillStar key={ind} />
+													)
 												}
 											)}
 										</div>

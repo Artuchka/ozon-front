@@ -44,7 +44,10 @@ const filterSlice = createSlice({
 			{ payload }: { payload: PayloadUpdateType }
 		): FilterType | void => {
 			const { name, value } = payload
-			return { ...state, [name]: value }
+			if (name === "page") {
+				return { ...state, [`${name}`]: value }
+			}
+			return { ...state, [name]: value, page: 1 }
 		},
 	},
 })
