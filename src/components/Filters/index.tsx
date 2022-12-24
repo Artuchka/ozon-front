@@ -17,7 +17,7 @@ export const Filters = () => {
 	const dispatch = useDispatch<AppDispatch>()
 
 	const handleChange = () => {
-		dispatch(getAllProducts())
+		dispatch(getAllProducts({}))
 	}
 	return (
 		<form className="filters" onChange={handleChange}>

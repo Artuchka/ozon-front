@@ -54,7 +54,7 @@ const initialState = {
 		vendor: { avatar: null, username: null },
 		updatedAt: null,
 	},
-	creating: { paths: [] },
+	creating: { paths: [], isLoading: false },
 }
 export const productSlice = createSlice({
 	name: "product",
@@ -67,16 +67,19 @@ export const productSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(createProduct.pending, (state, action) => {
 			console.log("pending")
+			state.creating.isLoading = true
 		})
 		builder.addCase(createProduct.fulfilled, (state, action) => {
+			state.creating.isLoading = false
 			toast.success("created product")
 		})
 		builder.addCase(createProduct.rejected, (state, action) => {
+			state.creating.isLoading = false
 			if (typeof action.payload === "string") toast.error(action.payload)
 		})
 
 		builder.addCase(getAllProducts.pending, (state, action) => {
-			console.log("pending")
+			state.isLoading = true
 		})
 		builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
 			const { products } = payload
@@ -88,25 +91,29 @@ export const productSlice = createSlice({
 			state.isLoading = false
 		})
 		builder.addCase(getSingleProduct.pending, (state, action) => {
-			console.log("pending")
+			state.singleProduct.isLoading = true
 		})
 		builder.addCase(getSingleProduct.fulfilled, (state, { payload }) => {
 			const { product } = payload
 			state.singleProduct = product
+			state.singleProduct.isLoading = false
 		})
 		builder.addCase(getSingleProduct.rejected, (state, action) => {
+			state.singleProduct.isLoading = false
 			if (typeof action.payload === "string") toast.error(action.payload)
 		})
 
 		builder.addCase(uploadImages.pending, (state, action) => {
-			console.log("pending")
+			state.creating.isLoading = true
 		})
 		builder.addCase(uploadImages.fulfilled, (state, { payload }) => {
 			const { msg, paths } = payload
 			toast.success(msg)
 			state.creating.paths = paths
+			state.creating.isLoading = false
 		})
 		builder.addCase(uploadImages.rejected, (state, action) => {
+			state.creating.isLoading = false
 			if (typeof action.payload === "string") toast.error(action.payload)
 		})
 	},

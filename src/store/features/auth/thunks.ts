@@ -17,8 +17,6 @@ export type updateDataType = {
 export const updateUser = createAsyncThunk(
 	"users/updateUser",
 	async (updateData: updateDataType, thunkAPI) => {
-		console.log(updateData)
-
 		try {
 			const resp = await ozonAPI.patch("/users", updateData)
 			return thunkAPI.fulfillWithValue(resp.data)
@@ -51,7 +49,6 @@ export const login = createAsyncThunk(
 			})
 			return resp.data
 		} catch (error: any) {
-			console.log(error.response.data.msg)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -61,7 +58,6 @@ export const loginJWT = createAsyncThunk(
 	async (_, thunkAPI) => {
 		try {
 			const resp = await ozonAPI("/auth/loginJWT")
-			console.log(resp.data)
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
 			return thunkAPI.rejectWithValue(error.response.data.msg)

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { ozonAPI } from "../../../axios/customFetch"
+import { FilterType } from "../filter/filterSlice"
 
 export const createProduct = createAsyncThunk(
 	"product/create",
@@ -36,9 +37,12 @@ export const uploadImages = createAsyncThunk(
 
 export const getAllProducts = createAsyncThunk(
 	"product/getAllProducts",
-	async (_, thunkAPI) => {
+	async (params: FilterType, thunkAPI) => {
 		try {
-			const { data } = await ozonAPI("/products")
+			const queryParams = createQueryParams(params)
+			console.log({ queryParams })
+
+			const { data } = await ozonAPI(`/products${queryParams}`)
 			return data
 		} catch (error: any) {
 			console.log("error caight = ", error)
@@ -58,3 +62,37 @@ export const getSingleProduct = createAsyncThunk(
 		}
 	}
 )
+
+const createQueryParams = (params: FilterType) => {
+	const {
+		title,
+		imagesAmount,
+		minPrice,
+		maxPrice,
+		minAverageRating,
+		maxAverageRating,
+		limit,
+		page,
+		sort,
+		numOfReviews,
+	} = params
+	let query = "?"
+
+	if (title) query += `&title=${title}`
+	if (imagesAmount) query += `&imagesAmount=${imagesAmount}`
+	if (limit) query += `&limit=${limit}`
+	if (page) query += `&page=${page}`
+	if (sort) query += `&sort=${sort}`
+	let numericFilters = "&numericFilters="
+	if (minPrice) numericFilters += `price>=${minPrice},`
+	if (maxPrice) numericFilters += `price<=${maxPrice},`
+	if (minAverageRating)
+		numericFilters += `averageRating>=${minAverageRating},`
+	if (maxAverageRating)
+		numericFilters += `averageRating<=${maxAverageRating},`
+	if (numOfReviews) numericFilters += `numOfReviews<=${numOfReviews},`
+	if (numericFilters !== "&numericFilters=") {
+		query += numericFilters
+	}
+	return query
+}

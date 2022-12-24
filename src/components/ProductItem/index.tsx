@@ -17,7 +17,6 @@ const serverURL = "http://localhost:3000"
 
 export const ProductItem: FC<ProductItemType> = (props) => {
 	const { images, price, _id, averageRating, title, numOfReviews } = props
-	console.log(images)
 
 	const image = images[0] === "" ? defaultImage : serverURL + images[0]
 	return (

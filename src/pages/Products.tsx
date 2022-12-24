@@ -11,15 +11,23 @@ export const Products = () => {
 	const dispatch = useDispatch<AppDispatch>()
 
 	const sortOptions = [
-		{ title: "Популярные", value: "popular" },
-		{ title: "Сначала дешевые", value: "-price" },
-		{ title: "Сначала дорогие", value: "price" },
+		{ title: "Популярные сначала", value: "-averageRating" },
+		{ title: "Непопулярные сначала", value: "averageRating" },
+		{ title: "Сначала много отзывов", value: "-numOfReviews" },
+		{ title: "Сначала мало отзывов", value: "numOfReviews" },
+		{ title: "Сначала дешевые", value: "price" },
+		{ title: "Сначала дорогие", value: "-price" },
 	]
 	const search = "мыло"
 	const amount = 1_083_585
 
 	useEffect(() => {
-		dispatch(getAllProducts())
+		dispatch(
+			getAllProducts({
+				page: 2,
+				limit: 5,
+			})
+		)
 	}, [])
 	return (
 		<div className="products-page">

@@ -12,7 +12,6 @@ import { selectAuth } from "../../../store/features/auth/selectors"
 export const Header = () => {
 	const [open, setOpen] = useState(false)
 	const auth = useSelector(selectAuth)
-	console.log(auth)
 	const user = auth.role !== null
 	const { role } = auth
 

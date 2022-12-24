@@ -11,7 +11,6 @@ import { Loading } from "../Loading"
 
 export const ProductsGrid: FC = () => {
 	const { products, isLoading } = useSelector(selectProducts)
-	console.log(products)
 
 	if (isLoading) {
 		return <Loading />
@@ -22,7 +21,7 @@ export const ProductsGrid: FC = () => {
 	}
 
 	return (
-		<div className={`${style["products-grid"]}`}>
+		<div className={`${style["products-grid"]} products`}>
 			{products.map((item) => {
 				return <ProductItem key={item._id} {...item} />
 			})}

@@ -2,7 +2,7 @@
 	display: grid;
 	grid-template-areas: "stats stats" "filters sort" "filters products";
 	grid-template-columns: 200px auto;
-	grid-template-rows: repeat(2, 50px) auto;
+	grid-template-rows: auto 50px auto;
 	gap: 1rem;
 
 	.filters {
@@ -16,5 +16,10 @@
 	}
 	.sort {
 		grid-area: sort;
+	}
+
+	.products {
+		grid-area: products;
+		place-self: center;
 	}
 }
