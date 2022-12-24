@@ -27,6 +27,14 @@ export const ratingOptions = [
 	{ label: "Лучшие", value: "5" },
 ]
 
+export const sortOptions = [
+	{ title: "Популярные сначала", value: "-averageRating" },
+	{ title: "Непопулярные сначала", value: "averageRating" },
+	{ title: "Сначала много отзывов", value: "-numOfReviews" },
+	{ title: "Сначала мало отзывов", value: "numOfReviews" },
+	{ title: "Сначала дешевые", value: "price" },
+	{ title: "Сначала дорогие", value: "-price" },
+]
 const filterSlice = createSlice({
 	name: "filter",
 	initialState,

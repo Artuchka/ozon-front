@@ -1,15 +1,22 @@
-import React, { FC, useEffect, useState } from "react"
+import React, { ChangeEvent, FC, useEffect, useState } from "react"
 import { GiTriangleTarget } from "react-icons/gi"
 import { BsTriangleFill } from "react-icons/bs"
 import style from "./style.module.scss"
+import {
+	sortOptions,
+	updateFilters,
+} from "../../store/features/filter/filterSlice"
+import { useDispatch } from "react-redux"
+import { AppDispatch } from "../../store/store"
 
-type PropType = {
-	options: { title: string; value: string }[]
-}
+// type PropType = {
+// 	options: { title: string; value: string }[]
+// }
 
-export const Sort: FC<PropType> = ({ options = [] }) => {
-	const [active, setActive] = useState(options[0])
+export const Sort: FC = () => {
+	const [active, setActive] = useState(sortOptions[0])
 	const [isOpen, setIsOpen] = useState(false)
+	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
 		const func = (e: any) => {
@@ -33,6 +40,13 @@ export const Sort: FC<PropType> = ({ options = [] }) => {
 		return () => window.removeEventListener("click", func)
 	}, [])
 
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target
+		console.log({ name, value })
+
+		dispatch(updateFilters({ name, value }))
+	}
+
 	return (
 		<form className={`sort ${style.sort}`}>
 			<div
@@ -45,20 +59,31 @@ export const Sort: FC<PropType> = ({ options = [] }) => {
 				/>
 			</div>
 			<ul className={`${style.list} ${isOpen ? style.open : ""}`}>
-				{options.map((opt) => {
+				{sortOptions.map((opt) => {
 					return (
-						<li
-							className={
-								active.title === opt.title ? style.active : ""
-							}
-							onClick={(e) => {
-								setIsOpen(false)
-								setActive(opt)
-							}}
+						<div
 							key={opt.value}
+							className={`${style.option} + ${
+								active.title === opt.title ? style.active : ""
+							}`}
 						>
-							{opt.title}
-						</li>
+							<input
+								type="radio"
+								name="sort"
+								value={opt.value}
+								id={`sort${opt.value}`}
+								onChange={handleChange}
+							/>
+							<label
+								htmlFor={`sort${opt.value}`}
+								onClick={(e) => {
+									setIsOpen(false)
+									setActive(opt)
+								}}
+							>
+								{opt.title}
+							</label>
+						</div>
 					)
 				})}
 			</ul>

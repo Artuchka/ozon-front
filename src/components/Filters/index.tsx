@@ -14,15 +14,14 @@ import {
 } from "../../store/features/filter/filterSlice"
 import { selectFilters } from "../../store/features/filter/selector"
 import { useEffect } from "react"
+import { selectProducts } from "../../store/features/product/selectors"
 
 export type RangeType = { name: string; value: number }
 export const Filters = () => {
-	// const dataComplex = [
-	// 	{ label: "бытовуха", value: "bit" },
-	// 	{ label: "красота", value: "pretty" },
-	// ]
 	const dispatch = useDispatch<AppDispatch>()
 	const filter = useSelector(selectFilters)
+	const { details } = useSelector(selectProducts)
+	const { minPrice, maxPrice } = details
 	useEffect(() => {
 		dispatch(getAllProducts())
 	}, [filter])
@@ -58,8 +57,8 @@ export const Filters = () => {
 			<Range
 				name="price"
 				title="Цена"
-				min={20}
-				max={4320}
+				min={minPrice}
+				max={maxPrice}
 				onChange={handleRangeChange}
 			/>
 		</form>

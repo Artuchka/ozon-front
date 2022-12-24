@@ -26,6 +26,12 @@ const initialState = {
 			_id: "",
 		},
 	],
+	details: {
+		maxPrice: 0,
+		minPrice: 0,
+		pagesFound: 0,
+		productsFound: 0,
+	},
 	isLoading: true,
 	singleProduct: {
 		isLoading: true,
@@ -82,7 +88,8 @@ export const productSlice = createSlice({
 			state.isLoading = true
 		})
 		builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
-			const { products } = payload
+			const { products, details } = payload
+			state.details = details
 			state.products = products
 			state.isLoading = false
 		})

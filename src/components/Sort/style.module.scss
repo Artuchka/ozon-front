@@ -28,32 +28,41 @@
 			opacity: 1;
 			z-index: 10;
 		}
-		li {
-			padding: 0.5em 1em;
-			cursor: pointer;
-			background-color: white;
-			position: relative;
-			&.active {
-				background-color: var(--primary-color-lighter);
-
-				&::after {
-					content: "\2713";
-					position: absolute;
-					right: 1rem;
-					top: 50%;
-					translate: 0 -40%;
-					font-size: 1.5rem;
-					color: var(--primary-color);
-				}
-			}
-
-			&:first-of-type {
+		.option {
+			&:first-of-type label {
 				border-top-left-radius: 1rem;
 				border-top-right-radius: 1rem;
 			}
-			&:last-of-type {
+			&:last-of-type label {
 				border-bottom-left-radius: 1rem;
 				border-bottom-right-radius: 1rem;
+			}
+			input {
+				position: absolute;
+				left: -100vmax;
+			}
+			label {
+				width: 100%;
+				cursor: pointer;
+				display: inline-block;
+				padding: 0.5em 1em;
+				background-color: white;
+				position: relative;
+			}
+			&.active {
+				label {
+					background-color: var(--primary-color-lighter);
+
+					&::after {
+						content: "\2713";
+						position: absolute;
+						right: 1rem;
+						top: 50%;
+						translate: 0 -40%;
+						font-size: 1.5rem;
+						color: var(--primary-color);
+					}
+				}
 			}
 		}
 	}

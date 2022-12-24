@@ -6,36 +6,26 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
 import { getAllProducts } from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
+import { selectFilters } from "../store/features/filter/selector"
 
 export const Products = () => {
 	const dispatch = useDispatch<AppDispatch>()
-
-	const sortOptions = [
-		{ title: "Популярные сначала", value: "-averageRating" },
-		{ title: "Непопулярные сначала", value: "averageRating" },
-		{ title: "Сначала много отзывов", value: "-numOfReviews" },
-		{ title: "Сначала мало отзывов", value: "numOfReviews" },
-		{ title: "Сначала дешевые", value: "price" },
-		{ title: "Сначала дорогие", value: "-price" },
-	]
-	const search = "мыло"
-	const amount = 1_083_585
+	const { details } = useSelector(selectProducts)
+	const { title } = useSelector(selectFilters)
+	const amount = details.productsFound
 
 	useEffect(() => {
-		dispatch(
-			getAllProducts({
-				page: 2,
-				limit: 5,
-			})
-		)
+		dispatch(getAllProducts())
 	}, [])
 	return (
 		<div className="products-page">
 			<div className="stats">
-				По запросу {search} найдено {amount} товаров
+				{!title
+					? `По вашему запросу найдено ${amount} товаров`
+					: `По запросу \`${title}\` найдено ${amount} товаров`}
 			</div>
 			<Filters />
-			<Sort options={sortOptions} />
+			<Sort />
 			<ProductsGrid />
 		</div>
 	)
