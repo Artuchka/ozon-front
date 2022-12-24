@@ -20,6 +20,7 @@ export type RangeType = { name: string; value: number }
 export const Filters = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const filter = useSelector(selectFilters)
+	const { minAverageRating } = filter
 	const { details } = useSelector(selectProducts)
 	const { minPrice, maxPrice } = details
 	useEffect(() => {
@@ -52,6 +53,7 @@ export const Filters = () => {
 				title="Оценка"
 				items={[...ratingOptions]}
 				onChange={handleChange}
+				selected={minAverageRating || 1}
 			/>
 
 			<Range

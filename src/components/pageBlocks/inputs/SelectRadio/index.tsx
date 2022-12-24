@@ -2,12 +2,13 @@ import React, { FC } from "react"
 import styles from "./style.module.scss"
 import { ChangeEventHandler } from "react"
 
-type ItemType = { value: string; label: string }
+type ItemType = { value: string | number; label: string }
 type PropTypes = {
 	className?: string
 	onChange: ChangeEventHandler<HTMLInputElement>
 	title: string
 	name: string
+	selected: number | string
 	items: ItemType[]
 }
 
@@ -15,6 +16,7 @@ export const SelectRadio: FC<PropTypes> = ({
 	title = "title",
 	name = "different",
 	onChange,
+	selected,
 	items = [
 		{
 			label: "First label",
@@ -40,6 +42,7 @@ export const SelectRadio: FC<PropTypes> = ({
 								value={value}
 								name={name}
 								onChange={onChange}
+								checked={selected == value}
 							/>
 							<label htmlFor={`${name}${value}`}>{label}</label>
 						</div>

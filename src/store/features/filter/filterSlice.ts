@@ -12,7 +12,10 @@ export interface FilterType {
 	page?: number
 	sort?: string
 }
-const initialState = {} as FilterType
+const initialState = {
+	sort: "-averageRating",
+	minAverageRating: 5,
+} as FilterType
 
 type PayloadUpdateType = {
 	name: string //keyof FilterType
