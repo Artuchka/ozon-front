@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useState } from "react"
 import style from "./style.module.scss"
 import {
+	pageOptions,
 	sortOptions,
 	updateFilters,
 } from "../../store/features/filter/filterSlice"
@@ -8,14 +9,12 @@ import { useDispatch } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { SelectDropdown } from "../pageBlocks/inputs/SelectDropdown"
 
-// type PropType = {
-// 	options: { title: string; value: string }[]
-// }
-
 export const Sort: FC = () => {
 	const dispatch = useDispatch<AppDispatch>()
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		console.log("clicked")
+
 		const { name, value } = e.target
 		console.log({ name, value })
 
@@ -23,8 +22,17 @@ export const Sort: FC = () => {
 	}
 
 	return (
-		<form>
-			<SelectDropdown onChange={handleChange} />
+		<form className="view-config">
+			<SelectDropdown
+				onChange={handleChange}
+				name="sort"
+				options={sortOptions}
+			/>
+			<SelectDropdown
+				onChange={handleChange}
+				name="limit"
+				options={pageOptions}
+			/>
 		</form>
 	)
 }

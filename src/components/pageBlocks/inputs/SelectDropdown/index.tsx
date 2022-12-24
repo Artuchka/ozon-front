@@ -1,31 +1,41 @@
-import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
+import React, {
+	ChangeEvent,
+	ChangeEventHandler,
+	FC,
+	MouseEventHandler,
+	useEffect,
+	useState,
+} from "react"
 import style from "./style.module.scss"
-import { sortOptions } from "../../../../store/features/filter/filterSlice"
+import { optionType } from "../../../../store/features/filter/filterSlice"
 
 import { GiTriangleTarget } from "react-icons/gi"
 import { BsTriangleFill } from "react-icons/bs"
 
 type propType = {
 	onChange: ChangeEventHandler<HTMLInputElement>
+	options: optionType[]
+	name: string
 }
 
-export const SelectDropdown: FC<propType> = ({ onChange }) => {
-	const [active, setActive] = useState(sortOptions[0])
+export const SelectDropdown: FC<propType> = ({ onChange, options, name }) => {
+	const [active, setActive] = useState(options[0])
 	const [isOpen, setIsOpen] = useState(false)
+
 	useEffect(() => {
 		const func = (e: any) => {
 			let isInside = false
+			const path = e.composedPath && e.composedPath()
 
-			const path = e.path || (e.composedPath && e.composedPath())
+			for (const item of path) {
+				Array.from(item.classList || [""]).forEach((item: any) => {
+					if (item.includes("sort")) {
+						isInside = true
+					}
+				})
+				if (isInside) break
+			}
 
-			path.forEach((item: any) => {
-				const includes = Array.from(item.classList || []).includes(
-					"sort"
-				)
-				if (includes) {
-					isInside = true
-				}
-			})
 			if (!isInside) {
 				setIsOpen(false)
 			}
@@ -33,41 +43,42 @@ export const SelectDropdown: FC<propType> = ({ onChange }) => {
 		window.addEventListener("click", func)
 		return () => window.removeEventListener("click", func)
 	}, [])
+
 	return (
-		<div className={`sort ${style.sort} `}>
+		<div className={`${style.sort} `}>
 			<div
 				className={style["shown"]}
 				onClick={(e) => setIsOpen((prev) => !prev)}
 			>
-				{active.title}
+				{active.label}
 				<BsTriangleFill
 					className={`${style.trianlge} ${isOpen ? style.open : ""}`}
 				/>
 			</div>
 			<ul className={`${style.list} ${isOpen ? style.open : ""}`}>
-				{sortOptions.map((opt) => {
+				{options.map((opt) => {
 					return (
 						<div
 							key={opt.value}
 							className={`${style.option} + ${
-								active.title === opt.title ? style.active : ""
+								active.label === opt.label ? style.active : ""
 							}`}
 						>
 							<input
 								type="radio"
-								name="sort"
+								name={name}
 								value={opt.value}
-								id={`sort${opt.value}`}
+								id={`${name}${opt.value}`}
 								onChange={onChange}
 							/>
 							<label
-								htmlFor={`sort${opt.value}`}
+								htmlFor={`${name}${opt.value}`}
 								onClick={(e) => {
 									setIsOpen(false)
 									setActive(opt)
 								}}
 							>
-								{opt.title}
+								{opt.label}
 							</label>
 						</div>
 					)

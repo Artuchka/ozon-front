@@ -2,7 +2,7 @@
 	display: grid;
 	grid-template-areas:
 		"stats stats"
-		"filters sort"
+		"filters view-config"
 		"filters products"
 		"pagination pagination";
 	grid-template-columns: 200px auto;
@@ -18,8 +18,10 @@
 	.stats {
 		grid-area: stats;
 	}
-	.sort {
-		grid-area: sort;
+	.view-config {
+		grid-area: view-config;
+		display: flex;
+		flex-direction: row;
 	}
 	.pagination {
 		grid-area: pagination;
