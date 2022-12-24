@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { ozonAPI } from "../../../axios/customFetch"
 import { FilterType } from "../filter/filterSlice"
+import { RootState } from "../../store"
 
 export const createProduct = createAsyncThunk(
 	"product/create",
@@ -37,9 +38,11 @@ export const uploadImages = createAsyncThunk(
 
 export const getAllProducts = createAsyncThunk(
 	"product/getAllProducts",
-	async (params: FilterType, thunkAPI) => {
+	async (_, thunkAPI) => {
 		try {
-			const queryParams = createQueryParams(params)
+			const { filter } = thunkAPI.getState() as RootState
+
+			const queryParams = createQueryParams(filter)
 			console.log({ queryParams })
 
 			const { data } = await ozonAPI(`/products${queryParams}`)

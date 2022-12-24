@@ -1,17 +1,21 @@
-import React, { FC, useState } from "react"
+import React, { ChangeEventHandler, FC, useState } from "react"
 
 import styles from "./style.module.scss"
+import { useEffect } from "react"
+import { RangeType } from "../../../Filters"
 
 type proptype = {
 	title: string
 	name: string
 	min: number
 	max: number
+	onChange: Function
 }
 
 export const Range: FC<proptype> = ({
 	title = "range default",
 	name = "price",
+	onChange,
 	min = 30,
 	max = 100,
 }) => {
@@ -19,6 +23,19 @@ export const Range: FC<proptype> = ({
 	const [rightValue, setRightValue] = useState(max * 0.8)
 	const [leftValueInput, setLeftValueInput] = useState(min + max / 10)
 	const [rightValueInput, setRightValueInput] = useState(max * 0.8)
+
+	useEffect(() => {
+		onChange({
+			name: "maxPrice",
+			value: rightValue,
+		})
+	}, [rightValue])
+	useEffect(() => {
+		onChange({
+			name: "minPrice",
+			value: leftValue,
+		})
+	}, [leftValue])
 
 	const handleChangeRight = (e: any) => {
 		const right = Number(e.target.value)

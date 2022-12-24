@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 import styles from "./header.module.scss"
 import { AiOutlineSearch } from "react-icons/ai"
 import { BiFace, BiAddToQueue } from "react-icons/bi"
@@ -6,22 +6,41 @@ import { BsHandbag, BsBoxSeam } from "react-icons/bs"
 import { StatusLink } from "../../StatusLink"
 import { Logo } from "../../Logo"
 import { LoginModal } from "../../LoginModal"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { selectAuth } from "../../../store/features/auth/selectors"
+import { selectFilters } from "../../../store/features/filter/selector"
+import { AppDispatch } from "../../../store/store"
+import { updateFilters } from "../../../store/features/filter/filterSlice"
 
 export const Header = () => {
 	const [open, setOpen] = useState(false)
+	const dispatch = useDispatch<AppDispatch>()
 	const auth = useSelector(selectAuth)
 	const user = auth.role !== null
 	const { role } = auth
 
+	const { title } = useSelector(selectFilters)
+
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target
+		dispatch(updateFilters({ name, value }))
+	}
+
 	return (
 		<header className={styles.header}>
 			<Logo className={styles.logo} />
-			<div className={styles.searchBar}>
-				<input type="text" placeholder="Искать на Ozon" />
-				<AiOutlineSearch />
-			</div>
+			<form>
+				<div className={styles.searchBar}>
+					<input
+						type="text"
+						placeholder="Искать на Ozon"
+						value={title}
+						name="title"
+						onChange={handleChange}
+					/>
+					<AiOutlineSearch />
+				</div>
+			</form>
 			<nav>
 				{user ? (
 					<StatusLink
