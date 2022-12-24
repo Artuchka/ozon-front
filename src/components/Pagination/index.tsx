@@ -11,7 +11,7 @@ export const Pagination = () => {
 	const { pagesFound } = details
 
 	const handleChange = (e: MouseEvent<HTMLButtonElement>) => {
-		const { value } = e.target
+		const { value } = e.target as HTMLInputElement
 		dispatch(updateFilters({ name: "page", value }))
 	}
 
