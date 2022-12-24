@@ -15,6 +15,8 @@ export interface FilterType {
 const initialState = {
 	sort: "-averageRating",
 	minAverageRating: 5,
+	minPrice: 0,
+	maxPrice: 1000,
 } as FilterType
 
 type PayloadUpdateType = {

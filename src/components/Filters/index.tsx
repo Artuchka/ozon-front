@@ -20,9 +20,13 @@ export type RangeType = { name: string; value: number }
 export const Filters = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const filter = useSelector(selectFilters)
-	const { minAverageRating } = filter
+	const {
+		minAverageRating,
+		minPrice: minPriceSelected,
+		maxPrice: maxPriceSelected,
+	} = filter
 	const { details } = useSelector(selectProducts)
-	const { minPrice, maxPrice } = details
+	const { minPrice: minPriceExisting, maxPrice: maxPriceExisting } = details
 	useEffect(() => {
 		dispatch(getAllProducts())
 	}, [filter])
@@ -59,8 +63,10 @@ export const Filters = () => {
 			<Range
 				name="price"
 				title="Цена"
-				min={minPrice}
-				max={maxPrice}
+				min={minPriceExisting}
+				max={maxPriceExisting}
+				selectedFrom={minPriceSelected || 0}
+				selectedTo={maxPriceSelected || 100}
 				onChange={handleRangeChange}
 			/>
 		</form>

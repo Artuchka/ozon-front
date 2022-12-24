@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react"
+import React, { ChangeEvent, useCallback, useState } from "react"
 import styles from "./header.module.scss"
 import { AiOutlineSearch } from "react-icons/ai"
 import { BiFace, BiAddToQueue } from "react-icons/bi"
@@ -11,30 +11,50 @@ import { selectAuth } from "../../../store/features/auth/selectors"
 import { selectFilters } from "../../../store/features/filter/selector"
 import { AppDispatch } from "../../../store/store"
 import { updateFilters } from "../../../store/features/filter/filterSlice"
+import debounce from "lodash.debounce"
+import { useLocation, useNavigate } from "react-router-dom"
 
 export const Header = () => {
 	const [open, setOpen] = useState(false)
+	const [search, setSearch] = useState("")
 	const dispatch = useDispatch<AppDispatch>()
 	const auth = useSelector(selectAuth)
 	const user = auth.role !== null
 	const { role } = auth
 
+	const navigate = useNavigate()
+	const { pathname } = useLocation()
 	const { title } = useSelector(selectFilters)
 
+	const debouncedChange = useCallback(
+		debounce((obj) => {
+			dispatch(updateFilters(obj))
+		}, 1000),
+		[]
+	)
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault()
 		const { name, value } = e.target
-		dispatch(updateFilters({ name, value }))
+		setSearch((prev) => value)
+		debouncedChange({ name, value })
+	}
+
+	const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		if (pathname == "/products") return
+
+		navigate("/products")
 	}
 
 	return (
 		<header className={styles.header}>
 			<Logo className={styles.logo} />
-			<form>
+			<form onSubmit={handleSubmit}>
 				<div className={styles.searchBar}>
 					<input
 						type="text"
 						placeholder="Искать на Ozon"
-						value={title}
+						value={search}
 						name="title"
 						onChange={handleChange}
 					/>
