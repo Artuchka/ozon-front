@@ -10,25 +10,24 @@ export type ProductItemType = {
 	price: number
 	averageRating: number
 	numOfReviews: number
-	id: string
-	image: string
+	_id: string
 }
 const serverURL = "http://localhost:3000"
 // crossorigin=anonymos should work for images
 
 export const ProductItem: FC<ProductItemType> = (props) => {
-	const { images, price, id, averageRating, title, numOfReviews } = props
+	const { images, price, _id, averageRating, title, numOfReviews } = props
 	console.log(images)
 
 	const image = images[0] === "" ? defaultImage : serverURL + images[0]
 	return (
 		<div className={`${style.product}`}>
-			<Link to={`/products/${id}`} className={style.image}>
+			<Link to={`/products/${_id}`} className={style.image}>
 				<img src={image} alt="product image" />
 			</Link>
 			<div className={style.price}>{price} ₽</div>
 
-			<Link to={`/products/${id}`} className={style.name}>
+			<Link to={`/products/${_id}`} className={style.name}>
 				<div>{title}</div>
 			</Link>
 			<div className={style.rating}>

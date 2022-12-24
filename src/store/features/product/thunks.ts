@@ -38,9 +38,7 @@ export const getAllProducts = createAsyncThunk(
 	"product/getAllProducts",
 	async (_, thunkAPI) => {
 		try {
-			const { data } = await ozonAPI(
-				"/products?numericFilters=price>100,price < 200"
-			)
+			const { data } = await ozonAPI("/products")
 			return data
 		} catch (error: any) {
 			console.log("error caight = ", error)

@@ -6,6 +6,7 @@ import {
 	uploadImages,
 } from "./thunks"
 import { toast } from "react-toastify"
+import { ProductItemType } from "../../../components/ProductItem"
 
 const product = {
 	description: "",
@@ -15,7 +16,16 @@ const product = {
 export type ListItemProductType = typeof product
 
 const initialState = {
-	products: [],
+	products: [
+		{
+			images: [],
+			title: "",
+			price: 0,
+			averageRating: 0,
+			numOfReviews: 0,
+			_id: "",
+		},
+	],
 	isLoading: true,
 	singleProduct: {
 		isLoading: true,

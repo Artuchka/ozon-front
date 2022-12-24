@@ -24,7 +24,7 @@ export const ProductsGrid: FC = () => {
 	return (
 		<div className={`${style["products-grid"]}`}>
 			{products.map((item) => {
-				return <ProductItem key={item.id} {...item} />
+				return <ProductItem key={item._id} {...item} />
 			})}
 		</div>
 	)
