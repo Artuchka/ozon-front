@@ -19,6 +19,7 @@ import { ozonAPI } from "../axios/customFetch"
 import { ReviewModal } from "../components/ReviewModal"
 import { setOpenReviewModal } from "../store/features/review/reviewSlice"
 import { AiFillStar, AiOutlineHeart } from "react-icons/ai"
+import { BsStarHalf } from "react-icons/bs"
 import { getIntlDate } from "../utils/intl"
 
 export const SingleProduct = () => {
@@ -64,6 +65,7 @@ export const SingleProduct = () => {
 	const handleBuy = async () => {
 		const formData = new FormData(orderConfigRef.current)
 	}
+	console.log("cool here")
 
 	return (
 		<div className="single-product-page">
@@ -73,10 +75,14 @@ export const SingleProduct = () => {
 				<div className="substats">
 					<div className="reviews">
 						<div className="stars">
-							{Array.from(Array(averageRating)).map((item) => {
-								console.log(item)
-								return <AiFillStar />
-							})}
+							{Array.from(Array(Math.floor(averageRating))).map(
+								(_, ind) => {
+									return <AiFillStar key={ind} />
+								}
+							)}
+							{averageRating !== Math.floor(averageRating) && (
+								<BsStarHalf />
+							)}
 						</div>
 						<a href="#reviews" className="numOfReviews">
 							{numOfReviews} отзывов
@@ -118,6 +124,11 @@ export const SingleProduct = () => {
 						Перейти к характеристикам
 					</a>
 				</div>
+			</div>
+
+			<div className="description">
+				<h3>Описание</h3>
+				<div className="text">{description}</div>
 			</div>
 
 			<div className="specs-full-wrapper" id="specs-full-wrapper">

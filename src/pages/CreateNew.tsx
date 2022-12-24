@@ -64,6 +64,23 @@ export const CreateNew = () => {
 	const handleRemoveSpec = (id: string) => {
 		setSpecs((prev) => prev.filter((spec) => spec.id !== id))
 	}
+	const handleChangeSpec = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+		const { value } = e.target
+		const { name } = e.target.dataset
+		if (!name) return
+		console.log({ name, value })
+
+		setSpecs((prev) => {
+			const newSpecs = prev.map((spec) => {
+				if (spec.id === id) {
+					return { ...spec, [name]: value }
+				}
+				return spec
+			})
+			return newSpecs
+		})
+		console.log(specs)
+	}
 
 	return (
 		<div className="create-new">
@@ -95,27 +112,34 @@ export const CreateNew = () => {
 				/>
 				<div className="specs">
 					{specs.map(({ title, value, link, id }, index) => {
+						// specs.filter((s) => s.id === id)[0].title
 						return (
 							<div className="spec" key={id} id={id}>
 								<input
 									type="text"
-									defaultValue={title}
 									className="input input--rounded "
 									placeholder="Введите название"
 									required
+									value={title}
+									data-name="title"
+									onChange={(e) => handleChangeSpec(e, id)}
 								/>
 								<input
 									type="text"
-									defaultValue={value}
 									className="input input--rounded "
 									placeholder="Введите значение"
 									required
+									value={value}
+									data-name="value"
+									onChange={(e) => handleChangeSpec(e, id)}
 								/>
 								<input
 									type="text"
-									defaultValue={link}
 									className="input input--rounded input--not-required"
 									placeholder="Введите ссылку"
+									value={link}
+									data-name="link"
+									onChange={(e) => handleChangeSpec(e, id)}
 								/>
 								<div
 									className="close"
