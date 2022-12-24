@@ -4,9 +4,10 @@ import { SelectRadio } from "../pageBlocks/inputs/SelectRadio"
 import style from "./style.module.scss"
 import { toast } from "react-toastify"
 import equal from "fast-deep-equal"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { updateDataType, updateUser } from "../../store/features/auth/thunks"
 import { AppDispatch } from "../../store/store"
+import { selectAuth } from "../../store/features/auth/selectors"
 
 export type typeVariants = "names" | "birthday" | "email" | "phone" | "gender"
 
@@ -27,6 +28,7 @@ export const UpdateModal: FC<proptype> = ({
 }) => {
 	const [answer, setAnswer] = useState<updateDataType>(defaultAnswer)
 	const dispatch = useDispatch<AppDispatch>()
+	const { gender } = useSelector(selectAuth)
 	let body = (
 		<>
 			<h1>update</h1>
@@ -88,6 +90,8 @@ export const UpdateModal: FC<proptype> = ({
 				name="gender"
 				items={genderOptions}
 				className={style.GenderChange}
+				selected={gender || "male"}
+				onChange={() => {}}
 			/>
 		)
 	}
