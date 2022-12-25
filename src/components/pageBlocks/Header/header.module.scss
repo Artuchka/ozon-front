@@ -6,7 +6,7 @@
 	flex-direction: column;
 	margin-bottom: 1rem;
 
-	@media (min-width: 600px) {
+	@media (min-width: 800px) {
 		gap: 2rem;
 		flex-direction: row;
 		.logo {
@@ -30,9 +30,10 @@
 	width: 200px;
 	object-fit: contain;
 }
-
-.searchBar {
+.searchBarWrapper {
 	flex-grow: 1;
+}
+.searchBar {
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -41,8 +42,10 @@
 
 	background-color: var(--primary-color);
 	input {
+		width: 100%;
 		flex-grow: 0;
-		max-width: 150px;
+		min-width: 100px;
+		max-width: 250px;
 		border-radius: 0.3rem;
 		border: none;
 		outline: none;

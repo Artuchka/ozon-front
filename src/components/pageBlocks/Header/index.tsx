@@ -50,7 +50,7 @@ export const Header = () => {
 	return (
 		<header className={styles.header}>
 			<Logo className={styles.logo} />
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit} className={styles.searchBarWrapper}>
 				<div className={styles.searchBar}>
 					<input
 						type="text"
@@ -88,25 +88,28 @@ export const Header = () => {
 					/>
 				)}
 				{!!user && (
-					<StatusLink
-						icon={<AiFillHeart />}
-						link="/bookmarks"
-						title="Избранное"
-						color="var(--heart-color)"
-					/>
+					<>
+						<StatusLink
+							icon={<AiFillHeart />}
+							link="/bookmarks"
+							title="Избранное"
+							color="var(--heart-color)"
+						/>
+
+						<StatusLink
+							data={3}
+							icon={<BsHandbag />}
+							link="/cart"
+							title="Корзина"
+						/>
+						<StatusLink
+							data={0}
+							icon={<BsBoxSeam />}
+							link="/orders"
+							title="Заказы"
+						/>
+					</>
 				)}
-				<StatusLink
-					data={3}
-					icon={<BsHandbag />}
-					link="/cart"
-					title="Корзина"
-				/>
-				<StatusLink
-					data={0}
-					icon={<BsBoxSeam />}
-					link="/orders"
-					title="Заказы"
-				/>
 			</nav>
 			<LoginModal open={open} setOpen={setOpen} />
 		</header>

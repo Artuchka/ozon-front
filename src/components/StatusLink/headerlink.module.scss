@@ -29,7 +29,11 @@
 }
 
 .icon {
+	// font-size: clamp(20px, 3vw, 30px);
 	font-size: clamp(20px, 3rem, 30px);
+	@media (min-width: 600px) {
+		font-size: clamp(15px, 1rem + 2vw, 30px);
+	}
 }
 
 .title {
