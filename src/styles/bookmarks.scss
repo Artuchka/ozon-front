@@ -1,0 +1,16 @@
+.bookmarks-page {
+	.bookmars {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		grid-auto-rows: minmax(250px, 1fr);
+		column-gap: 0.5rem;
+		row-gap: 2rem;
+
+		@media (min-width: 600px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media (min-width: 900px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+}

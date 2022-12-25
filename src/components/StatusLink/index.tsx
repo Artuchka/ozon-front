@@ -6,6 +6,7 @@ type PropType = {
 	title?: String | Number
 	icon: any
 	link?: To
+	color?: string
 	onClick?: MouseEventHandler
 }
 
@@ -14,6 +15,7 @@ export const StatusLink: FC<PropType> = ({
 	icon,
 	link,
 	title,
+	color,
 	onClick = () => {},
 }) => {
 	const body = (
@@ -27,7 +29,14 @@ export const StatusLink: FC<PropType> = ({
 						: data.toString()}
 				</div>
 			)}
-			<div className={style.icon}>{icon}</div>
+			<div
+				className={style.icon}
+				style={{
+					color: color ? color : "",
+				}}
+			>
+				{icon}
+			</div>
 			<div className={style.title}>{title?.toString()}</div>
 		</div>
 	)

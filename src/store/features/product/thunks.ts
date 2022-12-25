@@ -97,5 +97,7 @@ const createQueryParams = (params: FilterType) => {
 	if (numericFilters !== "&numericFilters=") {
 		query += numericFilters
 	}
+
+	query = query.replace("?&", "?")
 	return query
 }

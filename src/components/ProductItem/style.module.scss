@@ -51,5 +51,13 @@
 			stroke: var(--heart-color);
 			scale: 1.6;
 		}
+
+		&.bookmarked {
+			fill: var(--heart-color);
+			stroke: var(--heart-color);
+			&:hover {
+				scale: 1.2;
+			}
+		}
 	}
 }

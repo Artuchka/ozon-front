@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectAuth } from "./store/features/auth/selectors"
 import { ProtectedRoute } from "./pages/ProtectedRoute"
 import { CreateNew } from "./pages/CreateNew"
+import { Bookmarks } from "./pages/Bookmarks"
 
 function App() {
 	const user = useSelector(selectAuth)
@@ -31,6 +32,15 @@ function App() {
 								roles={["vendor"]}
 								user={user}
 								outlet={<CreateNew />}
+							/>
+						}
+					/>
+					<Route
+						path="/bookmarks"
+						element={
+							<ProtectedRoute
+								user={user}
+								outlet={<Bookmarks />}
 							/>
 						}
 					/>

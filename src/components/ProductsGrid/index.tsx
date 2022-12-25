@@ -16,7 +16,7 @@ export const ProductsGrid: FC = () => {
 		return <Loading />
 	}
 
-	if (products.length === 0) {
+	if (!products || products.length === 0) {
 		return <h1>Не нашлось товаров =/ </h1>
 	}
 

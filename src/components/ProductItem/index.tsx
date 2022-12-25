@@ -5,8 +5,14 @@ import { Link } from "react-router-dom"
 import { AiOutlineStar } from "react-icons/ai"
 import { serverURL } from "../../axios/customFetch"
 import { AiFillHeart } from "react-icons/ai"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
+import {
+	addBookmark,
+	deleteBookmark,
+	getAllBookmarks,
+} from "../../store/features/bookmark/thunks"
+import { selectBookmarks } from "../../store/features/bookmark/selector"
 
 export type ProductItemType = {
 	images: string[]
@@ -20,18 +26,29 @@ export type ProductItemType = {
 // or just set up cors correctly u stupid bih
 
 export const ProductItem: FC<ProductItemType> = (props) => {
-	const { images, price, _id, averageRating, title, numOfReviews } = props
-
-	const image = images[0] === "" ? defaultImage : serverURL + images[0]
 	const dispatch = useDispatch<AppDispatch>()
+
+	const { images, price, _id, averageRating, title, numOfReviews } = props
+	const image = images[0] === "" ? defaultImage : serverURL + images[0]
+
+	const { bookmarks } = useSelector(selectBookmarks)
+	const isBookmarked = !!bookmarks.find((item) => item.product._id === _id)
+
 	const handleAddBookmark = () => {
-		// dispatch()
+		if (isBookmarked) {
+			dispatch(deleteBookmark(_id))
+		} else {
+			dispatch(addBookmark(_id))
+		}
+		dispatch(getAllBookmarks())
 	}
 	return (
 		<div className={`${style.product}`}>
 			<div className={style.image}>
 				<AiFillHeart
-					className={style.heart}
+					className={`${style.heart} ${
+						isBookmarked ? style.bookmarked : ""
+					}`}
 					onClick={handleAddBookmark}
 				/>
 				<Link to={`/products/${_id}`}>

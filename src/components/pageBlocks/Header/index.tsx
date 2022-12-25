@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useState } from "react"
 import styles from "./header.module.scss"
-import { AiOutlineSearch } from "react-icons/ai"
+import { AiOutlineSearch, AiFillHeart } from "react-icons/ai"
 import { BiFace, BiAddToQueue } from "react-icons/bi"
 import { BsHandbag, BsBoxSeam } from "react-icons/bs"
 import { StatusLink } from "../../StatusLink"
@@ -85,6 +85,14 @@ export const Header = () => {
 						icon={<BiAddToQueue />}
 						link="/create-new"
 						title="+Товар"
+					/>
+				)}
+				{!!user && (
+					<StatusLink
+						icon={<AiFillHeart />}
+						link="/bookmarks"
+						title="Избранное"
+						color="var(--heart-color)"
 					/>
 				)}
 				<StatusLink
