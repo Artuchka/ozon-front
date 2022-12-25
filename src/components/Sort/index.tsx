@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useState } from "react"
 import style from "./style.module.scss"
 import {
-	pageOptions,
+	limitOptions,
 	sortOptions,
 	updateFilters,
 } from "../../store/features/filter/filterSlice"
@@ -12,7 +12,7 @@ import { selectFilters } from "../../store/features/filter/selector"
 
 export const Sort: FC = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { limit } = useSelector(selectFilters)
+	const { limit, sort } = useSelector(selectFilters)
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		console.log("clicked")
@@ -29,12 +29,13 @@ export const Sort: FC = () => {
 				onChange={handleChange}
 				name="sort"
 				options={sortOptions}
+				value={sort || sortOptions[0].value}
 			/>
 			<SelectDropdown
 				onChange={handleChange}
 				name="limit"
-				options={pageOptions}
-				// value={limit}
+				options={limitOptions}
+				value={limit || "3"}
 			/>
 		</form>
 	)

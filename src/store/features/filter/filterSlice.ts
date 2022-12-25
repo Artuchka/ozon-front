@@ -12,13 +12,6 @@ export interface FilterType {
 	page?: number
 	sort?: string
 }
-const initialState = {
-	sort: "-averageRating",
-	minAverageRating: 5,
-	minPrice: 0,
-	maxPrice: 1000,
-} as FilterType
-
 type PayloadUpdateType = {
 	name: string //keyof FilterType
 	value: string | number | boolean
@@ -46,7 +39,7 @@ export const sortOptions = [
 	{ label: "Сначала дорогие", value: "-price" },
 ] as optionType[]
 
-export const pageOptions = [
+export const limitOptions = [
 	{ label: "По 1", value: "1" },
 	{ label: "По 2", value: "2" },
 	{ label: "По 3", value: "3" },
@@ -54,6 +47,14 @@ export const pageOptions = [
 	{ label: "По 5", value: "5" },
 	{ label: "По 6", value: "6" },
 ] as optionType[]
+
+const initialState = {
+	sort: sortOptions[0].value,
+	limit: limitOptions[2].value,
+	minAverageRating: 5,
+	minPrice: 0,
+	maxPrice: 1000,
+} as FilterType
 
 const filterSlice = createSlice({
 	name: "filter",

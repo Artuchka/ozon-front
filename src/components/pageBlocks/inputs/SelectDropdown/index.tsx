@@ -16,11 +16,18 @@ type propType = {
 	onChange: ChangeEventHandler<HTMLInputElement>
 	options: optionType[]
 	name: string
+	value: string | number
 }
 
-export const SelectDropdown: FC<propType> = ({ onChange, options, name }) => {
-	const [active, setActive] = useState(options[0])
+export const SelectDropdown: FC<propType> = ({
+	onChange,
+	options,
+	name,
+	value,
+}) => {
 	const [isOpen, setIsOpen] = useState(false)
+
+	const activeLabel = options.find((opt) => opt.value === value)?.label
 
 	useEffect(() => {
 		const func = (e: any) => {
@@ -50,7 +57,7 @@ export const SelectDropdown: FC<propType> = ({ onChange, options, name }) => {
 				className={style["shown"]}
 				onClick={(e) => setIsOpen((prev) => !prev)}
 			>
-				{active.label}
+				{activeLabel}
 				<BsTriangleFill
 					className={`${style.trianlge} ${isOpen ? style.open : ""}`}
 				/>
@@ -61,7 +68,7 @@ export const SelectDropdown: FC<propType> = ({ onChange, options, name }) => {
 						<div
 							key={opt.value}
 							className={`${style.option} + ${
-								active.label === opt.label ? style.active : ""
+								value === opt.value ? style.active : ""
 							}`}
 						>
 							<input
@@ -75,7 +82,7 @@ export const SelectDropdown: FC<propType> = ({ onChange, options, name }) => {
 								htmlFor={`${name}${opt.value}`}
 								onClick={(e) => {
 									setIsOpen(false)
-									setActive(opt)
+									// setActive(opt)
 								}}
 							>
 								{opt.label}
