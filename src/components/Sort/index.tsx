@@ -5,12 +5,14 @@ import {
 	sortOptions,
 	updateFilters,
 } from "../../store/features/filter/filterSlice"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { SelectDropdown } from "../pageBlocks/inputs/SelectDropdown"
+import { selectFilters } from "../../store/features/filter/selector"
 
 export const Sort: FC = () => {
 	const dispatch = useDispatch<AppDispatch>()
+	const { limit } = useSelector(selectFilters)
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		console.log("clicked")
@@ -32,6 +34,7 @@ export const Sort: FC = () => {
 				onChange={handleChange}
 				name="limit"
 				options={pageOptions}
+				// value={limit}
 			/>
 		</form>
 	)
