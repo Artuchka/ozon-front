@@ -6,7 +6,6 @@ import React, {
 	useRef,
 	useState,
 } from "react"
-import { v4 as uuidv4 } from "uuid"
 
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
@@ -14,28 +13,45 @@ import { createProduct, uploadImages } from "../store/features/product/thunks"
 import axios from "axios"
 import { ozonAPI } from "../axios/customFetch"
 import { selectProducts } from "../store/features/product/selectors"
-
-type SpecType = {
-	title: string
-	value: string
-	link: string
-	id: string
-}
+import {
+	PropertyInput,
+	SpecType,
+} from "../components/pageBlocks/inputs/PropertyInput"
+import { InputMultiple } from "../components/pageBlocks/inputs/InputMultiple"
+import { toast } from "react-toastify"
 
 export const CreateNew = () => {
 	const formRef = useRef<HTMLFormElement>(null)
 	const { creating } = useSelector(selectProducts)
+	const companyOptions = ["apple", "samsung", "google"]
+	const categoryOptions = ["еда", "техника", "развлечение"]
+	const tagOptions = ["tag1", "tag2", "tag3", "tag4"]
 	const { paths: filePaths } = creating
 	const dispatch = useDispatch<AppDispatch>()
 	const [specs, setSpecs] = useState<SpecType[]>([])
+	const [companies, setCompanies] = useState<string[]>([])
+	const [categories, setCategories] = useState<string[]>([])
+	const [tags, setTags] = useState<string[]>([])
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		if (
+			companies.length === 0 ||
+			categories.length === 0 ||
+			specs.length === 0 ||
+			tags.length === 0
+		) {
+			toast.error("Please fill companies, categories, specs, tags")
+			return
+		}
 		let formData = new FormData(formRef.current || undefined)
 		for (let i = 0; i < filePaths.length; i++) {
 			formData.append("images", filePaths[i])
 		}
 		formData.set("specs", JSON.stringify(specs))
+		formData.set("companies", JSON.stringify(companies))
+		formData.set("categories", JSON.stringify(categories))
+		formData.set("tags", JSON.stringify(tags))
 		dispatch(createProduct(formData))
 	}
 
@@ -47,39 +63,6 @@ export const CreateNew = () => {
 			formData.append("images", files[i])
 		}
 		dispatch(uploadImages(formData))
-	}
-
-	const handleAddSpec = () => {
-		setSpecs((prev) => [
-			...prev,
-			{
-				value: "значение",
-				title: "название",
-				link: "/ссылка",
-				id: uuidv4(),
-			},
-		])
-	}
-
-	const handleRemoveSpec = (id: string) => {
-		setSpecs((prev) => prev.filter((spec) => spec.id !== id))
-	}
-	const handleChangeSpec = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-		const { value } = e.target
-		const { name } = e.target.dataset
-		if (!name) return
-		console.log({ name, value })
-
-		setSpecs((prev) => {
-			const newSpecs = prev.map((spec) => {
-				if (spec.id === id) {
-					return { ...spec, [name]: value }
-				}
-				return spec
-			})
-			return newSpecs
-		})
-		console.log(specs)
 	}
 
 	return (
@@ -110,54 +93,25 @@ export const CreateNew = () => {
 					name="price"
 					required
 				/>
-				<div className="specs">
-					{specs.map(({ title, value, link, id }, index) => {
-						// specs.filter((s) => s.id === id)[0].title
-						return (
-							<div className="spec" key={id} id={id}>
-								<input
-									type="text"
-									className="input input--rounded "
-									placeholder="Введите название"
-									required
-									value={title}
-									data-name="title"
-									onChange={(e) => handleChangeSpec(e, id)}
-								/>
-								<input
-									type="text"
-									className="input input--rounded "
-									placeholder="Введите значение"
-									required
-									value={value}
-									data-name="value"
-									onChange={(e) => handleChangeSpec(e, id)}
-								/>
-								<input
-									type="text"
-									className="input input--rounded input--not-required"
-									placeholder="Введите ссылку"
-									value={link}
-									data-name="link"
-									onChange={(e) => handleChangeSpec(e, id)}
-								/>
-								<div
-									className="close"
-									onClick={() => handleRemoveSpec(id)}
-								>
-									&times;
-								</div>
-							</div>
-						)
-					})}
-				</div>
-				<button
-					className="btn btn--contained btn--rounded btn--content"
-					onClick={handleAddSpec}
-					type="button"
-				>
-					Добавить характеристику
-				</button>
+				<PropertyInput props={specs} setProps={setSpecs} />
+				<InputMultiple
+					selected={companies}
+					setSelected={setCompanies}
+					options={companyOptions}
+					placeholder={"Введите компании изготовители"}
+				/>
+				<InputMultiple
+					selected={categories}
+					setSelected={setCategories}
+					options={categoryOptions}
+					placeholder={"Введите категории"}
+				/>
+				<InputMultiple
+					selected={tags}
+					setSelected={setTags}
+					options={tagOptions}
+					placeholder={"Введите теги"}
+				/>
 				<input
 					type="file"
 					className="input input--rounded"

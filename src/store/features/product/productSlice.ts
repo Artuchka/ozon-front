@@ -31,6 +31,9 @@ const initialState = {
 		minPrice: 0,
 		pagesFound: 0,
 		productsFound: 0,
+		companies: [],
+		categories: [],
+		tags: [],
 	},
 	isLoading: true,
 	singleProduct: {

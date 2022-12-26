@@ -1,29 +1,30 @@
 import React, { ChangeEvent, FormEvent, FormEventHandler } from "react"
-import { SelectList } from "../pageBlocks/inputs/SelectList"
-import { Switch } from "../pageBlocks/inputs/Switch"
 import { Range } from "../pageBlocks/inputs/Range"
-import { SelectCheckbox } from "../pageBlocks/inputs/SelectCheckbox"
 import { SelectRadio } from "../pageBlocks/inputs/SelectRadio"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { getAllProducts } from "../../store/features/product/thunks"
 import {
-	FilterType,
 	ratingOptions,
 	updateFilters,
 } from "../../store/features/filter/filterSlice"
 import { selectFilters } from "../../store/features/filter/selector"
 import { useEffect } from "react"
 import { selectProducts } from "../../store/features/product/selectors"
+import { SelectCheckbox } from "../pageBlocks/inputs/SelectCheckbox"
 
 export type RangeType = { name: string; value: number }
 export const Filters = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const filter = useSelector(selectFilters)
+
 	const {
 		minAverageRating,
 		minPrice: minPriceSelected,
 		maxPrice: maxPriceSelected,
+		companies,
+		categories,
+		tags,
 	} = filter
 	const { details } = useSelector(selectProducts)
 	const { minPrice: minPriceExisting, maxPrice: maxPriceExisting } = details
@@ -33,16 +34,22 @@ export const Filters = () => {
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		let { name } = e.target
-		let value
+		let value = ""
+		let checked = null
 
 		if (e.target.matches('input[type="checkbox"]')) {
-			value = e.target.checked
+			value = e.target.value
+			checked = e.target.checked
 		} else {
 			value = e.target.value
 		}
-		console.log({ name, value })
-
-		dispatch(updateFilters({ name, value }))
+		if (checked) {
+			console.log({ name, value, checked })
+			dispatch(updateFilters({ name, value, checked }))
+		} else {
+			console.log({ name, value })
+			dispatch(updateFilters({ name, value }))
+		}
 	}
 	const handleRangeChange = (e: RangeType) => {
 		const { name, value } = e
@@ -68,6 +75,28 @@ export const Filters = () => {
 				selectedFrom={minPriceSelected || 0}
 				selectedTo={maxPriceSelected || 100}
 				onChange={handleRangeChange}
+			/>
+
+			<SelectCheckbox
+				title="Компания"
+				items={[...details.companies]}
+				selected={companies}
+				name="companies"
+				onChange={handleChange}
+			/>
+			<SelectCheckbox
+				title="Категория"
+				items={[...details.categories]}
+				selected={categories}
+				name="categories"
+				onChange={handleChange}
+			/>
+			<SelectCheckbox
+				title="Теги"
+				items={[...details.tags]}
+				selected={tags}
+				name="tags"
+				onChange={handleChange}
 			/>
 		</form>
 	)

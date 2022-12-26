@@ -11,10 +11,14 @@ export interface FilterType {
 	limit?: number
 	page?: number
 	sort?: string
+	companies: string[]
+	tags: string[]
+	categories: string[]
 }
 type PayloadUpdateType = {
 	name: string //keyof FilterType
 	value: string | number | boolean
+	checked?: boolean
 }
 
 export type optionType = {
@@ -54,6 +58,9 @@ const initialState = {
 	minAverageRating: 5,
 	minPrice: 0,
 	maxPrice: 1000,
+	companies: [],
+	categories: [],
+	tags: [],
 } as FilterType
 
 const filterSlice = createSlice({
@@ -64,9 +71,23 @@ const filterSlice = createSlice({
 			state: FilterType,
 			{ payload }: { payload: PayloadUpdateType }
 		): FilterType | void => {
-			const { name, value } = payload
+			const { name, value, checked } = payload
 			if (name === "page") {
 				return { ...state, [`${name}`]: value }
+			}
+			if (
+				name === "companies" ||
+				name === "categories" ||
+				name === "tags"
+			) {
+				if (checked) {
+					return {
+						...state,
+						[name]: [...state[name], value.toString()],
+					}
+				}
+				state[name] = state[name].filter((v) => v !== value.toString())
+				return
 			}
 			return { ...state, [name]: value, page: 1 }
 		},

@@ -78,6 +78,9 @@ const createQueryParams = (params: FilterType) => {
 		page,
 		sort,
 		numOfReviews,
+		companies,
+		categories,
+		tags,
 	} = params
 	let query = "?"
 
@@ -96,6 +99,15 @@ const createQueryParams = (params: FilterType) => {
 	if (numOfReviews) numericFilters += `numOfReviews<=${numOfReviews},`
 	if (numericFilters !== "&numericFilters=") {
 		query += numericFilters
+	}
+	if (companies.length > 0) {
+		query += `&companies=${companies.join(",")}`
+	}
+	if (tags.length > 0) {
+		query += `&tags=${tags.join(",")}`
+	}
+	if (categories.length > 0) {
+		query += `&categories=${categories.join(",")}`
 	}
 
 	query = query.replace("?&", "?")

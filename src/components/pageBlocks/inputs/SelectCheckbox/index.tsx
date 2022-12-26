@@ -8,6 +8,7 @@ type PropTypes = {
 	onChange: ChangeEventHandler<HTMLInputElement>
 	name: string
 	items: string[]
+	selected: string[]
 }
 
 export const SelectCheckbox: FC<PropTypes> = ({
@@ -16,6 +17,7 @@ export const SelectCheckbox: FC<PropTypes> = ({
 	items = ["first", "second"],
 	onChange,
 	className,
+	selected,
 }) => {
 	return (
 		<div className={`${className} ${styles.selectList}`}>
@@ -30,6 +32,7 @@ export const SelectCheckbox: FC<PropTypes> = ({
 								value={value}
 								name={name}
 								onChange={onChange}
+								checked={selected.includes(value)}
 							/>
 							<label htmlFor={`${name}${value}`}>{value}</label>
 						</div>
