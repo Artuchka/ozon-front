@@ -1,17 +1,11 @@
 import React from "react"
-import { useSelector } from "react-redux"
 import { Link, Outlet } from "react-router-dom"
-import { selectAuth } from "../store/features/auth/selectors"
 
 export const My = () => {
 	const links = [
 		{ path: "/my/main", name: "Учетная запись" },
 		{ path: "/my/reviews", name: "Мои отзывы" },
 	]
-	const { role } = useSelector(selectAuth)
-	if (role === "vendor") {
-		links.push({ path: "/my/products", name: "Мои товары" })
-	}
 	return (
 		<div className="my-layout">
 			<div className="sidebar">
