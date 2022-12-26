@@ -15,3 +15,16 @@ export const createReview = createAsyncThunk(
 		}
 	}
 )
+
+export const getMyReviews = createAsyncThunk(
+	"review/getMyReviews",
+	async (_, thunkAPI) => {
+		try {
+			const resp = await ozonAPI.get("/reviews/my")
+			console.log(resp)
+			return resp.data
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)

@@ -169,7 +169,11 @@ export const SingleProduct = () => {
 							_id,
 						}) => {
 							return (
-								<article className="review-item" key={_id}>
+								<article
+									className="review-item"
+									id={`review-${_id}`}
+									key={_id}
+								>
 									<div className="title">
 										{title}{" "}
 										<span className="username">

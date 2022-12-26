@@ -8,7 +8,7 @@ import { logout } from "../store/features/auth/thunks"
 import { UpdateModal, typeVariants } from "../components/UpdateModal"
 
 export const Personal = () => {
-	const avatar = "/"
+	// const avatar = "/"
 	const dispatch = useDispatch<AppDispatch>()
 	const [open, setOpen] = useState(false)
 	const [type, setType] = useState<typeVariants>("phone")
@@ -20,8 +20,19 @@ export const Personal = () => {
 		setOpen(true)
 	}
 
-	const { lastName, firstName, email, birthday, phone, location, gender } =
-		useSelector(selectAuth)
+	const {
+		lastName,
+		firstName,
+		email,
+		birthday,
+		phone,
+		location,
+		gender,
+		avatar,
+	} = useSelector(selectAuth)
+
+	console.log(avatar)
+
 	return (
 		<div className="personal-page">
 			<UpdateModal
@@ -33,10 +44,10 @@ export const Personal = () => {
 			/>
 			<div className="main-info">
 				<div className="avatar">
-					{avatar == "/" ? (
+					{!avatar || avatar == "/" ? (
 						<BiFace className="placeholder" />
 					) : (
-						<img src="/" alt="avatar" />
+						<img src={avatar || "/"} alt="avatar" />
 					)}
 				</div>
 				<div className="desc">

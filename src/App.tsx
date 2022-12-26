@@ -11,6 +11,8 @@ import { selectAuth } from "./store/features/auth/selectors"
 import { ProtectedRoute } from "./pages/ProtectedRoute"
 import { CreateNew } from "./pages/CreateNew"
 import { Bookmarks } from "./pages/Bookmarks"
+import { My } from "./layouts/My"
+import { Reviews } from "./pages/Reviews"
 
 function App() {
 	const user = useSelector(selectAuth)
@@ -20,11 +22,12 @@ function App() {
 				<Route path="/" element={<Default />}>
 					<Route index element={<Landing />} />
 					<Route
-						path="/my/main"
-						element={
-							<ProtectedRoute user={user} outlet={<Personal />} />
-						}
-					/>
+						path="/my"
+						element={<ProtectedRoute user={user} outlet={<My />} />}
+					>
+						<Route path="main" element={<Personal />} />
+						<Route path="reviews" element={<Reviews />} />
+					</Route>
 					<Route
 						path="/create-new"
 						element={
