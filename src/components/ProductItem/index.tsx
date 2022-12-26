@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import style from "./style.module.scss"
 import defaultImage from "./../../assets/images/ozon-logo.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AiOutlineStar } from "react-icons/ai"
 import { serverURL } from "../../axios/customFetch"
 import { AiFillHeart } from "react-icons/ai"
@@ -13,6 +13,7 @@ import {
 	getAllBookmarks,
 } from "../../store/features/bookmark/thunks"
 import { selectBookmarks } from "../../store/features/bookmark/selector"
+import { setEdit } from "../../store/features/product/productSlice"
 
 export type ProductItemType = {
 	images: string[]
@@ -20,6 +21,7 @@ export type ProductItemType = {
 	price: number
 	averageRating: number
 	numOfReviews: number
+	editable?: boolean
 	_id: string
 }
 // crossorigin=anonymos should work for images
@@ -27,8 +29,16 @@ export type ProductItemType = {
 
 export const ProductItem: FC<ProductItemType> = (props) => {
 	const dispatch = useDispatch<AppDispatch>()
-
-	const { images, price, _id, averageRating, title, numOfReviews } = props
+	const navigate = useNavigate()
+	const {
+		images,
+		price,
+		_id,
+		averageRating,
+		title,
+		numOfReviews,
+		editable = null,
+	} = props
 	const image = images[0] === "" ? defaultImage : serverURL + images[0]
 
 	const { bookmarks } = useSelector(selectBookmarks)
@@ -42,8 +52,20 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 		}
 		dispatch(getAllBookmarks())
 	}
+
+	const handleEdit = () => {
+		navigate(`/create-new?editingId=${_id}`)
+	}
 	return (
 		<div className={`${style.product}`}>
+			{editable && (
+				<div
+					className={`${style.edit} btn btn--light btn--transparent`}
+					onClick={handleEdit}
+				>
+					Edit
+				</div>
+			)}
 			<div className={style.image}>
 				<AiFillHeart
 					className={`${style.heart} ${

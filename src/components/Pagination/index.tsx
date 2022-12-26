@@ -7,7 +7,11 @@ import { updateFilters } from "../../store/features/filter/filterSlice"
 
 export const Pagination = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { details } = useSelector(selectProducts)
+	const { details, isLoading } = useSelector(selectProducts)
+
+	if (isLoading) {
+		return <div>Loading...</div>
+	}
 	const { pagesFound } = details
 
 	const handleChange = (e: MouseEvent<HTMLButtonElement>) => {

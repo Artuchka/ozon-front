@@ -9,17 +9,25 @@ import { selectProducts } from "../store/features/product/selectors"
 import { selectFilters } from "../store/features/filter/selector"
 import { Pagination } from "../components/Pagination"
 import { getAllBookmarks } from "../store/features/bookmark/thunks"
+import { Loading } from "../components/Loading"
+import { selectAuth } from "../store/features/auth/selectors"
 
 export const Products = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { details } = useSelector(selectProducts)
+	const { details, isLoading } = useSelector(selectProducts)
 	const { title } = useSelector(selectFilters)
-	const amount = details.productsFound
+	const { loading: gettingUser } = useSelector(selectAuth)
 
 	useEffect(() => {
+		if (gettingUser) return
 		dispatch(getAllProducts())
 		dispatch(getAllBookmarks())
 	}, [])
+
+	// if (isLoading) {
+	// 	return <Loading />
+	// }
+	const amount = details.productsFound
 	return (
 		<div className="products-page">
 			<div className="stats">
@@ -28,9 +36,9 @@ export const Products = () => {
 					: `По запросу \`${title}\` найдено ${amount} товаров`}
 			</div>
 			<Filters />
-			<Sort />
-			<ProductsGrid />
-			<Pagination />
+			{/* <Sort /> */}
+			{/* <ProductsGrid /> */}
+			{/* <Pagination /> */}
 		</div>
 	)
 }

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, FormEventHandler } from "react"
+import React, { ChangeEvent, FormEvent, FormEventHandler, useMemo } from "react"
 import { Range } from "../pageBlocks/inputs/Range"
 import { SelectRadio } from "../pageBlocks/inputs/SelectRadio"
 import { useDispatch, useSelector } from "react-redux"
@@ -17,7 +17,16 @@ export type RangeType = { name: string; value: number }
 export const Filters = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const filter = useSelector(selectFilters)
+	const { details, isLoading } = useSelector(selectProducts)
+	console.log(filter)
 
+	useEffect(() => {
+		dispatch(getAllProducts())
+	}, [filter])
+
+	if (isLoading) {
+		return <h1>loading</h1>
+	}
 	const {
 		minAverageRating,
 		minPrice: minPriceSelected,
@@ -26,11 +35,7 @@ export const Filters = () => {
 		categories,
 		tags,
 	} = filter
-	const { details } = useSelector(selectProducts)
 	const { minPrice: minPriceExisting, maxPrice: maxPriceExisting } = details
-	useEffect(() => {
-		dispatch(getAllProducts())
-	}, [filter])
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		let { name } = e.target
@@ -53,7 +58,23 @@ export const Filters = () => {
 	}
 	const handleRangeChange = (e: RangeType) => {
 		const { name, value } = e
+
+		console.log("---------")
+
+		console.log("trying to update from")
+		console.log({ minPriceSelected, maxPriceSelected })
+
+		console.log("to")
 		console.log({ name, value })
+
+		console.log("---------")
+
+		if (
+			(name === "minPrice" && value === minPriceSelected) ||
+			(name === "maxPrice" && value === maxPriceSelected)
+		) {
+			return
+		}
 
 		dispatch(updateFilters({ name, value }))
 	}
@@ -72,8 +93,8 @@ export const Filters = () => {
 				title="Цена"
 				min={minPriceExisting}
 				max={maxPriceExisting}
-				selectedFrom={minPriceSelected || 0}
-				selectedTo={maxPriceSelected || 100}
+				selectedFrom={minPriceSelected || minPriceExisting}
+				selectedTo={maxPriceSelected || maxPriceExisting}
 				onChange={handleRangeChange}
 			/>
 

@@ -43,7 +43,7 @@ export const getAllProducts = createAsyncThunk(
 			const { filter } = thunkAPI.getState() as RootState
 
 			const queryParams = createQueryParams(filter)
-			console.log({ queryParams })
+			// console.log({ queryParams })
 
 			const { data } = await ozonAPI(`/products${queryParams}`)
 			return data

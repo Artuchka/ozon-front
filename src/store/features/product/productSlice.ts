@@ -16,73 +16,93 @@ const product = {
 }
 export type ListItemProductType = typeof product
 
-const initialState = {
-	products: [
+type SingleProductType = {
+	isLoading: boolean
+	activeImage: string
+	averageRating: 5
+	createdAt: string
+	description: string
+	id: string
+	images: string[]
+	numOfReviews: string
+	price: string
+	reviews: [
 		{
-			images: [],
-			title: "",
-			price: 0,
-			averageRating: 0,
-			numOfReviews: 0,
-			_id: "",
-		},
-	],
-	myIsLoading: false,
-	myProducts: [
-		{
-			images: [],
-			title: "",
-			price: 0,
-			averageRating: 0,
-			numOfReviews: 0,
-			_id: "",
-		},
-	],
-	details: {
-		maxPrice: 0,
-		minPrice: 0,
-		pagesFound: 0,
-		productsFound: 0,
-		companies: [],
-		categories: [],
-		tags: [],
-	},
-	isLoading: true,
-	singleProduct: {
-		isLoading: true,
-		activeImage: null,
-		averageRating: 5,
-		createdAt: null,
-		description: null,
-		id: null,
-		images: [],
-		numOfReviews: null,
-		price: null,
-		reviews: [
-			{
-				author: { avatar: "", email: "", username: "", _id: "" },
-				rating: "",
-				createdAt: "",
-				comment: "",
-				title: "",
-				_id: "",
-			},
-		],
-		specs: [],
-		tags: [],
-		title: null,
-		types: [],
-		vendor: { avatar: null, username: null },
-		updatedAt: null,
-	},
-	creating: { paths: [], isLoading: false },
+			author: {
+				avatar: string
+				email: string
+				username: string
+				_id: string
+			}
+			rating: string
+			createdAt: string
+			comment: string
+			title: string
+			_id: string
+		}
+	]
+	specs: []
+	tags: []
+	title: string
+	types: []
+	vendor: { avatar: string; username: string }
+	updatedAt: string
 }
+
+type ProductType = {
+	images: string[]
+	title: string
+	price: number
+	averageRating: number
+	numOfReviews: number
+	_id: string
+}
+
+type DetailsType = {
+	maxPrice: number
+	minPrice: number
+	pagesFound: number
+	productsFound: number
+	companies: string[]
+	categories: string[]
+	tags: string[]
+}
+type CreatingType = {
+	paths: string[]
+	isLoading: boolean
+	isEditing: boolean
+	editId: string
+}
+
+type InitState = {
+	singleProduct: SingleProductType
+	products: ProductType[]
+	isLoading: boolean
+	myProducts: ProductType[]
+	myIsLoading: boolean
+	details: DetailsType
+	creating: CreatingType
+}
+
+const initialState = {
+	singleProduct: { isLoading: true },
+	isLoading: true,
+	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
+} as InitState
 export const productSlice = createSlice({
 	name: "product",
 	initialState,
 	reducers: {
 		setActiveImage(state, action) {
 			state.singleProduct.activeImage = action.payload
+		},
+		setEdit(state, { payload }) {
+			state.creating.isEditing = true
+			state.creating.editId = payload.id
+		},
+		unsetEdit(state) {
+			state.creating.isEditing = false
+			state.creating.editId = ""
 		},
 	},
 	extraReducers: (builder) => {
@@ -154,6 +174,6 @@ export const productSlice = createSlice({
 	},
 })
 
-export const { setActiveImage } = productSlice.actions
+export const { setActiveImage, setEdit, unsetEdit } = productSlice.actions
 
 export default productSlice.reducer
