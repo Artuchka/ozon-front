@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import {
 	createProduct,
 	getAllProducts,
+	getMyProducts,
 	getSingleProduct,
 	uploadImages,
 } from "./thunks"
@@ -17,6 +18,17 @@ export type ListItemProductType = typeof product
 
 const initialState = {
 	products: [
+		{
+			images: [],
+			title: "",
+			price: 0,
+			averageRating: 0,
+			numOfReviews: 0,
+			_id: "",
+		},
+	],
+	myIsLoading: false,
+	myProducts: [
 		{
 			images: [],
 			title: "",
@@ -99,6 +111,19 @@ export const productSlice = createSlice({
 		builder.addCase(getAllProducts.rejected, (state, action) => {
 			if (typeof action.payload === "string") toast.error(action.payload)
 			state.isLoading = false
+		})
+
+		builder.addCase(getMyProducts.pending, (state, action) => {
+			state.myIsLoading = true
+		})
+		builder.addCase(getMyProducts.fulfilled, (state, { payload }) => {
+			const { products } = payload
+			state.myProducts = products
+			state.myIsLoading = false
+		})
+		builder.addCase(getMyProducts.rejected, (state, action) => {
+			if (typeof action.payload === "string") toast.error(action.payload)
+			state.myIsLoading = false
 		})
 		builder.addCase(getSingleProduct.pending, (state, action) => {
 			state.singleProduct.isLoading = true

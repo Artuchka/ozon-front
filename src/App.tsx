@@ -13,6 +13,7 @@ import { CreateNew } from "./pages/CreateNew"
 import { Bookmarks } from "./pages/Bookmarks"
 import { My } from "./layouts/My"
 import { Reviews } from "./pages/Reviews"
+import { MyProducts } from "./pages/MyProducts"
 
 function App() {
 	const user = useSelector(selectAuth)
@@ -27,6 +28,16 @@ function App() {
 					>
 						<Route path="main" element={<Personal />} />
 						<Route path="reviews" element={<Reviews />} />
+						<Route
+							path="products"
+							element={
+								<ProtectedRoute
+									user={user}
+									outlet={<MyProducts />}
+									roles={["vendor"]}
+								/>
+							}
+						/>
 					</Route>
 					<Route
 						path="/create-new"
