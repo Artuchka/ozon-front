@@ -16,7 +16,7 @@ const initialState = {
 	birthday: null,
 	avatar: null,
 	location: null,
-	loading: true,
+	loading: false,
 }
 export type AuthType = typeof initialState
 

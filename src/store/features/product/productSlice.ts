@@ -97,6 +97,35 @@ const initialState = {
 	},
 	creating: { paths: [], isLoading: false },
 }
+	singleProduct: {
+		isLoading: true,
+		activeImage: null,
+		averageRating: 5,
+		createdAt: null,
+		description: null,
+		id: null,
+		images: [],
+		numOfReviews: null,
+		price: null,
+		reviews: [
+			{
+				author: { avatar: "", email: "", username: "", _id: "" },
+				rating: "",
+				createdAt: "",
+				comment: "",
+				title: "",
+				_id: "",
+			},
+		],
+		specs: [],
+		tags: [],
+		title: null,
+		types: [],
+		vendor: { avatar: null, username: null },
+		updatedAt: null,
+	},
+	creating: { paths: [], isLoading: false },
+}
 export const productSlice = createSlice({
 	name: "product",
 	initialState,
@@ -169,6 +198,6 @@ export const productSlice = createSlice({
 	},
 })
 
-export const { setActiveImage, setEdit, unsetEdit } = productSlice.actions
+export const { setActiveImage } = productSlice.actions
 
 export default productSlice.reducer
