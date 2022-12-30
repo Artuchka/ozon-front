@@ -36,9 +36,9 @@ export const Products = () => {
 					: `По запросу \`${title}\` найдено ${amount} товаров`}
 			</div>
 			<Filters />
-			{/* <Sort /> */}
-			{/* <ProductsGrid /> */}
-			{/* <Pagination /> */}
+			<Sort />
+			<ProductsGrid />
+			<Pagination />
 		</div>
 	)
 }

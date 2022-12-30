@@ -88,6 +88,8 @@ const initialState = {
 	singleProduct: { isLoading: true },
 	isLoading: true,
 	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
+	// myProducts: []
+	creating: { isLoading: false },
 } as InitState
 export const productSlice = createSlice({
 	name: "product",

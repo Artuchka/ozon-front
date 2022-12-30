@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { AppDispatch } from "../store/store"
 import { getSingleProduct } from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
@@ -15,6 +15,7 @@ import { setOpenReviewModal } from "../store/features/review/reviewSlice"
 import { AiFillStar, AiOutlineHeart } from "react-icons/ai"
 import { BsStarHalf } from "react-icons/bs"
 import { getIntlDate } from "../utils/intl"
+import { HashLink } from "react-router-hash-link"
 
 export const SingleProduct = () => {
 	const { id } = useParams()
@@ -59,7 +60,6 @@ export const SingleProduct = () => {
 	const handleBuy = async () => {
 		const formData = new FormData(orderConfigRef.current)
 	}
-	console.log("cool here")
 
 	return (
 		<div className="single-product-page">
@@ -79,9 +79,9 @@ export const SingleProduct = () => {
 								<BsStarHalf />
 							)}
 						</div>
-						<a href="#reviews" className="numOfReviews">
+						<HashLink to="#reviews" className="numOfReviews">
 							{numOfReviews} отзывов
-						</a>
+						</HashLink>
 					</div>
 					<div className="to-favorites">
 						<AiOutlineHeart />
@@ -116,17 +116,22 @@ export const SingleProduct = () => {
 					/>
 				</form>
 				<div className="specs-short">
-					{specs.slice(0, 2).map(({ title, value, link, id }) => {
-						return (
-							<div className="spec" id={id} key={id}>
-								<div className="title">{title}</div>
-								<div className="value">{value}</div>
-							</div>
-						)
-					})}
-					<a href="#specs-full-wrapper" className="btn btn--light">
+					{specs
+						.slice(0, 2)
+						.map(({ title, value, link, _id: specId }) => {
+							return (
+								<div className="spec" id={specId} key={specId}>
+									<div className="title">{title}</div>
+									<div className="value">{value}</div>
+								</div>
+							)
+						})}
+					<HashLink
+						to="#specs-full-wrapper"
+						className="btn btn--light"
+					>
 						Перейти к характеристикам
-					</a>
+					</HashLink>
 				</div>
 			</div>
 
@@ -138,9 +143,9 @@ export const SingleProduct = () => {
 			<div className="specs-full-wrapper" id="specs-full-wrapper">
 				<h3>Характеристики</h3>
 				<div className="specs-full">
-					{specs.map(({ title, value, link, id }) => {
+					{specs.map(({ title, value, link, _id: specID }) => {
 						return (
-							<div className="spec" id={id} key={id}>
+							<div className="spec" id={specID} key={specID}>
 								<div className="title">{title}</div>
 								<div className="value">{value}</div>
 							</div>
