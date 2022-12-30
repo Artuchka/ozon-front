@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit"
 import {
 	createProduct,
 	getAllProducts,
-	getMyProducts,
 	getSingleProduct,
 	uploadImages,
 } from "./thunks"
@@ -48,49 +47,60 @@ type SingleProductType = {
 	vendor: { avatar: string; username: string }
 	updatedAt: string
 }
-
-type ProductType = {
-	images: string[]
-	title: string
-	price: number
-	averageRating: number
-	numOfReviews: number
-	_id: string
-}
-
-type DetailsType = {
-	maxPrice: number
-	minPrice: number
-	pagesFound: number
-	productsFound: number
-	companies: string[]
-	categories: string[]
-	tags: string[]
-}
-type CreatingType = {
-	paths: string[]
-	isLoading: boolean
-	isEditing: boolean
-	editId: string
-}
-
-type InitState = {
-	singleProduct: SingleProductType
-	products: ProductType[]
-	isLoading: boolean
-	myProducts: ProductType[]
-	myIsLoading: boolean
-	details: DetailsType
-	creating: CreatingType
-}
-
 const initialState = {
-	singleProduct: { isLoading: true },
+	products: [
+		{
+			images: [],
+			title: "",
+			price: 0,
+			averageRating: 0,
+			numOfReviews: 0,
+			_id: "",
+		},
+	],
+	details: {
+		maxPrice: 0,
+		minPrice: 0,
+		pagesFound: 0,
+		productsFound: 0,
+		companies: [],
+		categories: [],
+		tags: [],
+	},
 	isLoading: true,
 	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
 	// myProducts: []
 	creating: { isLoading: false },
 } as InitState
+	singleProduct: {
+		isLoading: true,
+		activeImage: null,
+		averageRating: 5,
+		createdAt: null,
+		description: null,
+		id: null,
+		images: [],
+		numOfReviews: null,
+		price: null,
+		reviews: [
+			{
+				author: { avatar: "", email: "", username: "", _id: "" },
+				rating: "",
+				createdAt: "",
+				comment: "",
+				title: "",
+				_id: "",
+			},
+		],
+		specs: [],
+		tags: [],
+		title: null,
+		types: [],
+		vendor: { avatar: null, username: null },
+		updatedAt: null,
+	},
+	creating: { paths: [], isLoading: false },
+}
 export const productSlice = createSlice({
 	name: "product",
 	initialState,
@@ -99,12 +109,12 @@ export const productSlice = createSlice({
 			state.singleProduct.activeImage = action.payload
 		},
 		setEdit(state, { payload }) {
-			state.creating.isEditing = true
-			state.creating.editId = payload.id
+			// state.creating.isEditing = true
+			// state.creating.editId = payload.id
 		},
 		unsetEdit(state) {
-			state.creating.isEditing = false
-			state.creating.editId = ""
+			// state.creating.isEditing = false
+			// state.creating.editId = ""
 		},
 	},
 	extraReducers: (builder) => {
@@ -133,19 +143,6 @@ export const productSlice = createSlice({
 		builder.addCase(getAllProducts.rejected, (state, action) => {
 			if (typeof action.payload === "string") toast.error(action.payload)
 			state.isLoading = false
-		})
-
-		builder.addCase(getMyProducts.pending, (state, action) => {
-			state.myIsLoading = true
-		})
-		builder.addCase(getMyProducts.fulfilled, (state, { payload }) => {
-			const { products } = payload
-			state.myProducts = products
-			state.myIsLoading = false
-		})
-		builder.addCase(getMyProducts.rejected, (state, action) => {
-			if (typeof action.payload === "string") toast.error(action.payload)
-			state.myIsLoading = false
 		})
 		builder.addCase(getSingleProduct.pending, (state, action) => {
 			state.singleProduct.isLoading = true
@@ -176,6 +173,6 @@ export const productSlice = createSlice({
 	},
 })
 
-export const { setActiveImage, setEdit, unsetEdit } = productSlice.actions
+export const { setActiveImage } = productSlice.actions
 
 export default productSlice.reducer
