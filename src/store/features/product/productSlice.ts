@@ -47,60 +47,50 @@ type SingleProductType = {
 	vendor: { avatar: string; username: string }
 	updatedAt: string
 }
+
+type ProductType = {
+	images: string[]
+	title: string
+	price: number
+	averageRating: number
+	numOfReviews: number
+	_id: string
+}
+
+type DetailsType = {
+	maxPrice: number
+	minPrice: number
+	pagesFound: number
+	productsFound: number
+	companies: string[]
+	categories: string[]
+	tags: string[]
+}
+type CreatingType = {
+	paths: string[]
+	isLoading: boolean
+	isEditing: boolean
+	editId: string
+}
+
+type InitState = {
+	singleProduct: SingleProductType
+	products: ProductType[]
+	isLoading: boolean
+	myProducts: ProductType[]
+	myIsLoading: boolean
+	details: DetailsType
+	creating: CreatingType
+}
+
 const initialState = {
-	products: [
-		{
-			images: [],
-			title: "",
-			price: 0,
-			averageRating: 0,
-			numOfReviews: 0,
-			_id: "",
-		},
-	],
-	details: {
-		maxPrice: 0,
-		minPrice: 0,
-		pagesFound: 0,
-		productsFound: 0,
-		companies: [],
-		categories: [],
-		tags: [],
-	},
+	singleProduct: { isLoading: true },
 	isLoading: true,
 	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
 	// myProducts: []
 	creating: { isLoading: false },
 } as InitState
-	singleProduct: {
-		isLoading: true,
-		activeImage: null,
-		averageRating: 5,
-		createdAt: null,
-		description: null,
-		id: null,
-		images: [],
-		numOfReviews: null,
-		price: null,
-		reviews: [
-			{
-				author: { avatar: "", email: "", username: "", _id: "" },
-				rating: "",
-				createdAt: "",
-				comment: "",
-				title: "",
-				_id: "",
-			},
-		],
-		specs: [],
-		tags: [],
-		title: null,
-		types: [],
-		vendor: { avatar: null, username: null },
-		updatedAt: null,
-	},
-	creating: { paths: [], isLoading: false },
-}
+
 export const productSlice = createSlice({
 	name: "product",
 	initialState,
