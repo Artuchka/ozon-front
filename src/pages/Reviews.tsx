@@ -6,6 +6,7 @@ import { AppDispatch } from "../store/store"
 import { getMyReviews } from "../store/features/review/thunks"
 import { serverURL } from "../axios/customFetch"
 import { Link } from "react-router-dom"
+import { HashLink } from "react-router-hash-link"
 
 export const Reviews = () => {
 	const { myReviews } = useSelector(selectReviews)
@@ -42,12 +43,12 @@ export const Reviews = () => {
 									<img src={image} />
 								</Link>
 							</div>
-							<Link
+							<HashLink
 								to={`/products/${review?.product?._id}#review-${review._id}`}
 								className="btn btn--light link-to-review"
 							>
 								Перейти к отзыву
-							</Link>
+							</HashLink>
 						</article>
 					)
 				})}

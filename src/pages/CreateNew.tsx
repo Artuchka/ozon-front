@@ -22,16 +22,18 @@ import { toast } from "react-toastify"
 
 export const CreateNew = () => {
 	const formRef = useRef<HTMLFormElement>(null)
-	const { creating } = useSelector(selectProducts)
 	const companyOptions = ["apple", "samsung", "google"]
 	const categoryOptions = ["еда", "техника", "развлечение"]
 	const tagOptions = ["tag1", "tag2", "tag3", "tag4"]
-	const { paths: filePaths } = creating
 	const dispatch = useDispatch<AppDispatch>()
 	const [specs, setSpecs] = useState<SpecType[]>([])
 	const [companies, setCompanies] = useState<string[]>([])
 	const [categories, setCategories] = useState<string[]>([])
 	const [tags, setTags] = useState<string[]>([])
+
+	if (creating.isLoading) {
+		return <Loading />
+	}
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -56,6 +58,7 @@ export const CreateNew = () => {
 	}
 
 	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault()
 		const files = e.target.files || []
 
 		let formData = new FormData()

@@ -68,6 +68,10 @@ const initialState = {
 		tags: [],
 	},
 	isLoading: true,
+	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
+	// myProducts: []
+	creating: { isLoading: false },
+} as InitState
 	singleProduct: {
 		isLoading: true,
 		activeImage: null,
