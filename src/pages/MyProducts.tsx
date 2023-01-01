@@ -16,14 +16,8 @@ export const MyProducts = () => {
 	}, [])
 	return (
 		<div className="my-products-page">
-			{myProducts?.map((product) => {
-				return (
-					<ProductItem
-						key={product._id}
-						{...product}
-						editable={true}
-					/>
-				)
+			{myProducts.map((product) => {
+				return <ProductItem key={product._id} {...product} />
 			})}
 		</div>
 	)
