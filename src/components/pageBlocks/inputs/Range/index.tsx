@@ -1,10 +1,4 @@
-import React, {
-	ChangeEventHandler,
-	FC,
-	useCallback,
-	useRef,
-	useState,
-} from "react"
+import React, { ChangeEventHandler, FC, useCallback, useState } from "react"
 
 import styles from "./style.module.scss"
 import { useEffect } from "react"
@@ -28,8 +22,8 @@ export const Range: FC<proptype> = ({
 	onChange,
 	min = 30,
 	max = 100,
-	selectedFrom = 50,
-	selectedTo = 90,
+	selectedFrom,
+	selectedTo,
 }) => {
 	const [leftValue, setLeftValue] = useState(selectedFrom)
 	const [rightValue, setRightValue] = useState(selectedTo)
@@ -57,13 +51,13 @@ export const Range: FC<proptype> = ({
 	}, [leftValue])
 
 	const handleChangeRight = (e: any) => {
-		const right = parseInt(e.target.value)
+		const right = Number(e.target.value)
 		if (right <= leftValue) return
 		setRightValue(right)
 		setRightValueInput(right)
 	}
 	const handleChangeLeft = (e: any) => {
-		const left = parseInt(e.target.value)
+		const left = Number(e.target.value)
 		if (left >= rightValue) return
 		setLeftValue(left)
 		setLeftValueInput(left)

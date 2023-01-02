@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit"
 import {
 	createProduct,
 	getAllProducts,
-	getMyProducts,
 	getSingleProduct,
 	uploadImages,
 } from "./thunks"
@@ -91,6 +90,7 @@ const initialState = {
 	// myProducts: []
 	creating: { isLoading: false },
 } as InitState
+
 export const productSlice = createSlice({
 	name: "product",
 	initialState,
@@ -99,12 +99,12 @@ export const productSlice = createSlice({
 			state.singleProduct.activeImage = action.payload
 		},
 		setEdit(state, { payload }) {
-			state.creating.isEditing = true
-			state.creating.editId = payload.id
+			// state.creating.isEditing = true
+			// state.creating.editId = payload.id
 		},
 		unsetEdit(state) {
-			state.creating.isEditing = false
-			state.creating.editId = ""
+			// state.creating.isEditing = false
+			// state.creating.editId = ""
 		},
 	},
 	extraReducers: (builder) => {
@@ -133,19 +133,6 @@ export const productSlice = createSlice({
 		builder.addCase(getAllProducts.rejected, (state, action) => {
 			if (typeof action.payload === "string") toast.error(action.payload)
 			state.isLoading = false
-		})
-
-		builder.addCase(getMyProducts.pending, (state, action) => {
-			state.myIsLoading = true
-		})
-		builder.addCase(getMyProducts.fulfilled, (state, { payload }) => {
-			const { products } = payload
-			state.myProducts = products
-			state.myIsLoading = false
-		})
-		builder.addCase(getMyProducts.rejected, (state, action) => {
-			if (typeof action.payload === "string") toast.error(action.payload)
-			state.myIsLoading = false
 		})
 		builder.addCase(getSingleProduct.pending, (state, action) => {
 			state.singleProduct.isLoading = true
@@ -176,6 +163,6 @@ export const productSlice = createSlice({
 	},
 })
 
-export const { setActiveImage, setEdit, unsetEdit } = productSlice.actions
+export const { setActiveImage } = productSlice.actions
 
 export default productSlice.reducer

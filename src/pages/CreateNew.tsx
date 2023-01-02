@@ -9,11 +9,7 @@ import React, {
 
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
-import {
-	createProduct,
-	getSingleProduct,
-	uploadImages,
-} from "../store/features/product/thunks"
+import { createProduct, uploadImages } from "../store/features/product/thunks"
 import axios from "axios"
 import { ozonAPI } from "../axios/customFetch"
 import { selectProducts } from "../store/features/product/selectors"
@@ -23,10 +19,6 @@ import {
 } from "../components/pageBlocks/inputs/PropertyInput"
 import { InputMultiple } from "../components/pageBlocks/inputs/InputMultiple"
 import { toast } from "react-toastify"
-import { useLocation, useParams } from "react-router-dom"
-import qs from "query-string"
-import { setEdit } from "../store/features/product/productSlice"
-import { Loading } from "../components/Loading"
 
 export const CreateNew = () => {
 	const formRef = useRef<HTMLFormElement>(null)
@@ -38,25 +30,6 @@ export const CreateNew = () => {
 	const [companies, setCompanies] = useState<string[]>([])
 	const [categories, setCategories] = useState<string[]>([])
 	const [tags, setTags] = useState<string[]>([])
-	const { search } = useLocation()
-	const { editingId } = qs.parse(search)
-
-	console.log({ editingId })
-	const { creating } = useSelector(selectProducts)
-	const { paths: filePaths } = creating
-
-	useEffect(() => {
-		console.log("SMTH CHANGED")
-
-		if (!editingId) return
-
-		console.log("WORKING ON EDITING")
-
-		dispatch(setEdit({ id: editingId }))
-		if (creating.isEditing) {
-			dispatch(getSingleProduct(creating.editId))
-		}
-	}, [creating.isEditing])
 
 	if (creating.isLoading) {
 		return <Loading />
