@@ -53,7 +53,7 @@ export const getAllProducts = createAsyncThunk(
 		}
 	}
 )
-
+// new changes
 export const getMyProducts = createAsyncThunk(
 	"product/getMyProducts",
 	async (_, thunkAPI) => {
