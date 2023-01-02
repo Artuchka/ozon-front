@@ -31,8 +31,6 @@ export const Personal = () => {
 		avatar,
 	} = useSelector(selectAuth)
 
-	console.log(avatar)
-
 	return (
 		<div className="personal-page">
 			<UpdateModal
