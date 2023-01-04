@@ -20,16 +20,12 @@ export const Personal = () => {
 		setOpen(true)
 	}
 
-	const {
-		lastName,
-		firstName,
-		email,
-		birthday,
-		phone,
-		location,
-		gender,
-		avatar,
-	} = useSelector(selectAuth)
+	const { lastName, firstName, email, birthday, phone, location, gender } =
+		useSelector(selectAuth)
+
+	const avatar = `https://avatars.dicebear.com/api/croodles/${gender}/${
+		lastName + firstName
+	}.svg?mood[]=happy&backgroundColor=%333999`
 
 	return (
 		<div className="personal-page">
