@@ -47,12 +47,12 @@ export const CreateNew = () => {
 	const { editingId } = qs.parse(search)
 
 	console.log({ editingId })
-	const { creating, singleProduct } = useSelector(selectProducts)
-	const { paths: filePaths, isEditing } = creating
+	const { creating, edit } = useSelector(selectProducts)
+	const { paths: filePaths } = creating
 
 	useEffect(() => {
 		return () => {
-			if (creating.editId) {
+			if (edit.editId) {
 				dispatch(unsetEdit())
 			}
 		}
@@ -64,37 +64,33 @@ export const CreateNew = () => {
 			return
 		}
 
-		// console.log({ here: editingId })
-
-		if (
-			!creating.isLoading &&
-			(!creating.product || creating.editId !== editingId)
-		) {
+		if (!edit.isLoading && (!edit.product || edit.editId !== editingId)) {
 			dispatch(fetchEdit(editingId as string))
 		}
 
 		if (
-			!creating.isLoading &&
-			creating.product &&
-			Object.keys(creating.product).length > 0
+			!edit.isLoading &&
+			edit.product &&
+			Object.keys(edit.product).length > 0
 		) {
 			setupInputs(
 				formRef,
-				creating.product,
+				edit.product,
 				setSpecs,
 				setCompanies,
 				setCategories,
 				setTags
 			)
 		}
-	}, [creating.isLoading, creating.editId, editingId])
+	}, [edit.isLoading, edit.editId, editingId])
 
-	if (creating.isLoading) {
+	if (edit.isLoading || edit.isLoading) {
 		return <Loading />
 	}
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
 		if (
 			companies.length === 0 ||
 			categories.length === 0 ||
@@ -113,7 +109,7 @@ export const CreateNew = () => {
 		formData.set("categories", JSON.stringify(categories))
 		formData.set("tags", JSON.stringify(tags))
 
-		if (isEditing) {
+		if (edit.isEditing) {
 			dispatch(updateProduct({ id: editingId, formData }))
 		} else {
 			dispatch(createProduct(formData))
@@ -122,6 +118,7 @@ export const CreateNew = () => {
 
 	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault()
+
 		const files = e.target.files || []
 
 		let formData = new FormData()
@@ -191,7 +188,7 @@ export const CreateNew = () => {
 					className="btn btn--contained btn--rounded btn--tall"
 					type="submit"
 				>
-					{isEditing ? "Сохранить" : "Создать"}
+					{edit.isEditing ? "Сохранить" : "Создать"}
 				</button>
 			</form>
 		</div>

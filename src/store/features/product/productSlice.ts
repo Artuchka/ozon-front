@@ -74,9 +74,13 @@ type CreatingType = {
 	paths: string[]
 	isLoading: boolean
 	product: SingleProductType
+}
+
+type EditType = {
+	isLoading: boolean
 	isEditing: boolean
 	editId: string
-	fetched: boolean
+	product: SingleProductType
 }
 
 type InitState = {
@@ -87,15 +91,17 @@ type InitState = {
 	myIsLoading: boolean
 	details: DetailsType
 	creating: CreatingType
+	edit: EditType
 }
 
 const initialState = {
 	singleProduct: { isLoading: false },
 	isLoading: true,
 	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
-	// myProducts: []
-	creating: { isLoading: false, isEditing: false },
+	creating: { isLoading: false },
+	edit: { isLoading: false, isEditing: false, editId: "" },
 } as InitState
+
 export const productSlice = createSlice({
 	name: "product",
 	initialState,
@@ -104,15 +110,15 @@ export const productSlice = createSlice({
 			state.singleProduct.activeImage = action.payload
 		},
 		setEdit(state, { payload }) {
-			state.creating.isEditing = true
-			state.creating.editId = payload.id
+			state.edit.isEditing = true
+			state.edit.editId = payload.id
 		},
 		unsetEdit(state) {
 			console.log("unsetEdit worked")
 
-			state.creating.isEditing = false
-			state.creating.editId = ""
-			state.creating.product = {} as SingleProductType
+			state.edit.isEditing = false
+			state.edit.editId = ""
+			state.edit.product = {} as SingleProductType
 		},
 	},
 	extraReducers: (builder) => {
@@ -157,17 +163,14 @@ export const productSlice = createSlice({
 		})
 		builder.addCase(getSingleProduct.pending, (state, action) => {
 			state.singleProduct.isLoading = true
-			state.creating.fetched = false
 		})
 		builder.addCase(getSingleProduct.fulfilled, (state, { payload }) => {
 			const { product } = payload
 			state.singleProduct = product
 			state.singleProduct.isLoading = false
-			state.creating.fetched = true
 		})
 		builder.addCase(getSingleProduct.rejected, (state, action) => {
 			state.singleProduct.isLoading = false
-			state.creating.fetched = true
 			if (typeof action.payload === "string") toast.error(action.payload)
 		})
 
@@ -186,16 +189,16 @@ export const productSlice = createSlice({
 		})
 
 		builder.addCase(fetchEdit.pending, (state, action) => {
-			state.creating.isLoading = true
+			state.edit.isLoading = true
 		})
 		builder.addCase(fetchEdit.fulfilled, (state, { payload }) => {
 			const { msg, product } = payload
 			toast.success(msg)
-			state.creating.product = product
-			state.creating.isLoading = false
+			state.edit.product = product
+			state.edit.isLoading = false
 		})
 		builder.addCase(fetchEdit.rejected, (state, { payload }) => {
-			state.creating.isLoading = false
+			state.edit.isLoading = false
 			if (typeof payload === "string") toast.error(payload)
 		})
 	},
