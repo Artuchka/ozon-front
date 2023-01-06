@@ -6,6 +6,12 @@
 	max-width: 250px;
 	gap: 0.5rem;
 	padding: 0.9em;
+
+	&:hover {
+		.name {
+			color: var(--primary-color);
+		}
+	}
 	.image {
 		position: relative;
 		width: 100%;

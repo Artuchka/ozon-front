@@ -17,19 +17,25 @@ export const Products = () => {
 	const { details, isLoading } = useSelector(selectProducts)
 	const { title } = useSelector(selectFilters)
 	const { loading: gettingUser } = useSelector(selectAuth)
+	const amount = details.productsFound
 
 	useEffect(() => {
-		document.title = "Товары"
-
 		if (gettingUser) return
 		dispatch(getAllProducts())
 		dispatch(getAllBookmarks())
 	}, [])
 
+	useEffect(() => {
+		document.title = "Товары"
+		if (amount > 0) {
+			document.title = `Нашли ${amount} товаров`
+		} else {
+			document.title = `Не нашли товаров`
+		}
+	}, [amount])
 	// if (isLoading) {
 	// 	return <Loading />
 	// }
-	const amount = details.productsFound
 	return (
 		<div className="products-page">
 			<div className="stats">
