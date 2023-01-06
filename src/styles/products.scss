@@ -4,9 +4,9 @@
 		"stats stats"
 		"filters view-config"
 		"filters products"
-		"pagination pagination";
+		"filters pagination";
 	grid-template-columns: 200px auto;
-	grid-template-rows: auto 50px minmax(300px, auto);
+	grid-template-rows: auto 40px minmax(300px, auto);
 	gap: 1rem;
 
 	.filters {
@@ -26,6 +26,7 @@
 	.pagination {
 		grid-area: pagination;
 		place-self: center;
+		align-self: start;
 		margin-top: 1rem;
 	}
 
