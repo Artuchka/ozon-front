@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { ozonAPI } from "../../../axios/customFetch"
 import { FilterType } from "../filter/filterSlice"
 import { RootState } from "../../store"
+import { setEdit } from "./productSlice"
 
 export const createProduct = createAsyncThunk(
 	"product/create",
@@ -14,6 +15,24 @@ export const createProduct = createAsyncThunk(
 			})
 			console.log("RESP = ", resp)
 			return resp
+		} catch (error: any) {
+			console.log("error caight = ", error)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
+
+export const updateProduct = createAsyncThunk(
+	"product/updateSingle",
+	async ({ formData, id }: any, thunkAPI) => {
+		try {
+			const resp = await ozonAPI(`/products/${id}`, {
+				data: formData,
+				method: "patch",
+				headers: { "content-type": "multipart/form-data" },
+			})
+			console.log("RESP = ", resp)
+			return resp.data
 		} catch (error: any) {
 			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
@@ -69,6 +88,19 @@ export const getMyProducts = createAsyncThunk(
 export const getSingleProduct = createAsyncThunk(
 	"product/getSingleProduct",
 	async (id: string, thunkAPI) => {
+		try {
+			const { data } = await ozonAPI(`/products/${id}`)
+			return data
+		} catch (error: any) {
+			console.log("error caight = ", error)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
+export const fetchEdit = createAsyncThunk(
+	"product/fetchEdit",
+	async (id: string, thunkAPI) => {
+		thunkAPI.dispatch(setEdit({ id }))
 		try {
 			const { data } = await ozonAPI(`/products/${id}`)
 			return data

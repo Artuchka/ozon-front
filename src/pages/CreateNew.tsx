@@ -2,6 +2,8 @@ import React, {
 	ChangeEvent,
 	FormEvent,
 	FormEventHandler,
+	MouseEvent,
+	RefObject,
 	useEffect,
 	useRef,
 	useState,
@@ -11,11 +13,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
 import {
 	createProduct,
-	getSingleProduct,
+	fetchEdit,
+	updateProduct,
 	uploadImages,
 } from "../store/features/product/thunks"
 import axios from "axios"
-import { ozonAPI } from "../axios/customFetch"
+import { ozonAPI, serverURL } from "../axios/customFetch"
 import { selectProducts } from "../store/features/product/selectors"
 import {
 	PropertyInput,
@@ -25,7 +28,12 @@ import { InputMultiple } from "../components/pageBlocks/inputs/InputMultiple"
 import { toast } from "react-toastify"
 import { useLocation, useParams } from "react-router-dom"
 import qs from "query-string"
-import { setEdit } from "../store/features/product/productSlice"
+import {
+	SingleProductType,
+	removeImagePath,
+	setImagePath,
+	unsetEdit,
+} from "../store/features/product/productSlice"
 import { Loading } from "../components/Loading"
 
 export const CreateNew = () => {
@@ -42,32 +50,57 @@ export const CreateNew = () => {
 	const { editingId } = qs.parse(search)
 
 	console.log({ editingId })
-	const { creating } = useSelector(selectProducts)
+	const { creating, edit } = useSelector(selectProducts)
 	const { paths: filePaths } = creating
 
 	useEffect(() => {
-		document.title = "Новый товар"
-	}, [])
-
-	useEffect(() => {
-		console.log("SMTH CHANGED")
-
-		if (!editingId) return
-
-		console.log("WORKING ON EDITING")
-
-		dispatch(setEdit({ id: editingId }))
-		if (creating.isEditing) {
-			dispatch(getSingleProduct(creating.editId))
+		if (!editingId) {
+			dispatch(unsetEdit())
+			return
 		}
-	}, [creating.isEditing])
 
-	if (creating.isLoading) {
+		if (edit.isError) return
+		if (!edit.isLoading && (!edit.product || edit.editId !== editingId)) {
+			dispatch(fetchEdit(editingId as string))
+		}
+
+		if (
+			!edit.isLoading &&
+			edit.product &&
+			Object.keys(edit.product).length > 0
+		) {
+			setupInputs(
+				formRef,
+				edit.product,
+				setSpecs,
+				setCompanies,
+				setCategories,
+				setTags,
+				(data: string[]) => dispatch(setImagePath(data))
+			)
+		}
+	}, [edit.isLoading, edit.editId, editingId])
+
+	if (edit.isLoading || edit.isLoading) {
 		return <Loading />
+	}
+
+	if (edit.isError) {
+		return (
+			<>
+				<h1>У нас нет такого товара</h1>
+				<p>Сожалеем, что вы попали на эту страницу</p>
+			</>
+		)
+	}
+	const handleImageRemove = (e: MouseEvent<HTMLImageElement>) => {
+		const img = e.target as HTMLImageElement
+		dispatch(removeImagePath(img.alt))
 	}
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+
 		if (
 			companies.length === 0 ||
 			categories.length === 0 ||
@@ -85,11 +118,17 @@ export const CreateNew = () => {
 		formData.set("companies", JSON.stringify(companies))
 		formData.set("categories", JSON.stringify(categories))
 		formData.set("tags", JSON.stringify(tags))
-		dispatch(createProduct(formData))
+
+		if (edit.isEditing) {
+			dispatch(updateProduct({ id: editingId, formData }))
+		} else {
+			dispatch(createProduct(formData))
+		}
 	}
 
 	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault()
+
 		const files = e.target.files || []
 
 		let formData = new FormData()
@@ -153,15 +192,50 @@ export const CreateNew = () => {
 					name="file"
 					accept="image/*"
 					onChange={handleFileChange}
-					required
+					required={filePaths?.length === 0}
 				/>
+				<div className="images-container">
+					{filePaths?.map((image, index) => (
+						<img
+							key={index}
+							src={`${serverURL}${image}`}
+							alt={image}
+							onClick={handleImageRemove}
+						/>
+					))}
+				</div>
 				<button
 					className="btn btn--contained btn--rounded btn--tall"
 					type="submit"
 				>
-					Создать
+					{edit.isEditing ? "Сохранить" : "Создать"}
 				</button>
 			</form>
 		</div>
 	)
+}
+
+function setupInputs(
+	formRef: RefObject<HTMLFormElement>,
+	product: SingleProductType,
+	setSpecs: Function,
+	setCompanies: Function,
+	setCategories: Function,
+	setTags: Function,
+	setPaths: Function
+) {
+	let inp = formRef.current?.title as unknown as HTMLInputElement
+	inp.value = product.title
+
+	inp = formRef.current?.description
+	inp.value = product.description
+
+	inp = formRef.current?.price
+	inp.value = product.price
+
+	setSpecs(product.specs)
+	setCategories(product.categories)
+	setCompanies(product.companies)
+	setTags(product.tags)
+	setPaths(product.images)
 }

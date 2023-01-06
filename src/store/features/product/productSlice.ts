@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
 	createProduct,
+	fetchEdit,
 	getAllProducts,
 	getMyProducts,
 	getSingleProduct,
+	updateProduct,
 	uploadImages,
 } from "./thunks"
 import { toast } from "react-toastify"
@@ -16,7 +18,7 @@ const product = {
 }
 export type ListItemProductType = typeof product
 
-type SingleProductType = {
+export type SingleProductType = {
 	isLoading: boolean
 	activeImage: string
 	averageRating: 5
@@ -42,7 +44,9 @@ type SingleProductType = {
 		}
 	]
 	specs: []
-	tags: []
+	tags: string[]
+	categories: string[]
+	companies: string[]
 	title: string
 	types: []
 	vendor: { avatar: string; username: string }
@@ -70,8 +74,15 @@ type DetailsType = {
 type CreatingType = {
 	paths: string[]
 	isLoading: boolean
+	product: SingleProductType
+}
+
+type EditType = {
+	isLoading: boolean
 	isEditing: boolean
+	isError: boolean
 	editId: string
+	product: SingleProductType
 }
 
 type InitState = {
@@ -82,15 +93,17 @@ type InitState = {
 	myIsLoading: boolean
 	details: DetailsType
 	creating: CreatingType
+	edit: EditType
 }
 
 const initialState = {
-	singleProduct: { isLoading: true },
+	singleProduct: { isLoading: false },
 	isLoading: true,
 	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
-	// myProducts: []
 	creating: { isLoading: false },
+	edit: { isLoading: false, isEditing: false, editId: "" },
 } as InitState
+
 export const productSlice = createSlice({
 	name: "product",
 	initialState,
@@ -98,13 +111,25 @@ export const productSlice = createSlice({
 		setActiveImage(state, action) {
 			state.singleProduct.activeImage = action.payload
 		},
+		removeImagePath(state, { payload }) {
+			state.creating.paths = state.creating.paths.filter(
+				(path) => path !== payload
+			)
+		},
+		setImagePath(state, { payload }) {
+			state.creating.paths = payload
+		},
 		setEdit(state, { payload }) {
-			state.creating.isEditing = true
-			state.creating.editId = payload.id
+			state.edit.isEditing = true
+			state.edit.editId = payload.id
 		},
 		unsetEdit(state) {
-			state.creating.isEditing = false
-			state.creating.editId = ""
+			console.log("unsetEdit worked")
+			state.creating.paths = []
+			state.edit.isEditing = false
+			state.edit.isError = false
+			state.edit.editId = ""
+			state.edit.product = {} as SingleProductType
 		},
 	},
 	extraReducers: (builder) => {
@@ -173,9 +198,45 @@ export const productSlice = createSlice({
 			state.creating.isLoading = false
 			if (typeof action.payload === "string") toast.error(action.payload)
 		})
+
+		builder.addCase(fetchEdit.pending, (state, action) => {
+			state.edit.isLoading = true
+		})
+		builder.addCase(fetchEdit.fulfilled, (state, { payload }) => {
+			const { msg, product } = payload
+			toast.success(msg)
+			state.edit.product = product
+			state.edit.isError = false
+			state.edit.isLoading = false
+		})
+		builder.addCase(fetchEdit.rejected, (state, { payload }) => {
+			state.edit.isLoading = false
+			state.edit.isError = true
+			if (typeof payload === "string") toast.error(payload)
+		})
+		builder.addCase(updateProduct.pending, (state, action) => {
+			state.edit.isLoading = true
+		})
+		builder.addCase(updateProduct.fulfilled, (state, { payload }) => {
+			const { msg, product } = payload
+			toast.success(msg)
+			state.edit.isError = false
+			state.edit.isLoading = false
+		})
+		builder.addCase(updateProduct.rejected, (state, { payload }) => {
+			state.edit.isLoading = false
+			state.edit.isError = true
+			if (typeof payload === "string") toast.error(payload)
+		})
 	},
 })
 
-export const { setActiveImage, setEdit, unsetEdit } = productSlice.actions
+export const {
+	setActiveImage,
+	setEdit,
+	unsetEdit,
+	setImagePath,
+	removeImagePath,
+} = productSlice.actions
 
 export default productSlice.reducer
