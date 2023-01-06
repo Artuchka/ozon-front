@@ -2,6 +2,7 @@ import React, {
 	ChangeEvent,
 	FormEvent,
 	FormEventHandler,
+	MouseEvent,
 	RefObject,
 	useEffect,
 	useRef,
@@ -17,7 +18,7 @@ import {
 	uploadImages,
 } from "../store/features/product/thunks"
 import axios from "axios"
-import { ozonAPI } from "../axios/customFetch"
+import { ozonAPI, serverURL } from "../axios/customFetch"
 import { selectProducts } from "../store/features/product/selectors"
 import {
 	PropertyInput,
@@ -29,6 +30,7 @@ import { useLocation, useParams } from "react-router-dom"
 import qs from "query-string"
 import {
 	SingleProductType,
+	removeImagePath,
 	unsetEdit,
 } from "../store/features/product/productSlice"
 import { Loading } from "../components/Loading"
@@ -86,6 +88,11 @@ export const CreateNew = () => {
 
 	if (edit.isLoading || edit.isLoading) {
 		return <Loading />
+	}
+
+	const handleImageRemove = (e: MouseEvent<HTMLImageElement>) => {
+		const img = e.target as HTMLImageElement
+		dispatch(removeImagePath(img.alt))
 	}
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -184,6 +191,16 @@ export const CreateNew = () => {
 					onChange={handleFileChange}
 					required
 				/>
+				<div className="images-container">
+					{filePaths?.map((image, index) => (
+						<img
+							key={index}
+							src={`${serverURL}${image}`}
+							alt={image}
+							onClick={handleImageRemove}
+						/>
+					))}
+				</div>
 				<button
 					className="btn btn--contained btn--rounded btn--tall"
 					type="submit"

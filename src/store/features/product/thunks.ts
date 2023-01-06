@@ -28,7 +28,7 @@ export const updateProduct = createAsyncThunk(
 		try {
 			const resp = await ozonAPI(`/products/${id}`, {
 				data: formData,
-				method: "post",
+				method: "patch",
 				headers: { "content-type": "multipart/form-data" },
 			})
 			console.log("RESP = ", resp)

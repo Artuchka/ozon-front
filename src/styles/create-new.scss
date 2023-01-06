@@ -18,4 +18,23 @@
 			}
 		}
 	}
+
+	.images-container {
+		display: grid;
+		grid-template-rows: 150px;
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+		place-items: center;
+		img {
+			cursor: pointer;
+			height: 100%;
+			object-fit: cover;
+			aspect-ratio: 1/1;
+			outline: 2px solid transparent;
+			transition: opacity 0.3s ease-in-out, outline-color 0.3s ease-in-out;
+			&:hover {
+				outline-color: red;
+				opacity: 0.3;
+			}
+		}
+	}
 }

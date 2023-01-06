@@ -109,13 +109,18 @@ export const productSlice = createSlice({
 		setActiveImage(state, action) {
 			state.singleProduct.activeImage = action.payload
 		},
+		removeImagePath(state, { payload }) {
+			state.creating.paths = state.creating.paths.filter(
+				(path) => path !== payload
+			)
+		},
 		setEdit(state, { payload }) {
 			state.edit.isEditing = true
 			state.edit.editId = payload.id
 		},
 		unsetEdit(state) {
 			console.log("unsetEdit worked")
-
+			state.creating.paths = []
 			state.edit.isEditing = false
 			state.edit.editId = ""
 			state.edit.product = {} as SingleProductType
@@ -204,6 +209,7 @@ export const productSlice = createSlice({
 	},
 })
 
-export const { setActiveImage, setEdit, unsetEdit } = productSlice.actions
+export const { setActiveImage, setEdit, unsetEdit, removeImagePath } =
+	productSlice.actions
 
 export default productSlice.reducer
