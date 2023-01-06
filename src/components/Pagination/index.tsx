@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectProducts } from "../../store/features/product/selectors"
 import { AppDispatch } from "../../store/store"
 import { updateFilters } from "../../store/features/filter/filterSlice"
+import { selectFilters } from "../../store/features/filter/selector"
 
 export const Pagination = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { details, isLoading } = useSelector(selectProducts)
+	const { page } = useSelector(selectFilters)
 
 	if (isLoading) {
 		return <div>Loading...</div>
@@ -27,7 +29,9 @@ export const Pagination = () => {
 					return (
 						<button
 							key={ind}
-							className={`${style.page} btn btn--contained btn--rounded btn--square btn--no-padding `}
+							className={`${
+								Number(page) === ind + 1 ? "btn--contained" : ""
+							} btn  btn--rounded btn--square btn--no-padding `}
 							onClick={handleChange}
 							value={ind + 1}
 						>
