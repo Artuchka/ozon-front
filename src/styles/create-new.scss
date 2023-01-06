@@ -21,9 +21,10 @@
 
 	.images-container {
 		display: grid;
-		grid-template-rows: 150px;
+		grid-auto-rows: 150px;
 		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 		place-items: center;
+		gap: 1rem;
 		img {
 			cursor: pointer;
 			height: 100%;

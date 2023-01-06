@@ -31,6 +31,7 @@ import qs from "query-string"
 import {
 	SingleProductType,
 	removeImagePath,
+	setImagePath,
 	unsetEdit,
 } from "../store/features/product/productSlice"
 import { Loading } from "../components/Loading"
@@ -66,6 +67,7 @@ export const CreateNew = () => {
 			return
 		}
 
+		if (edit.isError) return
 		if (!edit.isLoading && (!edit.product || edit.editId !== editingId)) {
 			dispatch(fetchEdit(editingId as string))
 		}
@@ -81,7 +83,8 @@ export const CreateNew = () => {
 				setSpecs,
 				setCompanies,
 				setCategories,
-				setTags
+				setTags,
+				(data: string[]) => dispatch(setImagePath(data))
 			)
 		}
 	}, [edit.isLoading, edit.editId, editingId])
@@ -90,6 +93,14 @@ export const CreateNew = () => {
 		return <Loading />
 	}
 
+	if (edit.isError) {
+		return (
+			<>
+				<h1>У нас нет такого товара</h1>
+				<p>Сожалеем, что вы попали на эту страницу</p>
+			</>
+		)
+	}
 	const handleImageRemove = (e: MouseEvent<HTMLImageElement>) => {
 		const img = e.target as HTMLImageElement
 		dispatch(removeImagePath(img.alt))
@@ -189,7 +200,7 @@ export const CreateNew = () => {
 					name="file"
 					accept="image/*"
 					onChange={handleFileChange}
-					required
+					required={filePaths?.length === 0}
 				/>
 				<div className="images-container">
 					{filePaths?.map((image, index) => (
@@ -218,7 +229,8 @@ function setupInputs(
 	setSpecs: Function,
 	setCompanies: Function,
 	setCategories: Function,
-	setTags: Function
+	setTags: Function,
+	setPaths: Function
 ) {
 	let inp = formRef.current?.title as unknown as HTMLInputElement
 	inp.value = product.title
@@ -233,4 +245,5 @@ function setupInputs(
 	setCategories(product.categories)
 	setCompanies(product.companies)
 	setTags(product.tags)
+	setPaths(product.images)
 }

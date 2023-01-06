@@ -5,6 +5,7 @@ import {
 	getAllProducts,
 	getMyProducts,
 	getSingleProduct,
+	updateProduct,
 	uploadImages,
 } from "./thunks"
 import { toast } from "react-toastify"
@@ -79,6 +80,7 @@ type CreatingType = {
 type EditType = {
 	isLoading: boolean
 	isEditing: boolean
+	isError: boolean
 	editId: string
 	product: SingleProductType
 }
@@ -114,6 +116,9 @@ export const productSlice = createSlice({
 				(path) => path !== payload
 			)
 		},
+		setImagePath(state, { payload }) {
+			state.creating.paths = payload
+		},
 		setEdit(state, { payload }) {
 			state.edit.isEditing = true
 			state.edit.editId = payload.id
@@ -122,6 +127,7 @@ export const productSlice = createSlice({
 			console.log("unsetEdit worked")
 			state.creating.paths = []
 			state.edit.isEditing = false
+			state.edit.isError = false
 			state.edit.editId = ""
 			state.edit.product = {} as SingleProductType
 		},
@@ -200,16 +206,37 @@ export const productSlice = createSlice({
 			const { msg, product } = payload
 			toast.success(msg)
 			state.edit.product = product
+			state.edit.isError = false
 			state.edit.isLoading = false
 		})
 		builder.addCase(fetchEdit.rejected, (state, { payload }) => {
 			state.edit.isLoading = false
+			state.edit.isError = true
+			if (typeof payload === "string") toast.error(payload)
+		})
+		builder.addCase(updateProduct.pending, (state, action) => {
+			state.edit.isLoading = true
+		})
+		builder.addCase(updateProduct.fulfilled, (state, { payload }) => {
+			const { msg, product } = payload
+			toast.success(msg)
+			state.edit.isError = false
+			state.edit.isLoading = false
+		})
+		builder.addCase(updateProduct.rejected, (state, { payload }) => {
+			state.edit.isLoading = false
+			state.edit.isError = true
 			if (typeof payload === "string") toast.error(payload)
 		})
 	},
 })
 
-export const { setActiveImage, setEdit, unsetEdit, removeImagePath } =
-	productSlice.actions
+export const {
+	setActiveImage,
+	setEdit,
+	unsetEdit,
+	setImagePath,
+	removeImagePath,
+} = productSlice.actions
 
 export default productSlice.reducer

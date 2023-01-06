@@ -32,7 +32,7 @@ export const updateProduct = createAsyncThunk(
 				headers: { "content-type": "multipart/form-data" },
 			})
 			console.log("RESP = ", resp)
-			return resp
+			return resp.data
 		} catch (error: any) {
 			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
