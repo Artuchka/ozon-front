@@ -12,6 +12,8 @@ export const Reviews = () => {
 	const { myReviews } = useSelector(selectReviews)
 	const dispatch = useDispatch<AppDispatch>()
 	useEffect(() => {
+		document.title = `Мои отзывы - OZON`
+
 		dispatch(getMyReviews())
 	}, [])
 	console.log(myReviews)

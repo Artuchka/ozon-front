@@ -11,6 +11,7 @@ export const MyProducts = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { myProducts } = useSelector(selectProducts)
 	useEffect(() => {
+		document.title = "Мои товары - OZON"
 		dispatch(getMyProducts())
 		dispatch(getAllBookmarks())
 	}, [])

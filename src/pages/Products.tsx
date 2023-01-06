@@ -19,6 +19,8 @@ export const Products = () => {
 	const { loading: gettingUser } = useSelector(selectAuth)
 
 	useEffect(() => {
+		document.title = "Товары"
+
 		if (gettingUser) return
 		dispatch(getAllProducts())
 		dispatch(getAllBookmarks())

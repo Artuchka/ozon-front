@@ -46,6 +46,10 @@ export const CreateNew = () => {
 	const { paths: filePaths } = creating
 
 	useEffect(() => {
+		document.title = "Новый товар"
+	}, [])
+
+	useEffect(() => {
 		console.log("SMTH CHANGED")
 
 		if (!editingId) return

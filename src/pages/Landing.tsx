@@ -1,7 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 
 export const Landing = () => {
+	useEffect(() => {
+		document.title = "OZON - Интернет-магазин"
+	}, [])
 	return (
 		<div className="landing">
 			<Link to="/products">go shopping</Link>

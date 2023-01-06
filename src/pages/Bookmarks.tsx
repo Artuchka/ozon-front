@@ -10,6 +10,7 @@ export const Bookmarks = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { bookmarks, isLoading } = useSelector(selectBookmarks)
 	useEffect(() => {
+		document.title = "Моё избранное - OZON"
 		dispatch(getAllBookmarks())
 	}, [])
 

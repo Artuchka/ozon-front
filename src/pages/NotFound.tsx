@@ -1,6 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 export const NotFound = () => {
+	useEffect(() => {
+		document.title = "404 - Страница не найдена"
+	}, [])
 	return (
 		<div className="not-found-page">
 			<h1>404</h1>

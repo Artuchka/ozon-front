@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { BiFace } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
 import { selectAuth } from "../store/features/auth/selectors"
@@ -20,12 +20,24 @@ export const Personal = () => {
 		setOpen(true)
 	}
 
-	const { lastName, firstName, email, birthday, phone, location, gender } =
-		useSelector(selectAuth)
+	const {
+		lastName,
+		firstName,
+		email,
+		birthday,
+		username,
+		phone,
+		location,
+		gender,
+	} = useSelector(selectAuth)
 
 	const avatar = `https://avatars.dicebear.com/api/croodles/${gender}/${
 		lastName + firstName
 	}.svg?mood[]=happy&backgroundColor=%333999`
+
+	useEffect(() => {
+		document.title = `${username} Личный кабинет - OZON`
+	}, [])
 
 	return (
 		<div className="personal-page">
