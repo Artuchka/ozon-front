@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
 	createProduct,
+	fetchEdit,
 	getAllProducts,
 	getMyProducts,
 	getSingleProduct,
@@ -16,7 +17,7 @@ const product = {
 }
 export type ListItemProductType = typeof product
 
-type SingleProductType = {
+export type SingleProductType = {
 	isLoading: boolean
 	activeImage: string
 	averageRating: 5
@@ -42,7 +43,9 @@ type SingleProductType = {
 		}
 	]
 	specs: []
-	tags: []
+	tags: string[]
+	categories: string[]
+	companies: string[]
 	title: string
 	types: []
 	vendor: { avatar: string; username: string }
@@ -70,8 +73,10 @@ type DetailsType = {
 type CreatingType = {
 	paths: string[]
 	isLoading: boolean
+	product: SingleProductType
 	isEditing: boolean
 	editId: string
+	fetched: boolean
 }
 
 type InitState = {
@@ -85,11 +90,11 @@ type InitState = {
 }
 
 const initialState = {
-	singleProduct: { isLoading: true },
+	singleProduct: { isLoading: false },
 	isLoading: true,
 	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
 	// myProducts: []
-	creating: { isLoading: false },
+	creating: { isLoading: false, isEditing: false },
 } as InitState
 export const productSlice = createSlice({
 	name: "product",
@@ -103,8 +108,11 @@ export const productSlice = createSlice({
 			state.creating.editId = payload.id
 		},
 		unsetEdit(state) {
+			console.log("unsetEdit worked")
+
 			state.creating.isEditing = false
 			state.creating.editId = ""
+			state.creating.product = {} as SingleProductType
 		},
 	},
 	extraReducers: (builder) => {
@@ -149,14 +157,17 @@ export const productSlice = createSlice({
 		})
 		builder.addCase(getSingleProduct.pending, (state, action) => {
 			state.singleProduct.isLoading = true
+			state.creating.fetched = false
 		})
 		builder.addCase(getSingleProduct.fulfilled, (state, { payload }) => {
 			const { product } = payload
 			state.singleProduct = product
 			state.singleProduct.isLoading = false
+			state.creating.fetched = true
 		})
 		builder.addCase(getSingleProduct.rejected, (state, action) => {
 			state.singleProduct.isLoading = false
+			state.creating.fetched = true
 			if (typeof action.payload === "string") toast.error(action.payload)
 		})
 
@@ -172,6 +183,20 @@ export const productSlice = createSlice({
 		builder.addCase(uploadImages.rejected, (state, action) => {
 			state.creating.isLoading = false
 			if (typeof action.payload === "string") toast.error(action.payload)
+		})
+
+		builder.addCase(fetchEdit.pending, (state, action) => {
+			state.creating.isLoading = true
+		})
+		builder.addCase(fetchEdit.fulfilled, (state, { payload }) => {
+			const { msg, product } = payload
+			toast.success(msg)
+			state.creating.product = product
+			state.creating.isLoading = false
+		})
+		builder.addCase(fetchEdit.rejected, (state, { payload }) => {
+			state.creating.isLoading = false
+			if (typeof payload === "string") toast.error(payload)
 		})
 	},
 })

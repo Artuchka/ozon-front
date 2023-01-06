@@ -12,6 +12,7 @@ export type SpecType = {
 	value: string
 	link: string
 	id: string
+	_id?: string
 }
 
 type propsType = {
@@ -54,8 +55,10 @@ export const PropertyInput: FC<propsType> = ({ props, setProps }) => {
 		<>
 			<div className="specs">
 				{props.map((prop, index) => {
-					const keys = Object.keys(prop).filter((key) => key !== "id")
-					const { id } = prop
+					const keys = Object.keys(prop).filter(
+						(key) => key !== "id" && key !== "_id"
+					)
+					const id = prop.id ? prop.id : (prop._id as string)
 
 					return (
 						<div className="spec" key={id} id={id}>

@@ -2,6 +2,7 @@ import React, {
 	ChangeEvent,
 	FormEvent,
 	FormEventHandler,
+	RefObject,
 	useEffect,
 	useRef,
 	useState,
@@ -11,7 +12,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
 import {
 	createProduct,
-	getSingleProduct,
+	fetchEdit,
+	updateProduct,
 	uploadImages,
 } from "../store/features/product/thunks"
 import axios from "axios"
@@ -25,7 +27,10 @@ import { InputMultiple } from "../components/pageBlocks/inputs/InputMultiple"
 import { toast } from "react-toastify"
 import { useLocation, useParams } from "react-router-dom"
 import qs from "query-string"
-import { setEdit } from "../store/features/product/productSlice"
+import {
+	SingleProductType,
+	unsetEdit,
+} from "../store/features/product/productSlice"
 import { Loading } from "../components/Loading"
 
 export const CreateNew = () => {
@@ -42,21 +47,47 @@ export const CreateNew = () => {
 	const { editingId } = qs.parse(search)
 
 	console.log({ editingId })
-	const { creating } = useSelector(selectProducts)
-	const { paths: filePaths } = creating
+	const { creating, singleProduct } = useSelector(selectProducts)
+	const { paths: filePaths, isEditing } = creating
 
 	useEffect(() => {
-		console.log("SMTH CHANGED")
-
-		if (!editingId) return
-
-		console.log("WORKING ON EDITING")
-
-		dispatch(setEdit({ id: editingId }))
-		if (creating.isEditing) {
-			dispatch(getSingleProduct(creating.editId))
+		return () => {
+			if (creating.editId) {
+				dispatch(unsetEdit())
+			}
 		}
-	}, [creating.isEditing])
+	}, [])
+
+	useEffect(() => {
+		if (!editingId) {
+			dispatch(unsetEdit())
+			return
+		}
+
+		// console.log({ here: editingId })
+
+		if (
+			!creating.isLoading &&
+			(!creating.product || creating.editId !== editingId)
+		) {
+			dispatch(fetchEdit(editingId as string))
+		}
+
+		if (
+			!creating.isLoading &&
+			creating.product &&
+			Object.keys(creating.product).length > 0
+		) {
+			setupInputs(
+				formRef,
+				creating.product,
+				setSpecs,
+				setCompanies,
+				setCategories,
+				setTags
+			)
+		}
+	}, [creating.isLoading, creating.editId, editingId])
 
 	if (creating.isLoading) {
 		return <Loading />
@@ -81,7 +112,12 @@ export const CreateNew = () => {
 		formData.set("companies", JSON.stringify(companies))
 		formData.set("categories", JSON.stringify(categories))
 		formData.set("tags", JSON.stringify(tags))
-		dispatch(createProduct(formData))
+
+		if (isEditing) {
+			dispatch(updateProduct({ id: editingId, formData }))
+		} else {
+			dispatch(createProduct(formData))
+		}
 	}
 
 	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -155,9 +191,32 @@ export const CreateNew = () => {
 					className="btn btn--contained btn--rounded btn--tall"
 					type="submit"
 				>
-					Создать
+					{isEditing ? "Сохранить" : "Создать"}
 				</button>
 			</form>
 		</div>
 	)
+}
+
+function setupInputs(
+	formRef: RefObject<HTMLFormElement>,
+	product: SingleProductType,
+	setSpecs: Function,
+	setCompanies: Function,
+	setCategories: Function,
+	setTags: Function
+) {
+	let inp = formRef.current?.title as unknown as HTMLInputElement
+	inp.value = product.title
+
+	inp = formRef.current?.description
+	inp.value = product.description
+
+	inp = formRef.current?.price
+	inp.value = product.price
+
+	setSpecs(product.specs)
+	setCategories(product.categories)
+	setCompanies(product.companies)
+	setTags(product.tags)
 }
