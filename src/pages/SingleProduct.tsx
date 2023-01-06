@@ -28,6 +28,7 @@ export const SingleProduct = () => {
 			dispatch(getSingleProduct(id))
 		}
 	}, [id])
+
 	useEffect(() => {
 		if (!singleProduct.isLoading) {
 			dispatch(setActiveImage(images[0]))
@@ -38,6 +39,7 @@ export const SingleProduct = () => {
 	if (singleProduct.isLoading) {
 		return <Loading />
 	}
+
 	const {
 		title,
 		price,
@@ -50,11 +52,12 @@ export const SingleProduct = () => {
 		averageRating,
 		numOfReviews,
 		activeImage,
-		vendor: { avatar, username },
+		vendor,
 	} = singleProduct
+
 	console.log(singleProduct)
 
-	const radioTypes = types.map((item: string) => {
+	const radioTypes = types?.map((item: string) => {
 		return { label: item, value: item.trim() }
 	})
 
@@ -102,10 +105,14 @@ export const SingleProduct = () => {
 			<div className="info">
 				<div className="vendor">
 					<img
-						src={avatar ? serverURL + avatar : defaultImg}
+						src={
+							vendor?.avatar
+								? serverURL + vendor?.avatar
+								: defaultImg
+						}
 						alt=""
 					/>
-					<div className="username">{username}</div>
+					<div className="username">{vendor?.username}</div>
 				</div>
 				<form className="types" ref={orderConfigRef}>
 					<SelectRadio

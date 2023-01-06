@@ -97,7 +97,7 @@ type InitState = {
 }
 
 const initialState = {
-	singleProduct: { isLoading: false },
+	singleProduct: { isLoading: true },
 	isLoading: true,
 	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
 	creating: { isLoading: false },
@@ -177,7 +177,7 @@ export const productSlice = createSlice({
 		})
 		builder.addCase(getSingleProduct.fulfilled, (state, { payload }) => {
 			const { product } = payload
-			state.singleProduct = product
+			state.singleProduct = { ...state.singleProduct, ...product }
 			state.singleProduct.isLoading = false
 		})
 		builder.addCase(getSingleProduct.rejected, (state, action) => {
