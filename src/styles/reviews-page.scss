@@ -11,8 +11,8 @@
 
 		display: grid;
 		grid-template-areas:
-			"product title change-review-btn"
-			"product comment link";
+			"product title actions"
+			"product comment actions";
 		grid-template-columns: 100px auto 150px;
 		grid-template-rows: 1.3rem auto;
 		column-gap: 1rem;
@@ -40,16 +40,16 @@
 				border-radius: 0.5rem;
 			}
 		}
-		.link-to-review {
-			grid-area: link;
-			width: max-content;
-			justify-self: end;
-			margin-top: 0.5rem;
-		}
-		.change-review-btn {
-			grid-area: change-review-btn;
-			width: max-content;
-			justify-self: end;
+		.actions {
+			grid-area: actions;
+			display: flex;
+			flex-direction: column;
+			justify-self: flex-end;
+			align-items: flex-end;
+			gap: 0.5rem;
+			& > * {
+				width: max-content;
+			}
 		}
 	}
 }

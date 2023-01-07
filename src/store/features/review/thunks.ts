@@ -41,6 +41,18 @@ export const getSingleReview = createAsyncThunk(
 		}
 	}
 )
+export const deleteReview = createAsyncThunk(
+	"review/deleteReview",
+	async (reviewId: string, thunkAPI) => {
+		try {
+			const resp = await ozonAPI.delete(`/reviews/${reviewId}`)
+			console.log(resp)
+			return resp.data
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
 export const updateReview = createAsyncThunk(
 	"review/updateReview",
 	async (data: { reviewId: string; formData: any }, thunkAPI) => {

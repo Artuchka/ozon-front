@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
 	createReview,
+	deleteReview,
 	getMyReviews,
 	getSingleReview,
 	updateReview,
@@ -125,6 +126,20 @@ const reviewSlice = createSlice({
 		})
 		builder.addCase(updateReview.rejected, (state, { payload }) => {
 			state.edit.isLoading = false
+			if (typeof payload === "string") {
+				toast.error(payload)
+			}
+		})
+
+		builder.addCase(deleteReview.pending, (state, action) => {
+			state.isLoading = true
+		})
+		builder.addCase(deleteReview.fulfilled, (state, { payload }) => {
+			state.isLoading = false
+			toast.success(payload.msg)
+		})
+		builder.addCase(deleteReview.rejected, (state, { payload }) => {
+			state.isLoading = false
 			if (typeof payload === "string") {
 				toast.error(payload)
 			}

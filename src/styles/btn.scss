@@ -48,6 +48,12 @@
 			color: var(--primary-color);
 		}
 	}
+	&--warn {
+		color: var(--error-color-light);
+		&:hover {
+			color: var(--error-color);
+		}
+	}
 	&--transparent {
 		background: transparent;
 	}
