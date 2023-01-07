@@ -1,5 +1,8 @@
 import React, { FC, ReactNode, useEffect } from "react"
 import style from "./style.module.scss"
+import { useDispatch } from "react-redux"
+import { AppDispatch } from "../../store/store"
+import { unsetEditReview } from "../../store/features/review/reviewSlice"
 
 type PropType = {
 	open: boolean
@@ -7,9 +10,8 @@ type PropType = {
 	children?: ReactNode
 }
 export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
-	const closeModal = () => {
-		setOpen(false)
-	}
+	const dispatch = useDispatch<AppDispatch>()
+
 	useEffect(() => {
 		const closeIfOutside = (e: MouseEvent) => {
 			let outside = false
@@ -24,9 +26,9 @@ export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
 				})
 			})
 
-			if (!outside) return
-
-			closeModal()
+			if (outside) {
+				setOpen(false)
+			}
 		}
 		window.addEventListener("click", closeIfOutside)
 
@@ -36,7 +38,7 @@ export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
 	return (
 		<div className={`${style.modal} ${open ? style.open : ""}`}>
 			<div className={style["modal-inner"]}>
-				<div className={style.close} onClick={closeModal}>
+				<div className={style.close} onClick={() => setOpen(false)}>
 					<span></span>
 					<span></span>
 				</div>

@@ -4,12 +4,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectReviews } from "../../store/features/review/selectors"
 import { AppDispatch } from "../../store/store"
 import {
+	Review,
 	setOpenReviewModal,
 	unsetEditReview,
 } from "../../store/features/review/reviewSlice"
 import style from "./style.module.scss"
 import { Loading } from "../Loading"
-import { createReview } from "../../store/features/review/thunks"
+import {
+	createReview,
+	getSingleReview,
+	updateReview,
+} from "../../store/features/review/thunks"
 
 export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 	const { isModalOpen, edit } = useSelector(selectReviews)
@@ -17,13 +22,19 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { isEdit, editId } = edit
 
-	console.log(edit)
+	useEffect(() => {
+		if (!isEdit) return
 
-	// useEffect(() => {
-	// 	if (edit.isEdit) {
-	// 		console.log("fetching review")
-	// 	}
-	// }, [editId, isEdit])
+		if (edit.isLoading) return
+
+		if (!edit.review || edit?.review?._id !== editId) {
+			dispatch(getSingleReview(editId))
+			return
+		}
+
+		console.log("setting form ref")
+		presetInputs(formRef.current, edit.review)
+	}, [editId, isEdit, edit.isLoading])
 
 	if (productId === "") {
 		return <Loading />
@@ -32,20 +43,22 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const formData = new FormData(formRef.current)
-		formData.set("productId", productId)
-		dispatch(createReview(formData))
+
+		if (isEdit) {
+			dispatch(updateReview({ reviewId: editId, formData }))
+		} else {
+			formData.set("productId", productId)
+			dispatch(createReview(formData))
+		}
 	}
 
 	return (
 		<Modal
 			open={isModalOpen}
 			setOpen={(val: boolean) => {
-				console.log("val is = ", { val })
-				console.log("isEdit = ", edit.isEdit)
-
 				dispatch(setOpenReviewModal(val))
 
-				if (edit.isEdit && !val) {
+				if (!val) {
 					dispatch(unsetEditReview())
 				}
 			}}
@@ -89,4 +102,15 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 			</form>
 		</Modal>
 	)
+}
+
+function presetInputs(form: HTMLFormElement, review: Review) {
+	let inp = form.title as unknown as HTMLInputElement
+	inp.value = review.title
+
+	inp = form.comment as HTMLInputElement
+	inp.value = review.comment
+
+	inp = form.rating as HTMLInputElement
+	inp.value = review.rating.toString()
 }

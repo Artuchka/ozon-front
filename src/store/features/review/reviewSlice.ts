@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { createReview, getMyReviews } from "./thunks"
+import {
+	createReview,
+	getMyReviews,
+	getSingleReview,
+	updateReview,
+} from "./thunks"
 import { toast } from "react-toastify"
 
-type Review = {
+export type Review = {
 	id: string
 	title: string
 	comment: string
@@ -29,6 +34,8 @@ type Review = {
 type EditType = {
 	isEdit: boolean
 	editId: string
+	isLoading: boolean
+	review: Review
 }
 
 type initType = {
@@ -44,6 +51,8 @@ const initialState = {
 	edit: {
 		isEdit: false,
 		editId: "",
+		isLoading: false,
+		review: {} as Review,
 	},
 } as initType
 
@@ -87,6 +96,35 @@ const reviewSlice = createSlice({
 		})
 		builder.addCase(getMyReviews.rejected, (state, { payload }) => {
 			state.isLoading = false
+			if (typeof payload === "string") {
+				toast.error(payload)
+			}
+		})
+
+		builder.addCase(getSingleReview.pending, (state, action) => {
+			state.edit.isLoading = true
+		})
+		builder.addCase(getSingleReview.fulfilled, (state, { payload }) => {
+			state.edit.review = payload.review
+			state.edit.isLoading = false
+		})
+		builder.addCase(getSingleReview.rejected, (state, { payload }) => {
+			state.edit.isLoading = false
+			if (typeof payload === "string") {
+				toast.error(payload)
+			}
+		})
+
+		builder.addCase(updateReview.pending, (state, action) => {
+			state.edit.isLoading = true
+		})
+		builder.addCase(updateReview.fulfilled, (state, { payload }) => {
+			state.edit.review = payload.review
+			state.edit.isLoading = false
+			toast.success(payload.msg)
+		})
+		builder.addCase(updateReview.rejected, (state, { payload }) => {
+			state.edit.isLoading = false
 			if (typeof payload === "string") {
 				toast.error(payload)
 			}
