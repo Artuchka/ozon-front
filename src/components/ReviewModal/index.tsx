@@ -16,7 +16,7 @@ import {
 	updateReview,
 } from "../../store/features/review/thunks"
 
-export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
+export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 	const { isModalOpen, edit } = useSelector(selectReviews)
 	const formRef = useRef(document.createElement("form"))
 	const dispatch = useDispatch<AppDispatch>()
@@ -58,7 +58,7 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 
 		if (isEdit) {
 			dispatch(updateReview({ reviewId: editId, formData }))
-		} else {
+		} else if (productId) {
 			formData.set("productId", productId)
 			dispatch(createReview(formData))
 		}
@@ -85,6 +85,7 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 						required
 						defaultValue={"заговоочек"}
 						name="title"
+						disabled={edit.isLoading}
 					/>
 					<input
 						className="input input--rounded"
@@ -93,6 +94,7 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 						placeholder="Введите комментарий"
 						required
 						defaultValue={"комментик"}
+						disabled={edit.isLoading}
 					/>
 					<input
 						className="input input--rounded"
@@ -103,6 +105,7 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 						max={5}
 						required
 						defaultValue={5}
+						disabled={edit.isLoading}
 					/>
 				</div>
 				<button

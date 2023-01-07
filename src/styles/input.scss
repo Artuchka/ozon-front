@@ -8,6 +8,10 @@
 		border-color: var(--primary-color);
 	}
 
+	&:disabled {
+		opacity: 0.3;
+	}
+
 	&:valid {
 		border-color: var(--success-color);
 	}

@@ -7,6 +7,11 @@ import { getMyReviews } from "../store/features/review/thunks"
 import { serverURL } from "../axios/customFetch"
 import { Link } from "react-router-dom"
 import { HashLink } from "react-router-hash-link"
+import {
+	setEditReview,
+	setOpenReviewModal,
+} from "../store/features/review/reviewSlice"
+import { ReviewModal } from "../components/ReviewModal"
 
 export const Reviews = () => {
 	const { myReviews } = useSelector(selectReviews)
@@ -18,8 +23,14 @@ export const Reviews = () => {
 	}, [])
 	console.log(myReviews)
 
+	const handleChangeReview = (reviewId: string) => {
+		dispatch(setEditReview(reviewId))
+		dispatch(setOpenReviewModal(true))
+	}
+
 	return (
 		<div className="my-reviews-page">
+			<ReviewModal />
 			<div className="reviews">
 				{myReviews.map((review) => {
 					const image = serverURL + review.product?.images[0]
@@ -51,6 +62,12 @@ export const Reviews = () => {
 							>
 								Перейти к отзыву
 							</HashLink>
+							<button
+								className="btn btn--light change-review-btn"
+								onClick={() => handleChangeReview(review._id)}
+							>
+								Изменить
+							</button>
 						</article>
 					)
 				})}
