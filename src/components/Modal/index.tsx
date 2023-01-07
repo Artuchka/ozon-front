@@ -7,6 +7,9 @@ type PropType = {
 	children?: ReactNode
 }
 export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
+	const closeModal = () => {
+		setOpen(false)
+	}
 	useEffect(() => {
 		const closeIfOutside = (e: MouseEvent) => {
 			let outside = false
@@ -21,9 +24,9 @@ export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
 				})
 			})
 
-			if (outside) {
-				setOpen(false)
-			}
+			if (!outside) return
+
+			closeModal()
 		}
 		window.addEventListener("click", closeIfOutside)
 
@@ -33,7 +36,7 @@ export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
 	return (
 		<div className={`${style.modal} ${open ? style.open : ""}`}>
 			<div className={style["modal-inner"]}>
-				<div className={style.close} onClick={() => setOpen(false)}>
+				<div className={style.close} onClick={closeModal}>
 					<span></span>
 					<span></span>
 				</div>

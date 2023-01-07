@@ -11,15 +11,22 @@ import { setActiveImage } from "../store/features/product/productSlice"
 import { SelectRadio } from "../components/pageBlocks/inputs/SelectRadio"
 import { serverURL } from "../axios/customFetch"
 import { ReviewModal } from "../components/ReviewModal"
-import { setOpenReviewModal } from "../store/features/review/reviewSlice"
+import {
+	setEditReview,
+	setOpenReviewModal,
+} from "../store/features/review/reviewSlice"
 import { AiFillStar, AiOutlineHeart } from "react-icons/ai"
 import { BsStarHalf } from "react-icons/bs"
 import { getIntlDate } from "../utils/intl"
 import { HashLink } from "react-router-hash-link"
+import { selectAuth } from "../store/features/auth/selectors"
+import { selectReviews } from "../store/features/review/selectors"
 
 export const SingleProduct = () => {
 	const { id } = useParams()
+	const { _id: userId } = useSelector(selectAuth)
 	const { singleProduct } = useSelector(selectProducts)
+	const { edit } = useSelector(selectReviews)
 	const dispatch = useDispatch<AppDispatch>()
 	const orderConfigRef = useRef(document.createElement("form"))
 
@@ -55,14 +62,17 @@ export const SingleProduct = () => {
 		vendor,
 	} = singleProduct
 
-	console.log(singleProduct)
-
 	const radioTypes = types?.map((item: string) => {
 		return { label: item, value: item.trim() }
 	})
 
 	const handleBuy = async () => {
 		const formData = new FormData(orderConfigRef.current)
+	}
+
+	const handleChangeReview = (reviewId: string) => {
+		dispatch(setEditReview(reviewId))
+		dispatch(setOpenReviewModal(true))
 	}
 
 	return (
@@ -177,13 +187,15 @@ export const SingleProduct = () => {
 							title,
 							comment,
 							rating,
-							author: { avatar, username },
+							author: { avatar, username, _id: authorID },
 							createdAt,
 							_id,
 						}) => {
 							return (
 								<article
-									className="review-item"
+									className={`review-item ${
+										authorID === userId ? "active" : ""
+									}`}
 									id={`review-${_id}`}
 									key={_id}
 								>
@@ -217,6 +229,16 @@ export const SingleProduct = () => {
 										}
 										alt=""
 									/>
+									{authorID === userId && (
+										<div
+											className="edit-btn btn--light"
+											onClick={() =>
+												handleChangeReview(_id)
+											}
+										>
+											Изменить
+										</div>
+									)}
 								</article>
 							)
 						}

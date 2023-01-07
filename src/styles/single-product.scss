@@ -118,10 +118,17 @@ html {
 		.review-item {
 			display: grid;
 			grid-template-areas:
+				"edit-btn edit-btn edit-btn"
 				"avatar title rating"
 				"avatar comment comment";
 			grid-template-columns: 50px auto 300px;
 			gap: 1rem;
+
+			&.active {
+				background-color: var(--gray-bg-light);
+				border: 20px solid var(--gray-bg-light);
+				border-radius: 0.5rem;
+			}
 			.avatar {
 				grid-area: avatar;
 				border-radius: 50%;
@@ -153,6 +160,10 @@ html {
 					// top: 0.1rem;
 					color: var(--star-color);
 				}
+			}
+			.edit-btn {
+				grid-area: edit-btn;
+				place-self: end;
 			}
 		}
 	}

@@ -2,6 +2,23 @@ import { createSlice } from "@reduxjs/toolkit"
 import { login, loginJWT, logout, register, updateUser } from "./thunks"
 import { toast } from "react-toastify"
 
+type InitStateType = {
+	token: string
+	_id: string
+	username: string
+	firstName: string
+	lastName: string
+	email: string
+	phone: string
+	createdAt: string
+	gender: string
+	role: string
+	birthday: string
+	avatar: string
+	location: string
+	loading: true
+}
+
 const initialState = {
 	token: null,
 	_id: null,

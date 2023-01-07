@@ -26,15 +26,25 @@ type Review = {
 	_id: string
 }
 
+type EditType = {
+	isEdit: boolean
+	editId: string
+}
+
 type initType = {
 	myReviews: Review[]
 	isModalOpen: boolean
 	isLoading: boolean
+	edit: EditType
 }
 const initialState = {
 	isModalOpen: false,
 	isLoading: false,
 	myReviews: [],
+	edit: {
+		isEdit: false,
+		editId: "",
+	},
 } as initType
 
 const reviewSlice = createSlice({
@@ -43,6 +53,14 @@ const reviewSlice = createSlice({
 	reducers: {
 		setOpenReviewModal(state, { payload }) {
 			state.isModalOpen = payload
+		},
+		setEditReview(state, { payload }) {
+			state.edit.isEdit = true
+			state.edit.editId = payload
+		},
+		unsetEditReview(state) {
+			state.edit.isEdit = false
+			state.edit.editId = ""
 		},
 	},
 	extraReducers(builder) {
@@ -76,6 +94,7 @@ const reviewSlice = createSlice({
 	},
 })
 
-export const { setOpenReviewModal } = reviewSlice.actions
+export const { setOpenReviewModal, setEditReview, unsetEditReview } =
+	reviewSlice.actions
 
 export default reviewSlice.reducer

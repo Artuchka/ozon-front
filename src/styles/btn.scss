@@ -37,6 +37,7 @@
 		background-color: black;
 	}
 	&--light {
+		cursor: pointer;
 		padding: 0;
 		transition: color 0.1s ease;
 		color: var(--primary-color-light);

@@ -1,20 +1,34 @@
-import React, { FC, FormEvent, useRef } from "react"
+import React, { FC, FormEvent, useEffect, useRef } from "react"
 import { Modal } from "../Modal"
 import { useDispatch, useSelector } from "react-redux"
 import { selectReviews } from "../../store/features/review/selectors"
 import { AppDispatch } from "../../store/store"
-import { setOpenReviewModal } from "../../store/features/review/reviewSlice"
+import {
+	setOpenReviewModal,
+	unsetEditReview,
+} from "../../store/features/review/reviewSlice"
 import style from "./style.module.scss"
 import { Loading } from "../Loading"
 import { createReview } from "../../store/features/review/thunks"
 
 export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
-	const { isModalOpen } = useSelector(selectReviews)
+	const { isModalOpen, edit } = useSelector(selectReviews)
 	const formRef = useRef(document.createElement("form"))
 	const dispatch = useDispatch<AppDispatch>()
+	const { isEdit, editId } = edit
+
+	console.log(edit)
+
+	// useEffect(() => {
+	// 	if (edit.isEdit) {
+	// 		console.log("fetching review")
+	// 	}
+	// }, [editId, isEdit])
+
 	if (productId === "") {
 		return <Loading />
 	}
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const formData = new FormData(formRef.current)
@@ -25,7 +39,16 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 	return (
 		<Modal
 			open={isModalOpen}
-			setOpen={(val: boolean) => dispatch(setOpenReviewModal(val))}
+			setOpen={(val: boolean) => {
+				console.log("val is = ", { val })
+				console.log("isEdit = ", edit.isEdit)
+
+				dispatch(setOpenReviewModal(val))
+
+				if (edit.isEdit && !val) {
+					dispatch(unsetEditReview())
+				}
+			}}
 		>
 			<h3>Вставьте и свои 5 копеек</h3>
 			<form onSubmit={handleSubmit} className={style.modal} ref={formRef}>
@@ -61,7 +84,7 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 					type="submit"
 					className="btn btn--rounded btn--tall btn--contained"
 				>
-					Добавить своё мнение
+					{edit.isEdit ? "Изменить" : "Добавить"} своё мнение
 				</button>
 			</form>
 		</Modal>
