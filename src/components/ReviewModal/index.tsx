@@ -32,9 +32,21 @@ export const ReviewModal: FC<{ productId: string }> = ({ productId }) => {
 			return
 		}
 
-		console.log("setting form ref")
+		console.log("setting custom form ref")
 		presetInputs(formRef.current, edit.review)
 	}, [editId, isEdit, edit.isLoading])
+
+	useEffect(() => {
+		if (isEdit || !isModalOpen) return
+
+		console.log("setting default form ref")
+
+		presetInputs(formRef.current, {
+			title: "Хороший отзыв",
+			comment: "лучший товар",
+			rating: 5,
+		} as Review)
+	}, [isModalOpen])
 
 	if (productId === "") {
 		return <Loading />
