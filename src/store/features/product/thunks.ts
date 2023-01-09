@@ -4,6 +4,19 @@ import { FilterType } from "../filter/filterSlice"
 import { RootState } from "../../store"
 import { setEdit } from "./productSlice"
 
+export const uploadImagesController = async (formData: any, thunkAPI: any) => {
+	try {
+		const resp = await ozonAPI.post("/products/uploadImage", formData, {
+			headers: { "content-type": "multipart/form-data" },
+		})
+		console.log("RESP = ", resp)
+		return resp.data
+	} catch (error: any) {
+		console.log("error caight = ", error)
+		return thunkAPI.rejectWithValue(error.response.data.msg)
+	}
+}
+
 export const createProduct = createAsyncThunk(
 	"product/create",
 	async (formData: any, thunkAPI) => {
@@ -41,18 +54,7 @@ export const updateProduct = createAsyncThunk(
 )
 export const uploadImages = createAsyncThunk(
 	"product/uploadImages",
-	async (formData: any, thunkAPI) => {
-		try {
-			const resp = await ozonAPI.post("/products/uploadImage", formData, {
-				headers: { "content-type": "multipart/form-data" },
-			})
-			console.log("RESP = ", resp)
-			return resp.data
-		} catch (error: any) {
-			console.log("error caight = ", error)
-			return thunkAPI.rejectWithValue(error.response.data.msg)
-		}
-	}
+	uploadImagesController
 )
 
 export const getAllProducts = createAsyncThunk(

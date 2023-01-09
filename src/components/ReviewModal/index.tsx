@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useRef } from "react"
+import React, { ChangeEvent, FC, FormEvent, useEffect, useRef } from "react"
 import { Modal } from "../Modal"
 import { useDispatch, useSelector } from "react-redux"
 import { selectReviews } from "../../store/features/review/selectors"
@@ -14,13 +14,16 @@ import {
 	createReview,
 	getSingleReview,
 	updateReview,
+	uploadImagesReview,
 } from "../../store/features/review/thunks"
+import { uploadImages } from "../../store/features/product/thunks"
 
 export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 	const { isModalOpen, edit } = useSelector(selectReviews)
 	const formRef = useRef(document.createElement("form"))
 	const dispatch = useDispatch<AppDispatch>()
-	const { isEdit, editId } = edit
+	const { isEdit, editId, imagePaths } = edit
+	console.log({ imagePaths })
 
 	useEffect(() => {
 		if (!isEdit) return
@@ -64,6 +67,17 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 		}
 	}
 
+	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault()
+
+		const files = e.target.files || []
+
+		let formData = new FormData()
+		for (let i = 0; i < files.length; i++) {
+			formData.append("images", files[i])
+		}
+		dispatch(uploadImagesReview(formData))
+	}
 	return (
 		<Modal
 			open={isModalOpen}
@@ -106,6 +120,16 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 						required
 						defaultValue={5}
 						disabled={edit.isLoading}
+					/>
+
+					<input
+						type="file"
+						className="input input--rounded"
+						multiple
+						name="file"
+						accept="image/*"
+						onChange={handleFileChange}
+						required={imagePaths?.length === 0}
 					/>
 				</div>
 				<button

@@ -5,6 +5,7 @@ import {
 	getMyReviews,
 	getSingleReview,
 	updateReview,
+	uploadImagesReview,
 } from "./thunks"
 import { toast } from "react-toastify"
 
@@ -37,6 +38,7 @@ type EditType = {
 	editId: string
 	isLoading: boolean
 	review: Review
+	imagePaths: string[]
 }
 
 type initType = {
@@ -54,6 +56,7 @@ const initialState = {
 		editId: "",
 		isLoading: false,
 		review: {} as Review,
+		imagePaths: [],
 	},
 } as initType
 
@@ -143,6 +146,22 @@ const reviewSlice = createSlice({
 			if (typeof payload === "string") {
 				toast.error(payload)
 			}
+		})
+
+		builder.addCase(uploadImagesReview.pending, (state, action) => {
+			state.edit.isLoading = true
+		})
+		builder.addCase(uploadImagesReview.fulfilled, (state, { payload }) => {
+			const { msg, paths } = payload
+			toast.success(msg)
+			console.log({ paths })
+
+			state.edit.imagePaths = paths
+			state.edit.isLoading = false
+		})
+		builder.addCase(uploadImagesReview.rejected, (state, action) => {
+			state.edit.isLoading = false
+			if (typeof action.payload === "string") toast.error(action.payload)
 		})
 	},
 })

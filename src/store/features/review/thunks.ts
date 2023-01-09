@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { ozonAPI } from "../../../axios/customFetch"
+import { uploadImagesController } from "../product/thunks"
 
 export const createReview = createAsyncThunk(
 	"review/createNew",
@@ -68,4 +69,9 @@ export const updateReview = createAsyncThunk(
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
+)
+
+export const uploadImagesReview = createAsyncThunk(
+	"review/uploadImages",
+	uploadImagesController
 )
