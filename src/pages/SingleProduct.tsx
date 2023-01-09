@@ -25,6 +25,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 
 // Import Swiper styles
 import "swiper/css"
+import { ImageViewer } from "../components/ImageViewer"
 export const SingleProduct = () => {
 	const [toggler, setToggler] = useState(false)
 
@@ -197,6 +198,9 @@ export const SingleProduct = () => {
 							images,
 							_id,
 						}) => {
+							const preparedImages = images.map(
+								(item) => serverURL + item
+							)
 							return (
 								<article
 									className={`review-item ${
@@ -237,7 +241,7 @@ export const SingleProduct = () => {
 									/>
 
 									<div className="images-wrapper">
-										{images.map((image) => {
+										{/* {images.map((image) => {
 											return (
 												<img
 													src={serverURL + image}
@@ -246,6 +250,8 @@ export const SingleProduct = () => {
 												/>
 											)
 										})}
+									*/}
+										<ImageViewer images={preparedImages} />
 									</div>
 
 									{authorID === userId && (

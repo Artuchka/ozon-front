@@ -8,8 +8,16 @@ type PropType = {
 	open: boolean
 	setOpen: Function
 	children?: ReactNode
+	className?: string
+	isWide?: boolean
 }
-export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
+export const Modal: FC<PropType> = ({
+	open,
+	setOpen,
+	children,
+	className,
+	isWide,
+}) => {
 	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
@@ -37,7 +45,12 @@ export const Modal: FC<PropType> = ({ open, setOpen, children }) => {
 
 	return (
 		<div className={`${style.modal} ${open ? style.open : ""}`}>
-			<div className={style["modal-inner"]}>
+			<div
+				className={style["modal-inner"]}
+				style={{
+					maxWidth: isWide ? "700px" : "350px",
+				}}
+			>
 				<div className={style.close} onClick={() => setOpen(false)}>
 					<span></span>
 					<span></span>
