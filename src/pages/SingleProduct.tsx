@@ -241,17 +241,11 @@ export const SingleProduct = () => {
 									/>
 
 									<div className="images-wrapper">
-										{/* {images.map((image) => {
-											return (
-												<img
-													src={serverURL + image}
-													alt={image}
-													className="image-item"
-												/>
-											)
-										})}
-									*/}
-										<ImageViewer images={preparedImages} />
+										{images.length > 0 && (
+											<ImageViewer
+												images={preparedImages}
+											/>
+										)}
 									</div>
 
 									{authorID === userId && (
