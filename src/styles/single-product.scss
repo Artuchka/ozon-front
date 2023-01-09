@@ -120,7 +120,8 @@ html {
 			grid-template-areas:
 				"edit-btn edit-btn edit-btn"
 				"avatar title rating"
-				"avatar comment comment";
+				"avatar comment comment"
+				"images-wrapper images-wrapper images-wrapper";
 			grid-template-columns: 50px auto 300px;
 			gap: 1rem;
 
@@ -159,6 +160,23 @@ html {
 					position: relative;
 					// top: 0.1rem;
 					color: var(--star-color);
+				}
+			}
+
+			.images-wrapper {
+				grid-area: images-wrapper;
+				display: grid;
+				grid-auto-flow: column;
+				grid-auto-rows: 100px;
+				border-radius: 0.5em;
+				border: 1px solid var(--primary-color);
+				width: 100%;
+				padding: 1rem;
+				img {
+					width: 100%;
+					height: 100%;
+					aspect-ratio: 1/1;
+					object-fit: contain;
 				}
 			}
 			.edit-btn {

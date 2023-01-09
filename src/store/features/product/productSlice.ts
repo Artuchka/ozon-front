@@ -37,6 +37,7 @@ export type SingleProductType = {
 				_id: string
 			}
 			rating: string
+			images: string[]
 			createdAt: string
 			comment: string
 			title: string

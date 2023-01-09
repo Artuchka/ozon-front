@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
 import { AppDispatch } from "../store/store"
@@ -21,8 +21,13 @@ import { getIntlDate } from "../utils/intl"
 import { HashLink } from "react-router-hash-link"
 import { selectAuth } from "../store/features/auth/selectors"
 import { selectReviews } from "../store/features/review/selectors"
+import { Swiper, SwiperSlide } from "swiper/react"
 
+// Import Swiper styles
+import "swiper/css"
 export const SingleProduct = () => {
+	const [toggler, setToggler] = useState(false)
+
 	const { id } = useParams()
 	const { _id: userId } = useSelector(selectAuth)
 	const { singleProduct } = useSelector(selectProducts)
@@ -189,6 +194,7 @@ export const SingleProduct = () => {
 							rating,
 							author: { avatar, username, _id: authorID },
 							createdAt,
+							images,
 							_id,
 						}) => {
 							return (
@@ -229,6 +235,19 @@ export const SingleProduct = () => {
 										}
 										alt=""
 									/>
+
+									<div className="images-wrapper">
+										{images.map((image) => {
+											return (
+												<img
+													src={serverURL + image}
+													alt={image}
+													className="image-item"
+												/>
+											)
+										})}
+									</div>
+
 									{authorID === userId && (
 										<div
 											className="edit-btn btn--light"

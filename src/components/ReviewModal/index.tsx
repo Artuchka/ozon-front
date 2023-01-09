@@ -58,7 +58,9 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const formData = new FormData(formRef.current)
-
+		for (let i = 0; i < imagePaths.length; i++) {
+			formData.append("images", imagePaths[i])
+		}
 		if (isEdit) {
 			dispatch(updateReview({ reviewId: editId, formData }))
 		} else if (productId) {
