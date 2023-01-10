@@ -15,6 +15,7 @@ import {
 	getSingleReview,
 	updateReview,
 	uploadImagesReview,
+	uploadVideosReview,
 } from "../../store/features/review/thunks"
 import { uploadImages } from "../../store/features/product/thunks"
 
@@ -22,7 +23,7 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 	const { isModalOpen, edit } = useSelector(selectReviews)
 	const formRef = useRef(document.createElement("form"))
 	const dispatch = useDispatch<AppDispatch>()
-	const { isEdit, editId, imagePaths } = edit
+	const { isEdit, editId, imagePaths, videoPaths } = edit
 	console.log({ imagePaths })
 
 	useEffect(() => {
@@ -61,6 +62,9 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 		for (let i = 0; i < imagePaths.length; i++) {
 			formData.append("images", imagePaths[i])
 		}
+		for (let i = 0; i < videoPaths.length; i++) {
+			formData.append("videos", videoPaths[i])
+		}
 		if (isEdit) {
 			dispatch(updateReview({ reviewId: editId, formData }))
 		} else if (productId) {
@@ -75,10 +79,19 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 		const files = e.target.files || []
 
 		let formData = new FormData()
-		for (let i = 0; i < files.length; i++) {
-			formData.append("images", files[i])
+
+		if (e.target.name === "image") {
+			for (let i = 0; i < files.length; i++) {
+				formData.append("images", files[i])
+			}
+			dispatch(uploadImagesReview(formData))
+			return
 		}
-		dispatch(uploadImagesReview(formData))
+
+		for (let i = 0; i < files.length; i++) {
+			formData.append("videos", files[i])
+		}
+		dispatch(uploadVideosReview(formData))
 	}
 	return (
 		<Modal
@@ -128,10 +141,19 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 						type="file"
 						className="input input--rounded"
 						multiple
-						name="file"
+						name="image"
 						accept="image/*"
 						onChange={handleFileChange}
-						required={imagePaths?.length === 0}
+						// required={imagePaths?.length === 0}
+					/>
+					<input
+						type="file"
+						className="input input--rounded"
+						multiple
+						name="video"
+						// accept="image/*"
+						onChange={handleFileChange}
+						// required={imagePaths?.length === 0}
 					/>
 				</div>
 				<button

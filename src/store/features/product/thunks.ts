@@ -16,6 +16,18 @@ export const uploadImagesController = async (formData: any, thunkAPI: any) => {
 		return thunkAPI.rejectWithValue(error.response.data.msg)
 	}
 }
+export const uploadVideosController = async (formData: any, thunkAPI: any) => {
+	try {
+		const resp = await ozonAPI.post("/products/uploadVideo", formData, {
+			headers: { "content-type": "multipart/form-data" },
+		})
+		console.log("RESP = ", resp)
+		return resp.data
+	} catch (error: any) {
+		console.log("error caight = ", error)
+		return thunkAPI.rejectWithValue(error.response.data.msg)
+	}
+}
 
 export const createProduct = createAsyncThunk(
 	"product/create",
