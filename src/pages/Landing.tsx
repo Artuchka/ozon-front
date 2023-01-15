@@ -8,7 +8,6 @@ export const Landing = () => {
 	}, [])
 	return (
 		<div className="landing">
-			<VideoPlayer src={videoURL} colorTheme="dark" />
 			<Link to="/products">go shopping</Link>
 			<div className="bold" style={{ fontWeight: "200" }}>
 				200

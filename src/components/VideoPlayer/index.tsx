@@ -21,12 +21,18 @@ import { SingleRange } from "../pageBlocks/inputs/SingleRange"
 import { usePrevious } from "../../hooks/usePrevious"
 
 export type colorThemeType = "default" | "primary" | "dark" | "light"
-type PropType = { className?: string; src: string; colorTheme?: colorThemeType }
+type PropType = {
+	className?: string
+	src: string
+	colorTheme?: colorThemeType
+	controls: "light" | "full"
+}
 
 export const VideoPlayer: FC<PropType> = ({
 	className = "",
 	src = "./",
 	colorTheme = "default",
+	controls = "light",
 }) => {
 	const [isPlaying, setPlaying] = useState(false)
 	const [isTheater, setTheater] = useState(false)
@@ -194,15 +200,17 @@ export const VideoPlayer: FC<PropType> = ({
 					onTimeUpdate={handleTimeUpdate}
 				></video>
 				<aside className={style.videoControls}>
-					<SingleRange
-						name="currentTime"
-						className={style["progressBar"]}
-						colorTheme="primary"
-						min={0}
-						max={videoLength}
-						onChange={handleTimeInput}
-						value={currentTime}
-					/>
+					{controls === "full" && (
+						<SingleRange
+							name="currentTime"
+							className={style["progressBar"]}
+							colorTheme="primary"
+							min={0}
+							max={videoLength}
+							onChange={handleTimeInput}
+							value={currentTime}
+						/>
+					)}
 					<div
 						className={style.playPauseButton}
 						onClick={handlePlayToggle}
@@ -226,22 +234,30 @@ export const VideoPlayer: FC<PropType> = ({
 							onChange={handleVolumeChange}
 						/>
 					</div>
-					<div
-						className={style.miniButton}
-						onClick={handleMiniToggle}
-					>
-						{isMini ? (
-							<TbPictureInPictureOff />
-						) : (
-							<TbPictureInPictureOn />
-						)}
-					</div>
-					<div
-						className={style.theaterButton}
-						onClick={handleTheaterToggle}
-					>
-						{isTheater ? <TbViewportNarrow /> : <TbViewportWide />}
-					</div>
+					{controls === "full" && (
+						<div
+							className={style.miniButton}
+							onClick={handleMiniToggle}
+						>
+							{isMini ? (
+								<TbPictureInPictureOff />
+							) : (
+								<TbPictureInPictureOn />
+							)}
+						</div>
+					)}
+					{controls === "full" && (
+						<div
+							className={style.theaterButton}
+							onClick={handleTheaterToggle}
+						>
+							{isTheater ? (
+								<TbViewportNarrow />
+							) : (
+								<TbViewportWide />
+							)}
+						</div>
+					)}
 					<div
 						className={style.fullscreenButton}
 						onClick={handleFullscreenToggle}
