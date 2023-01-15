@@ -121,7 +121,8 @@ html {
 				"edit-btn edit-btn edit-btn"
 				"avatar title rating"
 				"avatar comment comment"
-				"images-wrapper images-wrapper images-wrapper";
+				"images-wrapper images-wrapper images-wrapper"
+				"video video video";
 			grid-template-columns: 50px auto 300px;
 			gap: 1rem;
 
@@ -165,6 +166,12 @@ html {
 
 			.images-wrapper {
 				grid-area: images-wrapper;
+			}
+
+			.video-player {
+				grid-area: video;
+				width: 100%;
+				min-width: 300px;
 			}
 			.edit-btn {
 				grid-area: edit-btn;

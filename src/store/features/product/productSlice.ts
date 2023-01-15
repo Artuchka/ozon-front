@@ -38,6 +38,7 @@ export type SingleProductType = {
 			}
 			rating: string
 			images: string[]
+			videos: string[]
 			createdAt: string
 			comment: string
 			title: string

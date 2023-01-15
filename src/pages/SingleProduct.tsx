@@ -21,11 +21,10 @@ import { getIntlDate } from "../utils/intl"
 import { HashLink } from "react-router-hash-link"
 import { selectAuth } from "../store/features/auth/selectors"
 import { selectReviews } from "../store/features/review/selectors"
-import { Swiper, SwiperSlide } from "swiper/react"
-
-// Import Swiper styles
-import "swiper/css"
 import { ImageViewer } from "../components/ImageViewer"
+import { VideoPlayer } from "../components/VideoPlayer"
+import videojs from "video.js"
+import "video.js/dist/video-js.css"
 export const SingleProduct = () => {
 	const [toggler, setToggler] = useState(false)
 
@@ -35,6 +34,7 @@ export const SingleProduct = () => {
 	const { edit } = useSelector(selectReviews)
 	const dispatch = useDispatch<AppDispatch>()
 	const orderConfigRef = useRef(document.createElement("form"))
+	const playerRef = React.useRef(null)
 
 	useEffect(() => {
 		if (id) {
@@ -79,6 +79,32 @@ export const SingleProduct = () => {
 	const handleChangeReview = (reviewId: string) => {
 		dispatch(setEditReview(reviewId))
 		dispatch(setOpenReviewModal(true))
+	}
+
+	const videoJsOptions = {
+		autoplay: false,
+		controls: true,
+		responsive: true,
+		fluid: true,
+		sources: [
+			{
+				src: "/path/to/video.mp4",
+				type: "video/mp4",
+			},
+		],
+	}
+
+	const handlePlayerReady = (player: any) => {
+		playerRef.current = player
+
+		// You can handle player events here, for example:
+		player.on("waiting", () => {
+			videojs.log("player is waiting")
+		})
+
+		player.on("dispose", () => {
+			videojs.log("player will dispose")
+		})
 	}
 
 	return (
@@ -196,8 +222,11 @@ export const SingleProduct = () => {
 							author: { avatar, username, _id: authorID },
 							createdAt,
 							images,
+							videos,
 							_id,
 						}) => {
+							console.log({ videos })
+
 							const preparedImages = images.map(
 								(item) => serverURL + item
 							)
@@ -246,6 +275,15 @@ export const SingleProduct = () => {
 												images={preparedImages}
 											/>
 										)}
+									</div>
+
+									<div className="videos">
+										{videos?.map((video, index) => {
+											const url = serverURL + video
+											console.log({ url })
+
+											return <p>url</p>
+										})}
 									</div>
 
 									{authorID === userId && (
