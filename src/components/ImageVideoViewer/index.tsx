@@ -53,7 +53,7 @@ export const ImageVideoViewer: FC<PropType> = ({
 					return (
 						<VideoPlayer
 							src={src}
-							controls="none"
+							controls={[]}
 							colorTheme="primary"
 							className="videos-item"
 							onClick={() => handleClick(index)}
@@ -84,7 +84,14 @@ export const ImageVideoViewer: FC<PropType> = ({
 					{items[activeIndex].type === "video" && (
 						<VideoPlayer
 							src={items[activeIndex].src}
-							controls="full"
+							controls={[
+								"play",
+								"fullscreen",
+								"theater",
+								"pip",
+								"progress",
+								"volume",
+							]}
 							colorTheme="primary"
 							className={style.activeItem}
 						/>

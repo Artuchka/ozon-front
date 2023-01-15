@@ -32,7 +32,9 @@ type PropType = {
 	className?: string
 	src: string
 	colorTheme?: colorThemeType
-	controls: "none" | "light" | "full"
+	controls: Array<
+		"volume" | "play" | "fullscreen" | "theater" | "pip" | "progress"
+	>
 	onClick?: MouseEventHandler<HTMLDivElement>
 }
 
@@ -40,7 +42,7 @@ export const VideoPlayer: FC<PropType> = ({
 	className = "",
 	src = "./",
 	colorTheme = "default",
-	controls = "light",
+	controls = ["play", "fullscreen"],
 	onClick = () => {},
 }) => {
 	const [isPlaying, setPlaying] = useState(false)
@@ -164,7 +166,11 @@ export const VideoPlayer: FC<PropType> = ({
 		const onKeyUp = (e: any) => {
 			console.log(e)
 			const tagName = e.target.tagName.toLowerCase()
-			if (tagName === "input" || tagName === "textarea") {
+			if (
+				tagName === "input" ||
+				tagName === "textarea" ||
+				controls.length === 0
+			) {
 				return false
 			}
 			e.preventDefault()
@@ -206,13 +212,13 @@ export const VideoPlayer: FC<PropType> = ({
 					src={src}
 					className={style.video}
 					ref={videoRef}
-					onClick={controls !== "none" ? handlePlayToggle : () => {}}
+					onClick={controls.length > 0 ? handlePlayToggle : () => {}}
 					onLoadedMetadata={handleOnLoadMetadata}
 					onTimeUpdate={handleTimeUpdate}
 				></video>
-				{controls !== "none" && (
+				{controls.length > 0 && (
 					<aside className={style.videoControls}>
-						{controls === "full" && (
+						{controls.includes("progress") && (
 							<SingleRange
 								name="currentTime"
 								className={style["progressBar"]}
@@ -223,30 +229,34 @@ export const VideoPlayer: FC<PropType> = ({
 								value={currentTime}
 							/>
 						)}
-						<div
-							className={style.playPauseButton}
-							onClick={handlePlayToggle}
-						>
-							{isPlaying ? <FiPause /> : <FiPlay />}
-						</div>
-						<div className={style.volumeButton}>
-							<div onClick={handleVolumeToggle}>
-								{volumeLevel === 0 && <FiVolumeX />}
-								{volumeLevel > 0 && volumeLevel <= 50 && (
-									<FiVolume1 />
-								)}
-								{volumeLevel > 50 && <FiVolume2 />}
+						{controls.includes("play") && (
+							<div
+								className={style.playPauseButton}
+								onClick={handlePlayToggle}
+							>
+								{isPlaying ? <FiPause /> : <FiPlay />}
 							</div>
-							<SingleRange
-								colorTheme={colorTheme}
-								name="volumeLevel"
-								min={0}
-								max={100}
-								value={volumeLevel}
-								onChange={handleVolumeChange}
-							/>
-						</div>
-						{controls === "full" && (
+						)}
+						{controls.includes("volume") && (
+							<div className={style.volumeButton}>
+								<div onClick={handleVolumeToggle}>
+									{volumeLevel === 0 && <FiVolumeX />}
+									{volumeLevel > 0 && volumeLevel <= 50 && (
+										<FiVolume1 />
+									)}
+									{volumeLevel > 50 && <FiVolume2 />}
+								</div>
+								<SingleRange
+									colorTheme={colorTheme}
+									name="volumeLevel"
+									min={0}
+									max={100}
+									value={volumeLevel}
+									onChange={handleVolumeChange}
+								/>
+							</div>
+						)}
+						{controls.includes("pip") && (
 							<div
 								className={style.miniButton}
 								onClick={handleMiniToggle}
@@ -258,7 +268,7 @@ export const VideoPlayer: FC<PropType> = ({
 								)}
 							</div>
 						)}
-						{controls === "full" && (
+						{controls.includes("theater") && (
 							<div
 								className={style.theaterButton}
 								onClick={handleTheaterToggle}
@@ -270,16 +280,18 @@ export const VideoPlayer: FC<PropType> = ({
 								)}
 							</div>
 						)}
-						<div
-							className={style.fullscreenButton}
-							onClick={handleFullscreenToggle}
-						>
-							{isFullscreen ? (
-								<BiExitFullscreen />
-							) : (
-								<BsFullscreen />
-							)}
-						</div>
+						{controls.includes("fullscreen") && (
+							<div
+								className={style.fullscreenButton}
+								onClick={handleFullscreenToggle}
+							>
+								{isFullscreen ? (
+									<BiExitFullscreen />
+								) : (
+									<BsFullscreen />
+								)}
+							</div>
+						)}
 					</aside>
 				)}
 			</div>
