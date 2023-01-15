@@ -100,6 +100,7 @@ export const Range: FC<proptype> = ({
 					name={name}
 					min={min}
 					max={max}
+					className={styles.rangeInput}
 				/>
 				<input
 					type="range"
@@ -108,6 +109,7 @@ export const Range: FC<proptype> = ({
 					name={name}
 					min={min}
 					max={max}
+					className={styles.rangeInput}
 				/>
 			</div>
 			<div className={styles["numbers"]}>

@@ -13,7 +13,7 @@
 	--thumb-shadow: rgb(126, 129, 163);
 }
 
-input[type="range"] {
+.rangeInput {
 	min-height: calc(var(--thumb-size) + 10px);
 	box-sizing: border-box;
 	appearance: none;
@@ -83,7 +83,7 @@ input[type="range"] {
 	position: relative;
 	min-height: var(--slider-size);
 
-	input[type="range"] {
+	.rangeInput {
 		position: absolute;
 
 		// &:nth-child(1) {
