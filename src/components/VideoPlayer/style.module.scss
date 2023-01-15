@@ -11,7 +11,11 @@
 	--padding-inline: 2rem;
 
 	&.theater {
-		background-color: black;
+		// background-color: black;
+		.innerWrapper {
+			box-shadow: 9rem 0 10rem 0 rgba(0, 0, 0, 0.5),
+				-9rem 0 10rem 0 rgba(0, 0, 0, 0.5);
+		}
 	}
 	&.primary {
 		--controls-bg: linear-gradient(
@@ -63,6 +67,7 @@
 .innerWrapper {
 	position: relative;
 	max-width: 70%;
+	transition: box-shadow 0.8s ease-in-out;
 }
 
 .video {

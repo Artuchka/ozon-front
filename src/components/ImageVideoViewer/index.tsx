@@ -1,4 +1,10 @@
-import React, { FC, useState } from "react"
+import React, {
+	FC,
+	useEffect,
+	useState,
+	DetailedHTMLProps,
+	HtmlHTMLAttributes,
+} from "react"
 import style from "./style.module.scss"
 import { serverURL } from "../../axios/customFetch"
 import { Modal } from "../Modal"
@@ -46,6 +52,23 @@ export const ImageVideoViewer: FC<PropType> = ({
 			return newIndex
 		})
 	}
+
+	useEffect(() => {
+		const func = (e: any) => {
+			switch (e.code) {
+				case "ArrowLeft":
+					handleMove(-1)
+					break
+				case "ArrowRight":
+					handleMove(1)
+					break
+			}
+		}
+		window.addEventListener("keydown", func)
+		return () => {
+			window.removeEventListener("keydown", func)
+		}
+	}, [])
 	return (
 		<div className={style.wrapper}>
 			{items?.map(({ type, src }: ItemType, index) => {

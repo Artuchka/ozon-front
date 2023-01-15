@@ -162,39 +162,40 @@ export const VideoPlayer: FC<PropType> = ({
 		}
 	}, [isMini])
 
-	useEffect(() => {
-		const onKeyUp = (e: any) => {
-			console.log(e)
-			const tagName = e.target.tagName.toLowerCase()
-			if (
-				tagName === "input" ||
-				tagName === "textarea" ||
-				controls.length === 0
-			) {
-				return false
-			}
-			e.preventDefault()
-			switch (e.code) {
-				case "KeyF":
-					handleFullscreenToggle()
-					break
-				case "KeyT":
-					handleTheaterToggle()
-					break
-				case "KeyI":
-					handleMiniToggle()
-					break
-				case "KeyM":
-					handleVolumeToggle()
-					break
-			}
-		}
-		window.addEventListener("keyup", onKeyUp)
+	// UNCOMMENT FOR KEYBOARD ACCESS
+	// useEffect(() => {
+	// 	const onKeyUp = (e: any) => {
+	// 		console.log(e)
+	// 		const tagName = e.target.tagName.toLowerCase()
+	// 		if (
+	// 			tagName === "input" ||
+	// 			tagName === "textarea" ||
+	// 			controls.length === 0
+	// 		) {
+	// 			return false
+	// 		}
+	// 		e.preventDefault()
+	// 		switch (e.code) {
+	// 			case "KeyF":
+	// 				handleFullscreenToggle()
+	// 				break
+	// 			case "KeyT":
+	// 				handleTheaterToggle()
+	// 				break
+	// 			case "KeyI":
+	// 				handleMiniToggle()
+	// 				break
+	// 			case "KeyM":
+	// 				handleVolumeToggle()
+	// 				break
+	// 		}
+	// 	}
+	// 	window.addEventListener("keyup", onKeyUp)
 
-		return () => {
-			window.removeEventListener("keyup", onKeyUp)
-		}
-	})
+	// 	return () => {
+	// 		window.removeEventListener("keyup", onKeyUp)
+	// 	}
+	// }, [])
 
 	return (
 		<div
