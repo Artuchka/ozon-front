@@ -15,14 +15,16 @@
 		cursor: pointer;
 	}
 
-	.activeImage {
+	.activeItem {
 		width: 100%;
-		max-height: 300px;
+		max-height: 500px;
 		object-fit: contain;
 		cursor: initial;
 	}
 
 	.modal-wrapper {
+		max-width: 1000px;
+		width: 100%;
 		--arrow-size: 50px;
 		display: grid;
 		grid-template-areas:

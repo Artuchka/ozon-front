@@ -9,14 +9,20 @@ type PropType = {
 	setOpen: Function
 	children?: ReactNode
 	className?: string
-	isWide?: boolean
+	width?: "low" | "medium" | "high"
+}
+
+const maxWidthMap = {
+	low: "350px",
+	medium: "600px",
+	high: "900px",
 }
 export const Modal: FC<PropType> = ({
 	open,
 	setOpen,
 	children,
 	className,
-	isWide,
+	width = "low",
 }) => {
 	const dispatch = useDispatch<AppDispatch>()
 
@@ -48,7 +54,7 @@ export const Modal: FC<PropType> = ({
 			<div
 				className={style["modal-inner"]}
 				style={{
-					maxWidth: isWide ? "700px" : "350px",
+					maxWidth: maxWidthMap[width],
 				}}
 			>
 				<div className={style.close} onClick={() => setOpen(false)}>

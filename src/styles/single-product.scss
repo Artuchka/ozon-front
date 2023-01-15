@@ -168,10 +168,15 @@ html {
 				grid-area: images-wrapper;
 			}
 
-			.video-player {
+			.videos {
 				grid-area: video;
 				width: 100%;
 				min-width: 300px;
+				display: grid;
+				grid-template-columns: repeat(auto-full, 300px);
+				.videos-item {
+					width: 100%;
+				}
 			}
 			.edit-btn {
 				grid-area: edit-btn;

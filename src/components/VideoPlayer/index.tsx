@@ -1,4 +1,11 @@
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react"
+import React, {
+	ChangeEvent,
+	FC,
+	MouseEventHandler,
+	useEffect,
+	useRef,
+	useState,
+} from "react"
 
 import style from "./style.module.scss"
 import {
@@ -25,7 +32,8 @@ type PropType = {
 	className?: string
 	src: string
 	colorTheme?: colorThemeType
-	controls: "light" | "full"
+	controls: "none" | "light" | "full"
+	onClick?: MouseEventHandler<HTMLDivElement>
 }
 
 export const VideoPlayer: FC<PropType> = ({
@@ -33,6 +41,7 @@ export const VideoPlayer: FC<PropType> = ({
 	src = "./",
 	colorTheme = "default",
 	controls = "light",
+	onClick = () => {},
 }) => {
 	const [isPlaying, setPlaying] = useState(false)
 	const [isTheater, setTheater] = useState(false)
@@ -188,83 +197,91 @@ export const VideoPlayer: FC<PropType> = ({
 				${colorTheme === "primary" ? style.primary : ""}
 				${colorTheme === "dark" ? style.dark : ""}
 				${colorTheme === "light" ? style.light : ""}
+				${className || ""}
 				`}
+			onClick={onClick}
 		>
 			<div className={style.innerWrapper} ref={innerWrapperRef}>
 				<video
 					src={src}
 					className={style.video}
 					ref={videoRef}
-					onClick={handlePlayToggle}
+					onClick={controls !== "none" ? handlePlayToggle : () => {}}
 					onLoadedMetadata={handleOnLoadMetadata}
 					onTimeUpdate={handleTimeUpdate}
 				></video>
-				<aside className={style.videoControls}>
-					{controls === "full" && (
-						<SingleRange
-							name="currentTime"
-							className={style["progressBar"]}
-							colorTheme="primary"
-							min={0}
-							max={videoLength}
-							onChange={handleTimeInput}
-							value={currentTime}
-						/>
-					)}
-					<div
-						className={style.playPauseButton}
-						onClick={handlePlayToggle}
-					>
-						{isPlaying ? <FiPause /> : <FiPlay />}
-					</div>
-					<div className={style.volumeButton}>
-						<div onClick={handleVolumeToggle}>
-							{volumeLevel === 0 && <FiVolumeX />}
-							{volumeLevel > 0 && volumeLevel <= 50 && (
-								<FiVolume1 />
-							)}
-							{volumeLevel > 50 && <FiVolume2 />}
-						</div>
-						<SingleRange
-							colorTheme={colorTheme}
-							name="volumeLevel"
-							min={0}
-							max={100}
-							value={volumeLevel}
-							onChange={handleVolumeChange}
-						/>
-					</div>
-					{controls === "full" && (
+				{controls !== "none" && (
+					<aside className={style.videoControls}>
+						{controls === "full" && (
+							<SingleRange
+								name="currentTime"
+								className={style["progressBar"]}
+								colorTheme="primary"
+								min={0}
+								max={videoLength}
+								onChange={handleTimeInput}
+								value={currentTime}
+							/>
+						)}
 						<div
-							className={style.miniButton}
-							onClick={handleMiniToggle}
+							className={style.playPauseButton}
+							onClick={handlePlayToggle}
 						>
-							{isMini ? (
-								<TbPictureInPictureOff />
-							) : (
-								<TbPictureInPictureOn />
-							)}
+							{isPlaying ? <FiPause /> : <FiPlay />}
 						</div>
-					)}
-					{controls === "full" && (
+						<div className={style.volumeButton}>
+							<div onClick={handleVolumeToggle}>
+								{volumeLevel === 0 && <FiVolumeX />}
+								{volumeLevel > 0 && volumeLevel <= 50 && (
+									<FiVolume1 />
+								)}
+								{volumeLevel > 50 && <FiVolume2 />}
+							</div>
+							<SingleRange
+								colorTheme={colorTheme}
+								name="volumeLevel"
+								min={0}
+								max={100}
+								value={volumeLevel}
+								onChange={handleVolumeChange}
+							/>
+						</div>
+						{controls === "full" && (
+							<div
+								className={style.miniButton}
+								onClick={handleMiniToggle}
+							>
+								{isMini ? (
+									<TbPictureInPictureOff />
+								) : (
+									<TbPictureInPictureOn />
+								)}
+							</div>
+						)}
+						{controls === "full" && (
+							<div
+								className={style.theaterButton}
+								onClick={handleTheaterToggle}
+							>
+								{isTheater ? (
+									<TbViewportNarrow />
+								) : (
+									<TbViewportWide />
+								)}
+							</div>
+						)}
 						<div
-							className={style.theaterButton}
-							onClick={handleTheaterToggle}
+							className={style.fullscreenButton}
+							onClick={handleFullscreenToggle}
 						>
-							{isTheater ? (
-								<TbViewportNarrow />
+							{isFullscreen ? (
+								<BiExitFullscreen />
 							) : (
-								<TbViewportWide />
+								<BsFullscreen />
 							)}
 						</div>
-					)}
-					<div
-						className={style.fullscreenButton}
-						onClick={handleFullscreenToggle}
-					>
-						{isFullscreen ? <BiExitFullscreen /> : <BsFullscreen />}
-					</div>
-				</aside>
+					</aside>
+				)}
 			</div>
 		</div>
 	)

@@ -34,6 +34,7 @@
 		max-height: 90vh;
 		display: flex;
 		flex-direction: column;
+		transition: max-width 0.3s ease-in-out;
 	}
 
 	.close {

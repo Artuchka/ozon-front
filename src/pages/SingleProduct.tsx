@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { AppDispatch } from "../store/store"
 import { getSingleProduct } from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
@@ -21,11 +21,9 @@ import { getIntlDate } from "../utils/intl"
 import { HashLink } from "react-router-hash-link"
 import { selectAuth } from "../store/features/auth/selectors"
 import { selectReviews } from "../store/features/review/selectors"
-import { ImageViewer } from "../components/ImageViewer"
-import { VideoPlayer } from "../components/VideoPlayer"
-export const SingleProduct = () => {
-	const [toggler, setToggler] = useState(false)
+import { ImageVideoViewer } from "../components/ImageVideoViewer"
 
+export const SingleProduct = () => {
 	const { id } = useParams()
 	const { _id: userId } = useSelector(selectAuth)
 	const { singleProduct } = useSelector(selectProducts)
@@ -202,6 +200,9 @@ export const SingleProduct = () => {
 							const preparedImages = images.map(
 								(item) => serverURL + item
 							)
+							const preparedVideos = videos.map(
+								(item) => serverURL + item
+							)
 							return (
 								<article
 									className={`review-item ${
@@ -243,19 +244,11 @@ export const SingleProduct = () => {
 
 									<div className="images-wrapper">
 										{images.length > 0 && (
-											<ImageViewer
+											<ImageVideoViewer
 												images={preparedImages}
+												videos={preparedVideos}
 											/>
 										)}
-									</div>
-
-									<div className="videos">
-										{videos?.map((video, index) => {
-											const url = serverURL + video
-											console.log({ url })
-
-											return <p>url</p>
-										})}
 									</div>
 
 									{authorID === userId && (
