@@ -5,8 +5,56 @@
 	align-items: center;
 	background: transparent;
 
+	--controls-bg: ;
+	--padding-inline: 2rem;
+
 	&.theater {
 		background-color: black;
+	}
+	&.primary {
+		--controls-bg: linear-gradient(
+			to bottom,
+			transparent,
+			rgba(255 255 255 / 0.2) 20%,
+			rgba(255 255 255 / 0.4) 40%,
+			rgba(255 255 255 / 0.6) 60%,
+			rgba(255 255 255 / 0.8) 80%
+		);
+		.videoControls {
+			svg {
+				color: var(--primary-color-light);
+			}
+		}
+	}
+	&.light {
+		--controls-bg: linear-gradient(
+			to bottom,
+			transparent,
+			rgba(0 0 0 / 0.4) 20%,
+			rgba(0 0 0 / 0.65) 40%,
+			rgba(0 0 0 / 0.75) 60%,
+			rgba(0 0 0 / 0.8) 80%
+		);
+		.videoControls {
+			svg {
+				color: var(--primary-color-lighter);
+			}
+		}
+	}
+	&.dark {
+		--controls-bg: linear-gradient(
+			to bottom,
+			transparent,
+			rgba(230 230 230 / 0.4) 20%,
+			rgba(230 230 230 / 0.65) 40%,
+			rgba(230 230 230 / 0.75) 60%,
+			rgba(230 230 230 / 0.8) 80%
+		);
+		.videoControls {
+			svg {
+				color: var(--text-color-dark);
+			}
+		}
 	}
 }
 
@@ -28,23 +76,16 @@
 	right: 0;
 	left: 0;
 
-	background: linear-gradient(
-		to bottom,
-		transparent,
-		rgba(255 255 255 / 0.2) 20%,
-		rgba(255 255 255 / 0.4) 40%,
-		rgba(255 255 255 / 0.6) 60%,
-		rgba(255 255 255 / 0.8) 80%
-	);
-	height: 5rem;
+	background: var(--controls-bg);
+	height: 6rem;
 	display: flex;
-	align-items: center;
+	align-items: flex-end;
+	padding-bottom: 1rem;
 	gap: 2rem;
 	padding-inline: 2rem;
 	svg {
 		font-size: calc(0.8rem + 0.8cqw);
 		// font-size: 2rem;
-		color: var(--primary-color-light);
 	}
 
 	& > * {
@@ -60,4 +101,12 @@
 		align-items: center;
 		gap: 0.5rem;
 	}
+}
+
+.progressBar {
+	position: absolute;
+	right: var(--padding-inline);
+	left: var(--padding-inline);
+
+	top: 0rem;
 }

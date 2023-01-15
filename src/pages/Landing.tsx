@@ -8,10 +8,7 @@ export const Landing = () => {
 	}, [])
 	return (
 		<div className="landing">
-			<div className="test" style={{ backgroundColor: "orange" }}>
-				{/* <SingleRange /> */}
-			</div>
-			<VideoPlayer src={videoURL} />
+			<VideoPlayer src={videoURL} colorTheme="dark" />
 			<Link to="/products">go shopping</Link>
 			<div className="bold" style={{ fontWeight: "200" }}>
 				200
