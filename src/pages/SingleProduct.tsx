@@ -23,8 +23,6 @@ import { selectAuth } from "../store/features/auth/selectors"
 import { selectReviews } from "../store/features/review/selectors"
 import { ImageViewer } from "../components/ImageViewer"
 import { VideoPlayer } from "../components/VideoPlayer"
-import videojs from "video.js"
-import "video.js/dist/video-js.css"
 export const SingleProduct = () => {
 	const [toggler, setToggler] = useState(false)
 
@@ -79,32 +77,6 @@ export const SingleProduct = () => {
 	const handleChangeReview = (reviewId: string) => {
 		dispatch(setEditReview(reviewId))
 		dispatch(setOpenReviewModal(true))
-	}
-
-	const videoJsOptions = {
-		autoplay: false,
-		controls: true,
-		responsive: true,
-		fluid: true,
-		sources: [
-			{
-				src: "/path/to/video.mp4",
-				type: "video/mp4",
-			},
-		],
-	}
-
-	const handlePlayerReady = (player: any) => {
-		playerRef.current = player
-
-		// You can handle player events here, for example:
-		player.on("waiting", () => {
-			videojs.log("player is waiting")
-		})
-
-		player.on("dispose", () => {
-			videojs.log("player will dispose")
-		})
 	}
 
 	return (
