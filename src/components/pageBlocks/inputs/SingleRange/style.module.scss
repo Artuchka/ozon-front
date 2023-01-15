@@ -1,0 +1,109 @@
+.range {
+	// max-width: 1000px;
+	.title {
+		font-weight: 500;
+	}
+	--thumb-size: 20px;
+	--slider-size: calc(var(--thumb-size) + 10px);
+	// please add some px to slider-size(it is its' height, by the way)
+	// so that thumb doesn't overflow the slider `outline`
+
+	--slider-bg: var(--gray-text);
+	--thumb-bg: var(--primary-color);
+	--thumb-shadow: rgb(126, 129, 163);
+
+	&.primary {
+		--slider-bg: var(--primary-color-lighter);
+		--thumb-size: 25px;
+	}
+}
+
+.rangeInput {
+	min-height: calc(var(--thumb-size) + 10px);
+	box-sizing: border-box;
+	appearance: none;
+	width: 100%;
+	margin: 0;
+	padding: 0 0;
+	overflow: hidden;
+	border: 0;
+	border-radius: 100vmax;
+	outline: none;
+	background: linear-gradient(var(--slider-bg), var(--slider-bg)) no-repeat
+		center;
+	background-size: 100% 2px;
+
+	// idk why this was suggested
+	// pointer-events: none;
+
+	&:active,
+	&:focus {
+		outline: none;
+	}
+
+	&::-webkit-slider-thumb {
+		height: var(--thumb-size);
+		width: var(--thumb-size);
+		border-radius: var(--thumb-size);
+		background-color: var(--thumb-bg);
+
+		position: relative;
+		margin: clamp(
+				5px,
+				calc((var(--slider-size) - var(--thumb-size)) / 2),
+				100px
+			)
+			0;
+		cursor: pointer;
+		appearance: none;
+		pointer-events: all;
+		box-shadow: 0 0 4px 0.5px var(--thumb-shadow);
+		&::before {
+			content: " ";
+			display: block;
+			position: absolute;
+			top: 13px;
+			left: 100%;
+			width: 2000px;
+			height: 2px;
+		}
+	}
+
+	&::-moz-range-thumb {
+		-webkit-appearance: none;
+		pointer-events: all;
+		width: var(--thumb-size);
+		height: var(--thumb-size);
+		background-color: #fff;
+		border-radius: 50%;
+		box-shadow: 0 0 4px 0.5px var(--thumb-shadow);
+		background-color: var(--thumb-bg);
+		border: none;
+		cursor: pointer;
+	}
+}
+
+.sliders {
+	// uncomment under to see the use of variables
+	// outline: 1px solid red;
+	position: relative;
+	min-height: var(--slider-size);
+
+	.rangeInput {
+		position: absolute;
+
+		// &:nth-child(1) {
+		// 	&::-webkit-slider-thumb::before {
+		// 		background-color: red;
+		// 	}
+		// }
+
+		&:nth-child(2) {
+			background: none;
+
+			// &::-webkit-slider-thumb::before {
+			// 	background-color: grey;
+			// }
+		}
+	}
+}
