@@ -1,11 +1,4 @@
-import React, {
-	ChangeEvent,
-	FC,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react"
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 
 import style from "./style.module.scss"
 import {
@@ -109,6 +102,10 @@ export const VideoPlayer: FC<PropType> = ({
 		setCurrentTime(videoRef.current.currentTime)
 	}
 
+	const handleOnLoadMetadata = () => {
+		setVideoLength(videoRef.current.duration)
+	}
+
 	useEffect(() => {
 		videoRef.current.volume = volumeLevel / 100
 	}, [volumeLevel])
@@ -148,9 +145,36 @@ export const VideoPlayer: FC<PropType> = ({
 		}
 	}, [isMini])
 
-	const handleOnLoadMetadata = () => {
-		setVideoLength(videoRef.current.duration)
-	}
+	useEffect(() => {
+		const onKeyUp = (e: any) => {
+			console.log(e)
+			const tagName = e.target.tagName.toLowerCase()
+			if (tagName === "input" || tagName === "textarea") {
+				return false
+			}
+			e.preventDefault()
+			switch (e.code) {
+				case "KeyF":
+					handleFullscreenToggle()
+					break
+				case "KeyT":
+					handleTheaterToggle()
+					break
+				case "KeyI":
+					handleMiniToggle()
+					break
+				case "KeyM":
+					handleVolumeToggle()
+					break
+			}
+		}
+		window.addEventListener("keyup", onKeyUp)
+
+		return () => {
+			window.removeEventListener("keyup", onKeyUp)
+		}
+	})
+
 	return (
 		<div
 			className={`${style.wrapper}
@@ -183,7 +207,7 @@ export const VideoPlayer: FC<PropType> = ({
 						className={style.playPauseButton}
 						onClick={handlePlayToggle}
 					>
-						{isPlaying ? <FiPlay /> : <FiPause />}
+						{isPlaying ? <FiPause /> : <FiPlay />}
 					</div>
 					<div className={style.volumeButton}>
 						<div onClick={handleVolumeToggle}>
