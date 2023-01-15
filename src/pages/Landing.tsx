@@ -1,12 +1,17 @@
 import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
-
+import { VideoPlayer } from "../components/VideoPlayer"
+import videoURL from "./../assets/video/попутчик.mp4"
 export const Landing = () => {
 	useEffect(() => {
 		document.title = "OZON - Интернет-магазин"
 	}, [])
 	return (
 		<div className="landing">
+			<div className="test" style={{ backgroundColor: "orange" }}>
+				{/* <SingleRange /> */}
+			</div>
+			<VideoPlayer src={videoURL} />
 			<Link to="/products">go shopping</Link>
 			<div className="bold" style={{ fontWeight: "200" }}>
 				200
