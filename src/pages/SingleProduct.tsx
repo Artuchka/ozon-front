@@ -195,8 +195,6 @@ export const SingleProduct = () => {
 							videos,
 							_id,
 						}) => {
-							console.log({ videos })
-
 							const preparedImages = images.map(
 								(item) => serverURL + item
 							)

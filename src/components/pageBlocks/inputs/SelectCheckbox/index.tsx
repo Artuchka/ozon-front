@@ -4,7 +4,7 @@ import { ChangeEventHandler } from "react"
 
 type PropTypes = {
 	className?: string
-	title: string
+	title?: string
 	onChange: ChangeEventHandler<HTMLInputElement>
 	name: string
 	items: string[]
@@ -12,7 +12,7 @@ type PropTypes = {
 }
 
 export const SelectCheckbox: FC<PropTypes> = ({
-	title = "title",
+	title = null,
 	name = "different",
 	items = ["first", "second"],
 	onChange,
@@ -21,7 +21,7 @@ export const SelectCheckbox: FC<PropTypes> = ({
 }) => {
 	return (
 		<div className={`${className} ${styles.selectList}`}>
-			<h4 className={styles.title}>{title}</h4>
+			{!!title && <h4 className={styles.title}>{title}</h4>}
 			<ul className={styles.list}>
 				{items.map((value) => {
 					return (

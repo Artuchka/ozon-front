@@ -1,0 +1,18 @@
+.cart-page {
+	.heading {
+		display: flex;
+		align-items: center;
+		span {
+			position: relative;
+			top: -1rem;
+			font-weight: 300;
+			color: var(--gray-text);
+		}
+	}
+
+	.action-tab {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+}

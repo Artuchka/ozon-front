@@ -14,6 +14,8 @@ import { Bookmarks } from "./pages/Bookmarks"
 import { My } from "./layouts/My"
 import { Reviews } from "./pages/Reviews"
 import { MyProducts } from "./pages/MyProducts"
+import { Cart } from "./pages/Cart"
+import { Checkout } from "./pages/Checkout"
 
 function App() {
 	const user = useSelector(selectAuth)
@@ -56,6 +58,18 @@ function App() {
 								user={user}
 								outlet={<Bookmarks />}
 							/>
+						}
+					/>
+					<Route
+						path="/cart"
+						element={
+							<ProtectedRoute user={user} outlet={<Cart />} />
+						}
+					/>
+					<Route
+						path="/checkout"
+						element={
+							<ProtectedRoute user={user} outlet={<Checkout />} />
 						}
 					/>
 					<Route path="/products" element={<Products />} />

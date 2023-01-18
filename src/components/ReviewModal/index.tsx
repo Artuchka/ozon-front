@@ -24,7 +24,6 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 	const formRef = useRef(document.createElement("form"))
 	const dispatch = useDispatch<AppDispatch>()
 	const { isEdit, editId, imagePaths, videoPaths } = edit
-	console.log({ imagePaths })
 
 	useEffect(() => {
 		if (!isEdit) return
@@ -65,6 +64,7 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 		for (let i = 0; i < videoPaths.length; i++) {
 			formData.append("videos", videoPaths[i])
 		}
+
 		if (isEdit) {
 			dispatch(updateReview({ reviewId: editId, formData }))
 		} else if (productId) {

@@ -80,6 +80,7 @@ export const ImageVideoViewer: FC<PropType> = ({
 							colorTheme="primary"
 							className="videos-item"
 							onClick={() => handleClick(index)}
+							key={src}
 						/>
 					)
 				}
