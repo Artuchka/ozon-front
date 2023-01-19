@@ -14,7 +14,7 @@ import {
 } from "../../store/features/bookmark/thunks"
 import { selectBookmarks } from "../../store/features/bookmark/selector"
 import { setEdit } from "../../store/features/product/productSlice"
-import { updateOrder } from "../../store/features/order/thunks"
+import { addToCart, updateOrder } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
 import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"
 
@@ -26,6 +26,7 @@ export type ProductItemType = {
 	numOfReviews: number
 	editable?: boolean
 	_id: string
+	amount: number
 }
 // crossorigin=anonymos should work for images
 // or just set up cors correctly u stupid bih
@@ -41,6 +42,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 		title,
 		numOfReviews,
 		editable = null,
+		amount,
 	} = props
 	const image = images[0] === "" ? defaultImage : serverURL + images[0]
 
@@ -63,16 +65,19 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 	}
 
 	const handleAddToCart = () => {
-		const newItem: OrderItemType = {
-			product: _id,
-			amount: 1,
-		} as OrderItemType
-
 		dispatch(
-			updateOrder({
-				data: {
-					items: [...order.items, newItem],
-				} as OrderType,
+			addToCart({
+				productId: _id,
+				amount: 1,
+				orderId: order._id,
+			})
+		)
+	}
+	const handleRemoveFromCart = () => {
+		dispatch(
+			addToCart({
+				productId: _id,
+				amount: 0,
 				orderId: order._id,
 			})
 		)
@@ -107,12 +112,24 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 				{averageRating || 0} <AiOutlineStar className={style["star"]} />
 				{numOfReviews}
 			</div>
-			<button
-				className={"btn btn--rounded btn--contained btn--content"}
-				onClick={handleAddToCart}
-			>
-				В корзину
-			</button>
+			{amount === 0 && (
+				<button
+					className={"btn btn--rounded btn--contained btn--content"}
+					onClick={handleAddToCart}
+				>
+					В корзину
+				</button>
+			)}
+			{amount > 0 && (
+				<button
+					className={
+						"btn btn--rounded btn--contained btn--content btn--warn"
+					}
+					onClick={handleRemoveFromCart}
+				>
+					Убрать из корзины
+				</button>
+			)}
 		</div>
 	)
 }

@@ -23,7 +23,7 @@ import { selectAuth } from "../store/features/auth/selectors"
 import { selectReviews } from "../store/features/review/selectors"
 import { ImageVideoViewer } from "../components/ImageVideoViewer"
 import { OrderItemType, OrderType } from "../store/features/order/orderSlice"
-import { updateOrder } from "../store/features/order/thunks"
+import { addToCart, updateOrder } from "../store/features/order/thunks"
 import { selectOrder } from "../store/features/order/selector"
 
 export const SingleProduct = () => {
@@ -69,13 +69,12 @@ export const SingleProduct = () => {
 		_id,
 	} = singleProduct
 
+	const amountFound = order?.items?.filter((i) => i.product._id === _id)
+	const amount = amountFound?.length === 0 ? 0 : amountFound?.[0]?.amount
+
 	const radioTypes = types?.map((item: string) => {
 		return { label: item, value: item.trim() }
 	})
-
-	const handleBuy = async () => {
-		const formData = new FormData(orderConfigRef.current)
-	}
 
 	const handleChangeReview = (reviewId: string) => {
 		dispatch(setEditReview(reviewId))
@@ -83,17 +82,20 @@ export const SingleProduct = () => {
 	}
 
 	const handleAddToCart = () => {
-		const newItem: OrderItemType = {
-			product: _id,
-			amount: 1,
-		} as OrderItemType
-
-		let newItems = order.items ? [...order.items, newItem] : [newItem]
 		dispatch(
-			updateOrder({
-				data: {
-					items: newItems,
-				} as OrderType,
+			addToCart({
+				productId: _id,
+				amount: 1,
+				orderId: order._id,
+			})
+		)
+	}
+
+	const handleRemoveFromCart = () => {
+		dispatch(
+			addToCart({
+				productId: _id,
+				amount: 0,
 				orderId: order._id,
 			})
 		)
@@ -189,12 +191,24 @@ export const SingleProduct = () => {
 					<span>{Math.floor(price / 6)} ₽</span> &times; 6 месяцев в
 					FakeOzon Рассрочку
 				</div>
-				<button
-					className="btn btn--rounded btn--contained  btn--tall btn--warn"
-					onClick={handleAddToCart}
-				>
-					Добавить в корзину
-				</button>
+				{amount === 0 && (
+					<button
+						className={
+							"btn btn--rounded btn--contained btn--success"
+						}
+						onClick={handleAddToCart}
+					>
+						В корзину
+					</button>
+				)}
+				{amount > 0 && (
+					<button
+						className={"btn btn--rounded btn--contained  btn--warn"}
+						onClick={handleRemoveFromCart}
+					>
+						Убрать из корзины
+					</button>
+				)}
 			</div>
 
 			<div className="description">
