@@ -17,6 +17,7 @@ import { setEdit } from "../../store/features/product/productSlice"
 import { addToCart, updateOrder } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
 import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"
+import { formatPrice } from "../../utils/intl"
 
 export type ProductItemType = {
 	images: string[]
@@ -103,7 +104,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 					<img src={image} alt="product image" />
 				</Link>
 			</div>
-			<div className={style.price}>{price} ₽</div>
+			<div className={style.price}>{formatPrice(price)} ₽</div>
 
 			<Link to={`/products/${_id}`} className={style.name}>
 				<div>{title}</div>

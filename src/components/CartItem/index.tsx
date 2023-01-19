@@ -14,6 +14,7 @@ import {
 	deleteBookmark,
 	getAllBookmarks,
 } from "../../store/features/bookmark/thunks"
+import { formatPrice } from "../../utils/intl"
 const selectAmountOptions = [
 	{ value: 1, label: "1" },
 	{ value: 2, label: "2" },
@@ -80,7 +81,11 @@ export const CartItem: FC<OrderItemType> = (props) => {
 			<div className={style.title}>{title}</div>
 			<div className={style["some-actions"]}>
 				<div className={style.credit}>
-					Частями по <span>{Math.floor(price / 6)} ₽</span> / мес
+					Частями по{" "}
+					<span>
+						{formatPrice(Math.floor((price * amount) / 6))} ₽
+					</span>{" "}
+					/ мес
 				</div>
 				<div className={style.actions}>
 					<small
@@ -103,12 +108,12 @@ export const CartItem: FC<OrderItemType> = (props) => {
 			</div>
 			<div className={style.price}>
 				<div className={style["new-price"]}>
-					<div className={style["value"]}>{price} ₽</div>
+					<div className={style["value"]}>{formatPrice(price)} ₽</div>
 					<span>со скидкой</span>
 				</div>
 				<div className={style["oldprice"]}>
 					<div className={style["value"]}>
-						{Math.floor(price * 1.1)} ₽
+						{formatPrice(Math.floor(price * 1.1))} ₽
 					</div>
 					<span>старая цена</span>
 				</div>

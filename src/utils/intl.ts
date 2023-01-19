@@ -5,3 +5,9 @@ export const getIntlDate = (date: any) => {
 		day: "numeric",
 	}).format(new Date(date))
 }
+
+export const formatPrice = (price: number) => {
+	return price.toLocaleString("ru-RU", {
+		maximumFractionDigits: 2,
+	})
+}

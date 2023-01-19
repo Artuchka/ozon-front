@@ -7,6 +7,7 @@ import { createOrder } from "../store/features/order/thunks"
 import { AppDispatch } from "../store/store"
 import { Loading } from "../components/Loading"
 import { selectAuth } from "../store/features/auth/selectors"
+import { formatPrice } from "../utils/intl"
 
 export const Cart = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -42,7 +43,7 @@ export const Cart = () => {
 		<div className="cart-page">
 			<header className="heading">
 				<h1>Корзина</h1>
-				<span>{order?.amountTotal}</span>
+				<span>{formatPrice(order?.amountTotal)}</span>
 			</header>
 			{order?.itemsLength > 0 ? (
 				<>
@@ -71,24 +72,41 @@ export const Cart = () => {
 						<div className="info">
 							<div className="buy-card-heading">
 								<h3>Ваша корзина</h3>
-								<span>{order?.amountTotal} товара</span>
+								<span>
+									{formatPrice(order?.amountTotal)} товара
+								</span>
 							</div>
 							<small className="subtotal">
 								<span className="title">
-									Товары ( {order?.amountTotal} )
+									Товары ( {formatPrice(order?.amountTotal)} )
 								</span>
 								<span className="value">
-									{order.subtotal} ₽
+									{formatPrice(order.subtotal)} ₽
 								</span>
 							</small>
 							{order?.discounts?.length > 0 && (
 								<small className="discounts">
 									<span>Скидка</span>
 									<span className="value">
-										{order.total - order.subtotal} ₽
+										{formatPrice(
+											order.total - order.subtotal
+										)}{" "}
+										₽
 									</span>
 								</small>
 							)}
+							<div className="total">
+								<h3 className="title">Общая стоимость</h3>
+								<div className="value">
+									{formatPrice(order.total)} ₽
+								</div>
+							</div>
+							<div className="discount-total">
+								<small className="title">Со скидкой</small>
+								<div className="value">
+									{formatPrice(order.total)} ₽
+								</div>
+							</div>
 						</div>
 					</div>
 				</>

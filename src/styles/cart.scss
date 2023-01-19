@@ -54,7 +54,7 @@
 			justify-content: space-between;
 			margin-bottom: 0.9rem;
 			h3 {
-				font-weight: 500;
+				font-weight: 600;
 			}
 			span {
 				color: var(--gray-text);
@@ -81,11 +81,41 @@
 		}
 
 		.discounts,
+		.total,
+		.discount-total,
+		.discounts,
 		.subtotal {
 			display: flex;
 			justify-content: space-between;
 			.value {
 				font-weight: 500;
+			}
+		}
+
+		.total {
+			margin-top: 2rem;
+			margin-bottom: 0.5rem;
+			position: relative;
+			&::before {
+				content: "";
+				width: 100%;
+				background-color: var(--gray-bg);
+				height: 0.05rem;
+				position: absolute;
+				display: inline-block;
+				top: -1rem;
+				left: 0;
+				right: 0;
+			}
+			.title {
+				font-weight: 600;
+			}
+		}
+
+		.discount-total {
+			.value {
+				font-size: 0.8rem;
+				color: var(--success-color);
 			}
 		}
 	}
