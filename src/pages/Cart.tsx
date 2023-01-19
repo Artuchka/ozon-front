@@ -3,11 +3,13 @@ import { SelectCheckbox } from "../components/pageBlocks/inputs/SelectCheckbox"
 import { CartItemsList } from "../components/CartItemsList"
 import { useDispatch, useSelector } from "react-redux"
 import { selectOrder } from "../store/features/order/selector"
-import { createOrder } from "../store/features/order/thunks"
+import { createOrder, updateOrder } from "../store/features/order/thunks"
 import { AppDispatch } from "../store/store"
 import { Loading } from "../components/Loading"
 import { selectAuth } from "../store/features/auth/selectors"
 import { formatPrice } from "../utils/intl"
+import { useNavigate } from "react-router-dom"
+import { OrderType } from "../store/features/order/orderSlice"
 
 export const Cart = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -25,6 +27,17 @@ export const Cart = () => {
 			}
 			return prev.filter((v) => v !== value)
 		})
+	}
+
+	const navigate = useNavigate()
+	const handleCheckout = () => {
+		dispatch(
+			updateOrder({
+				data: { status: "pending" } as OrderType,
+				orderId: order._id,
+			})
+		)
+		navigate("/checkout")
 	}
 
 	useEffect(() => {
@@ -62,7 +75,10 @@ export const Cart = () => {
 						<CartItemsList />
 					</div>
 					<div className="buy-card">
-						<button className="btn btn--contained btn--success btn--rounded btn--tall btn--text-small">
+						<button
+							className="btn btn--contained btn--success btn--rounded btn--tall btn--text-small"
+							onClick={handleCheckout}
+						>
 							Перейти к оформлению
 						</button>
 						<small className="checkout-info">

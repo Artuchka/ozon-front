@@ -98,7 +98,7 @@ export const Header = () => {
 						/>
 
 						<StatusLink
-							data={order.amountTotal || 0}
+							data={order?.amountTotal || 0}
 							icon={<BsHandbag />}
 							link="/cart"
 							title="Корзина"

@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { addToCart, createOrder, getCart, updateOrder } from "./thunks"
+import {
+	addToCart,
+	createOrder,
+	createPaymentIntent,
+	getCart,
+	updateOrder,
+} from "./thunks"
 import { toast } from "react-toastify"
 import { SingleProductType } from "../product/productSlice"
 
@@ -29,14 +35,17 @@ export type OrderType = {
 	amountTotal: number
 	itemsLength: number
 	status: OrderStatusType
+	clientSecret: string
 }
 
 type InitialStateType = {
 	isLoading: boolean
 	order: OrderType
+	haveTried: boolean
 }
 
 const initialState = {
+	haveTried: false,
 	isLoading: false,
 	order: {} as OrderType,
 } as InitialStateType
@@ -66,10 +75,12 @@ const orderSlice = createSlice({
 		builder.addCase(getCart.fulfilled, (state, { payload }) => {
 			const { msg, order } = payload
 			state.isLoading = false
+			state.haveTried = true
 			state.order = order
 			toast.success(msg)
 		})
 		builder.addCase(getCart.rejected, (state, { payload }) => {
+			state.haveTried = true
 			state.isLoading = false
 			toast.error(payload as string)
 		})
@@ -99,6 +110,21 @@ const orderSlice = createSlice({
 			toast.success(msg)
 		})
 		builder.addCase(addToCart.rejected, (state, { payload }) => {
+			state.isLoading = false
+			toast.error(payload as string)
+		})
+
+		builder.addCase(createPaymentIntent.pending, (state, { payload }) => {
+			state.isLoading = true
+		})
+		builder.addCase(createPaymentIntent.fulfilled, (state, { payload }) => {
+			const { msg, order } = payload
+			state.isLoading = false
+			state.order = order
+
+			toast.success(msg)
+		})
+		builder.addCase(createPaymentIntent.rejected, (state, { payload }) => {
 			state.isLoading = false
 			toast.error(payload as string)
 		})

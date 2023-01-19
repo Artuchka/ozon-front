@@ -3,6 +3,11 @@ import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { CheckoutForm } from "../components/CheckoutForm"
 import { ozonAPI } from "../axios/customFetch"
+import { useDispatch, useSelector } from "react-redux"
+import { selectOrder } from "../store/features/order/selector"
+import { Loading } from "../components/Loading"
+import { AppDispatch } from "../store/store"
+import { createPaymentIntent } from "../store/features/order/thunks"
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -16,15 +21,13 @@ type appereanceType = {
 }
 
 export const Checkout = () => {
-	const [clientSecret, setClientSecret] = useState("")
+	const { order, isLoading } = useSelector(selectOrder)
+	const { clientSecret } = order
+	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
 		// Create PaymentIntent as soon as the page loads
-		ozonAPI("/orders/63c7742c255715ae5260b837", {
-			method: "PATCH",
-			headers: { "Content-Type": "application/json" },
-			data: JSON.stringify({ status: "pending" }),
-		}).then(({ data }) => setClientSecret(data.clientSecret))
+		dispatch(createPaymentIntent(order._id))
 	}, [])
 
 	const appearance: appereanceType = {
@@ -35,7 +38,9 @@ export const Checkout = () => {
 		clientSecret,
 		appearance,
 	}
-
+	if (isLoading || clientSecret === "placeholder") {
+		return <Loading />
+	}
 	return (
 		<div className="checkout-page">
 			{clientSecret && (

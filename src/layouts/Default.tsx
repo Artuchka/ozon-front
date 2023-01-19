@@ -7,13 +7,15 @@ import "react-toastify/dist/ReactToastify.css"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
 import { loginJWT } from "../store/features/auth/thunks"
-import { getCart } from "../store/features/order/thunks"
+import { createOrder, getCart } from "../store/features/order/thunks"
 import { selectAuth } from "./../store/features/auth/selectors"
 import { getAllBookmarks } from "../store/features/bookmark/thunks"
+import { selectOrder } from "../store/features/order/selector"
 
 export const Default = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { username } = useSelector(selectAuth)
+	const { haveTried, order } = useSelector(selectOrder)
 
 	useEffect(() => {
 		dispatch(loginJWT())
@@ -24,6 +26,16 @@ export const Default = () => {
 
 		dispatch(getCart())
 	}, [username])
+
+	useEffect(() => {
+		if (!username || Object.keys(order).length > 0) return
+
+		console.log("trying")
+		console.log(username)
+		console.log(order)
+
+		dispatch(createOrder({ status: "cart" }))
+	}, [haveTried])
 
 	useEffect(() => {
 		if (!username) return
