@@ -7,7 +7,9 @@ export const getIntlDate = (date: any) => {
 }
 
 export const formatPrice = (price: number) => {
-	return price.toLocaleString("ru-RU", {
-		maximumFractionDigits: 2,
-	})
+	return (
+		price?.toLocaleString("ru-RU", {
+			maximumFractionDigits: 2,
+		}) || 0
+	)
 }
