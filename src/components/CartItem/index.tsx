@@ -8,6 +8,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { addToCart, updateOrder } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
+import { selectBookmarks } from "../../store/features/bookmark/selector"
+import {
+	addBookmark,
+	deleteBookmark,
+	getAllBookmarks,
+} from "../../store/features/bookmark/thunks"
 const selectAmountOptions = [
 	{ value: 1, label: "1" },
 	{ value: 2, label: "2" },
@@ -29,7 +35,19 @@ export const CartItem: FC<OrderItemType> = (props) => {
 
 	const dispatch = useDispatch<AppDispatch>()
 	const { order } = useSelector(selectOrder)
+	const { bookmarks } = useSelector(selectBookmarks)
+	const isBookmarked = !!bookmarks.find(
+		(item) => item.product._id === productId
+	)
 
+	const handleAddBookmark = () => {
+		if (isBookmarked) {
+			dispatch(deleteBookmark(productId))
+		} else {
+			dispatch(addBookmark(productId))
+		}
+		dispatch(getAllBookmarks())
+	}
 	const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target
 
@@ -41,6 +59,17 @@ export const CartItem: FC<OrderItemType> = (props) => {
 			})
 		)
 	}
+
+	const handleRemoveFromCart = () => {
+		dispatch(
+			addToCart({
+				productId,
+				amount: 0,
+				orderId: order._id,
+			})
+		)
+	}
+
 	return (
 		<div className={style.wrapper}>
 			<img
@@ -51,7 +80,25 @@ export const CartItem: FC<OrderItemType> = (props) => {
 			<div className={style.title}>{title}</div>
 			<div className={style["some-actions"]}>
 				<div className={style.credit}>
-					<span>{Math.floor(price / 6)} ₽</span> / мес
+					Частями по <span>{Math.floor(price / 6)} ₽</span> / мес
+				</div>
+				<div className={style.actions}>
+					<small
+						className={`${
+							style.bookmark
+						} btn btn--light btn--content ${
+							isBookmarked ? "btn--warn" : ""
+						}`}
+						onClick={handleAddBookmark}
+					>
+						{isBookmarked ? "В избранном" : "В избранное"}
+					</small>
+					<small
+						className={`${style.delete} btn btn--light btn--content`}
+						onClick={handleRemoveFromCart}
+					>
+						Удалить
+					</small>
 				</div>
 			</div>
 			<div className={style.price}>

@@ -11,7 +11,8 @@ export const Bookmarks = () => {
 	const { bookmarks, isLoading } = useSelector(selectBookmarks)
 	useEffect(() => {
 		document.title = "Моё избранное - OZON"
-		dispatch(getAllBookmarks())
+		// dispatch(getAllBookmarks())
+		// hope i fetched bookmarks from DefaultLayout
 	}, [])
 
 	if (isLoading) {

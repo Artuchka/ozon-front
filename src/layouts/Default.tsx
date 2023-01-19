@@ -9,6 +9,7 @@ import { AppDispatch } from "../store/store"
 import { loginJWT } from "../store/features/auth/thunks"
 import { getCart } from "../store/features/order/thunks"
 import { selectAuth } from "./../store/features/auth/selectors"
+import { getAllBookmarks } from "../store/features/bookmark/thunks"
 
 export const Default = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -22,6 +23,12 @@ export const Default = () => {
 		if (!username) return
 
 		dispatch(getCart())
+	}, [username])
+
+	useEffect(() => {
+		if (!username) return
+
+		dispatch(getAllBookmarks())
 	}, [username])
 
 	return (

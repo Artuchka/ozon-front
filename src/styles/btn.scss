@@ -10,43 +10,12 @@
 		padding: 0;
 	}
 
-	&--warn {
-		color: var(--error-color-light);
-		&:hover {
-			color: var(--error-color);
-		}
-	}
-	&--success {
-		color: var(--success-color);
-		&:hover {
-			color: var(--success-color-dark);
-		}
-	}
 	&--rounded {
 		border-radius: 0.5em;
 	}
 	&--outlined {
 		background-color: white;
 		color: var(--primary-color);
-	}
-	&--contained {
-		background-color: var(--primary-color);
-		color: white;
-
-		&.btn--warn {
-			background-color: var(--error-color);
-			&:hover {
-				background-color: var(--error-color-dark);
-				color: white;
-			}
-		}
-		&.btn--success {
-			background-color: var(--success-color);
-			&:hover {
-				background-color: var(--success-color-dark);
-				color: white;
-			}
-		}
 	}
 	&--content {
 		width: max-content;
@@ -83,5 +52,37 @@
 
 	&--text-small {
 		font-size: 0.9rem;
+	}
+
+	&--warn {
+		color: var(--error-color-light);
+		&:hover {
+			color: var(--error-color);
+		}
+	}
+	&--success {
+		color: var(--success-color);
+		&:hover {
+			color: var(--success-color-dark);
+		}
+	}
+	&--contained {
+		background-color: var(--primary-color);
+		color: white;
+
+		&.btn--warn {
+			background-color: var(--error-color);
+			&:hover {
+				background-color: var(--error-color-dark);
+				color: white;
+			}
+		}
+		&.btn--success {
+			background-color: var(--success-color);
+			&:hover {
+				background-color: var(--success-color-dark);
+				color: white;
+			}
+		}
 	}
 }

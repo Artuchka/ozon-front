@@ -28,15 +28,11 @@ export const Cart = () => {
 
 	useEffect(() => {
 		if (!username || Object.keys(order).length > 0) {
-			console.log("returnig becuase")
-			console.log({ username, len: Object.keys(order).length })
-
 			return
 		}
 
-		console.log("before creating cart")
-
 		dispatch(createOrder({ status: "cart" }))
+		console.log("after creating cart")
 	}, [])
 
 	if (isLoading) {

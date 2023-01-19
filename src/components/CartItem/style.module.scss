@@ -2,10 +2,10 @@
 	display: grid;
 	grid-template-areas:
 		"image title price amount"
-		"image title price amount"
+		"image some-actions price amount"
 		"image some-actions price amount";
 	grid-template-columns: 100px auto 120px 70px;
-	grid-template-rows: 2rem 1rem 2rem;
+	grid-template-rows: 2rem 1rem 1rem;
 	gap: 1rem;
 
 	height: 100px;
@@ -86,6 +86,9 @@
 	}
 	.some-actions {
 		grid-area: some-actions;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 
 		.credit {
 			background-color: var(--credit-price-bg);
@@ -93,6 +96,24 @@
 			border-radius: 0.3rem;
 			font-size: 0.8rem;
 			width: max-content;
+		}
+
+		.actions {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.bookmark {
+			position: relative;
+			&::after {
+				content: "";
+				width: 0.05rem;
+				background-color: var(--gray-bg);
+				height: 100%;
+				position: absolute;
+				display: inline-block;
+				right: -1.3rem;
+			}
 		}
 	}
 }
