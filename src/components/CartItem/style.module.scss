@@ -1,0 +1,98 @@
+.wrapper {
+	display: grid;
+	grid-template-areas:
+		"image title price amount"
+		"image title price amount"
+		"image some-actions price amount";
+	grid-template-columns: 100px auto 120px 70px;
+	grid-template-rows: 2rem 1rem 2rem;
+	gap: 1rem;
+
+	height: 100px;
+	position: relative;
+	&::after {
+		content: "";
+		width: 100%;
+		background-color: var(--gray-bg);
+		height: 0.05rem;
+		position: absolute;
+		display: inline-block;
+		bottom: -1rem;
+		left: 0;
+		right: 0;
+	}
+
+	.image {
+		grid-area: image;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+	.title {
+		grid-area: title;
+	}
+	.price {
+		grid-area: price;
+
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		.new-price {
+			display: flex;
+			align-items: flex-end;
+			flex-wrap: wrap;
+			gap: 0.3rem;
+			font-size: 0.9rem;
+			width: 100%;
+			span {
+				color: var(--new-price-bg);
+			}
+			.value {
+				background-color: var(--new-price-bg);
+				color: white;
+				border-radius: 0.3rem;
+				padding: 0.1rem 0.3rem;
+				width: max-content;
+				font-weight: 500;
+			}
+		}
+		.oldprice {
+			display: flex;
+			gap: 0.5rem;
+			align-items: flex-end;
+			color: var(--gray-text);
+			font-size: 0.8rem;
+
+			.value {
+				position: relative;
+				width: max-content;
+				&::after {
+					width: 100%;
+					height: 0.05rem;
+					content: "";
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					translate: -50% -200%;
+					rotate: -10deg;
+					background-color: var(--error-color);
+				}
+			}
+		}
+	}
+	.amount {
+		grid-area: amount;
+	}
+	.some-actions {
+		grid-area: some-actions;
+
+		.credit {
+			background-color: var(--credit-price-bg);
+			padding: 0.5em 1em;
+			border-radius: 0.3rem;
+			font-size: 0.8rem;
+			width: max-content;
+		}
+	}
+}

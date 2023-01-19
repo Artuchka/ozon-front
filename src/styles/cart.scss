@@ -1,5 +1,21 @@
 .cart-page {
+	display: grid;
+	grid-template-areas:
+		"stats stats"
+		"action-tab buy-card"
+		"cart-items buy-card";
+	column-gap: 1.5rem;
+	row-gap: 0.1rem;
+	grid-template-columns: auto 300px;
+
+	// height: max-content;
+
+	// box-shadow: 0 0 0 100vmax whitesmoke;
+	// clip-path: inset(0 -100%);
+	// background-color: whitesmoke;
+
 	.heading {
+		grid-area: stats;
 		display: flex;
 		align-items: center;
 		span {
@@ -11,8 +27,66 @@
 	}
 
 	.action-tab {
+		background-color: #fff;
+		grid-area: action-tab;
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+		padding: 1rem;
+	}
+	.cart-list-wrapper {
+		background-color: #fff;
+		grid-area: cart-items;
+		padding: 1rem;
+	}
+	.buy-card {
+		height: max-content;
+		background-color: #fff;
+		grid-area: buy-card;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
+		.buy-card-heading {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 0.9rem;
+			h3 {
+				font-weight: 500;
+			}
+			span {
+				color: var(--gray-text);
+				font-size: 0.9rem;
+			}
+		}
+
+		.checkout-info {
+			color: var(--gray-text);
+			position: relative;
+			display: inline-block;
+			margin-bottom: 2rem;
+			&::after {
+				content: "";
+				width: 100%;
+				background-color: var(--gray-bg);
+				height: 0.05rem;
+				position: absolute;
+				display: inline-block;
+				bottom: -1.5rem;
+				left: 0;
+				right: 0;
+			}
+		}
+
+		.discounts,
+		.subtotal {
+			display: flex;
+			justify-content: space-between;
+			.value {
+				font-weight: 500;
+			}
+		}
 	}
 }

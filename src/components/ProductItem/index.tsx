@@ -65,9 +65,6 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 	const handleAddToCart = () => {
 		const newItem: OrderItemType = {
 			product: _id,
-			price,
-			title,
-			image: images[0],
 			amount: 1,
 		} as OrderItemType
 

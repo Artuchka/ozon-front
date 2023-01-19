@@ -17,6 +17,7 @@ type propType = {
 	options: optionType[]
 	name: string
 	value: string | number
+	light?: boolean
 }
 
 export const SelectDropdown: FC<propType> = ({
@@ -24,6 +25,7 @@ export const SelectDropdown: FC<propType> = ({
 	options,
 	name,
 	value,
+	light = false,
 }) => {
 	const [isOpen, setIsOpen] = useState(false)
 
@@ -52,7 +54,7 @@ export const SelectDropdown: FC<propType> = ({
 	}, [])
 
 	return (
-		<div className={`${style.sort} `}>
+		<div className={`${style.sort} ${light ? style.light : ""} `}>
 			<div
 				className={style["shown"]}
 				onClick={(e) => setIsOpen((prev) => !prev)}

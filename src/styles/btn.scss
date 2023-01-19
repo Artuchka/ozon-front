@@ -16,6 +16,12 @@
 			color: var(--error-color);
 		}
 	}
+	&--success {
+		color: var(--success-color);
+		&:hover {
+			color: var(--success-color-dark);
+		}
+	}
 	&--rounded {
 		border-radius: 0.5em;
 	}
@@ -31,6 +37,13 @@
 			background-color: var(--error-color);
 			&:hover {
 				background-color: var(--error-color-dark);
+				color: white;
+			}
+		}
+		&.btn--success {
+			background-color: var(--success-color);
+			&:hover {
+				background-color: var(--success-color-dark);
 				color: white;
 			}
 		}
@@ -66,5 +79,9 @@
 	}
 	&--transparent {
 		background: transparent;
+	}
+
+	&--text-small {
+		font-size: 0.9rem;
 	}
 }

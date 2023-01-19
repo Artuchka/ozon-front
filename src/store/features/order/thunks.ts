@@ -38,6 +38,28 @@ export const updateOrder = createAsyncThunk(
 		}
 	}
 )
+export const addToCart = createAsyncThunk(
+	"orders/addToCart",
+	async (
+		{
+			productId,
+			orderId,
+			amount,
+		}: { amount: number; productId: string; orderId: string },
+		thunkAPI
+	) => {
+		try {
+			const { data } = await ozonAPI(`/orders/${orderId}`, {
+				method: "POST",
+				data: { productId, amount },
+			})
+
+			return thunkAPI.fulfillWithValue(data)
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response.msg)
+		}
+	}
+)
 
 export const getCart = createAsyncThunk(
 	"orders/getCart",

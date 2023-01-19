@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { createOrder, getCart, updateOrder } from "./thunks"
+import { addToCart, createOrder, getCart, updateOrder } from "./thunks"
 import { toast } from "react-toastify"
+import { SingleProductType } from "../product/productSlice"
 
 export type OrderItemType = {
 	_id: string
-	product: string
-	price: number
-	title: string
-	image: string
+	product: SingleProductType
+	// price: number
+	// title: string
+	// image: string
 	amount: number
 }
 
@@ -81,6 +82,21 @@ const orderSlice = createSlice({
 			toast.success(msg)
 		})
 		builder.addCase(createOrder.rejected, (state, { payload }) => {
+			state.isLoading = false
+			toast.error(payload as string)
+		})
+
+		builder.addCase(addToCart.pending, (state, { payload }) => {
+			state.isLoading = true
+		})
+		builder.addCase(addToCart.fulfilled, (state, { payload }) => {
+			const { msg, order } = payload
+			state.isLoading = false
+			state.order = order
+
+			toast.success(msg)
+		})
+		builder.addCase(addToCart.rejected, (state, { payload }) => {
 			state.isLoading = false
 			toast.error(payload as string)
 		})

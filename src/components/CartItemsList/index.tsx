@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 import style from "./style.module.scss"
 import { CartItem } from "../CartItem"
 import { useSelector } from "react-redux"
 import { selectOrder } from "../../store/features/order/selector"
 import { Loading } from "../Loading"
+import { ozonAPI } from "../../axios/customFetch"
 
 export const CartItemsList = () => {
 	const { order, isLoading } = useSelector(selectOrder)
@@ -15,7 +16,7 @@ export const CartItemsList = () => {
 	return (
 		<div className={style.wrapper}>
 			{items?.map((item) => {
-				return <CartItem key={item._id} {...item} />
+				return <CartItem key={item.product._id} {...item} />
 			})}
 		</div>
 	)

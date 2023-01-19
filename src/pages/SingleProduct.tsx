@@ -85,16 +85,14 @@ export const SingleProduct = () => {
 	const handleAddToCart = () => {
 		const newItem: OrderItemType = {
 			product: _id,
-			price,
-			title,
-			image: images[0],
 			amount: 1,
 		} as OrderItemType
 
+		let newItems = order.items ? [...order.items, newItem] : [newItem]
 		dispatch(
 			updateOrder({
 				data: {
-					items: [...order.items, newItem],
+					items: newItems,
 				} as OrderType,
 				orderId: order._id,
 			})
@@ -184,7 +182,7 @@ export const SingleProduct = () => {
 					со скидкой
 				</div>
 				<div className="oldprice">
-					<div className="value">{price * 1.1} ₽</div>
+					<div className="value">{Math.floor(price * 1.1)} ₽</div>
 					старая цена
 				</div>
 				<div className="credit">
