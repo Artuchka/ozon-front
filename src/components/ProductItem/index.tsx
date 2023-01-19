@@ -14,6 +14,9 @@ import {
 } from "../../store/features/bookmark/thunks"
 import { selectBookmarks } from "../../store/features/bookmark/selector"
 import { setEdit } from "../../store/features/product/productSlice"
+import { updateOrder } from "../../store/features/order/thunks"
+import { selectOrder } from "../../store/features/order/selector"
+import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"
 
 export type ProductItemType = {
 	images: string[]
@@ -41,6 +44,8 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 	} = props
 	const image = images[0] === "" ? defaultImage : serverURL + images[0]
 
+	const { order } = useSelector(selectOrder)
+
 	const { bookmarks } = useSelector(selectBookmarks)
 	const isBookmarked = !!bookmarks.find((item) => item.product._id === _id)
 
@@ -55,6 +60,25 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 
 	const handleEdit = () => {
 		navigate(`/create-new?editingId=${_id}`)
+	}
+
+	const handleAddToCart = () => {
+		const newItem: OrderItemType = {
+			product: _id,
+			price,
+			title,
+			image: images[0],
+			amount: 1,
+		} as OrderItemType
+
+		dispatch(
+			updateOrder({
+				data: {
+					items: [...order.items, newItem],
+				} as OrderType,
+				orderId: order._id,
+			})
+		)
 	}
 	return (
 		<div className={`${style.product}`}>
@@ -86,7 +110,10 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 				{averageRating || 0} <AiOutlineStar className={style["star"]} />
 				{numOfReviews}
 			</div>
-			<button className={"btn btn--rounded btn--contained btn--content"}>
+			<button
+				className={"btn btn--rounded btn--contained btn--content"}
+				onClick={handleAddToCart}
+			>
 				В корзину
 			</button>
 		</div>

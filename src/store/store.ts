@@ -4,9 +4,10 @@ import product from "./features/product/productSlice"
 import reviews from "./features/review/reviewSlice"
 import filter from "./features/filter/filterSlice"
 import bookmarks from "./features/bookmark/bookmarkSlice"
+import order from "./features/order/orderSlice"
 
 export const store = configureStore({
-	reducer: { auth, product, reviews, filter, bookmarks },
+	reducer: { auth, product, reviews, filter, bookmarks, order },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
