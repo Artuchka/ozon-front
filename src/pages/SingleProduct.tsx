@@ -22,12 +22,16 @@ import { HashLink } from "react-router-hash-link"
 import { selectAuth } from "../store/features/auth/selectors"
 import { selectReviews } from "../store/features/review/selectors"
 import { ImageVideoViewer } from "../components/ImageVideoViewer"
+import { OrderItemType, OrderType } from "../store/features/order/orderSlice"
+import { updateOrder } from "../store/features/order/thunks"
+import { selectOrder } from "../store/features/order/selector"
 
 export const SingleProduct = () => {
 	const { id } = useParams()
 	const { _id: userId } = useSelector(selectAuth)
 	const { singleProduct } = useSelector(selectProducts)
 	const { edit } = useSelector(selectReviews)
+	const { order } = useSelector(selectOrder)
 	const dispatch = useDispatch<AppDispatch>()
 	const orderConfigRef = useRef(document.createElement("form"))
 	const playerRef = React.useRef(null)
@@ -62,6 +66,7 @@ export const SingleProduct = () => {
 		numOfReviews,
 		activeImage,
 		vendor,
+		_id,
 	} = singleProduct
 
 	const radioTypes = types?.map((item: string) => {
@@ -77,6 +82,24 @@ export const SingleProduct = () => {
 		dispatch(setOpenReviewModal(true))
 	}
 
+	const handleAddToCart = () => {
+		const newItem: OrderItemType = {
+			product: _id,
+			price,
+			title,
+			image: images[0],
+			amount: 1,
+		} as OrderItemType
+
+		dispatch(
+			updateOrder({
+				data: {
+					items: [...order.items, newItem],
+				} as OrderType,
+				orderId: order._id,
+			})
+		)
+	}
 	return (
 		<div className="single-product-page">
 			<ReviewModal productId={id || ""} />
@@ -153,6 +176,27 @@ export const SingleProduct = () => {
 						Перейти к характеристикам
 					</HashLink>
 				</div>
+			</div>
+
+			<div className="buy-card">
+				<div className="price">
+					<div className="value">{price} ₽</div>
+					со скидкой
+				</div>
+				<div className="oldprice">
+					<div className="value">{price * 1.1} ₽</div>
+					старая цена
+				</div>
+				<div className="credit">
+					<span>{Math.floor(price / 6)} ₽</span> &times; 6 месяцев в
+					FakeOzon Рассрочку
+				</div>
+				<button
+					className="btn btn--rounded btn--contained  btn--tall btn--warn"
+					onClick={handleAddToCart}
+				>
+					Добавить в корзину
+				</button>
 			</div>
 
 			<div className="description">

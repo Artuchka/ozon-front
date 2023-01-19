@@ -39,7 +39,7 @@ export const Cart = () => {
 				<span>{order?.items?.length} различных товаров</span>
 			</header>
 			<main>
-				{order?.items.length > 0 ? (
+				{order?.items?.length > 0 ? (
 					<>
 						<div className="action-tab">
 							<SelectCheckbox

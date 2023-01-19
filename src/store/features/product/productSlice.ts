@@ -21,13 +21,13 @@ export type ListItemProductType = typeof product
 export type SingleProductType = {
 	isLoading: boolean
 	activeImage: string
-	averageRating: 5
+	averageRating: number
 	createdAt: string
 	description: string
-	id: string
+	_id: string
 	images: string[]
 	numOfReviews: string
-	price: string
+	price: number
 	reviews: [
 		{
 			author: {
@@ -36,7 +36,7 @@ export type SingleProductType = {
 				username: string
 				_id: string
 			}
-			rating: string
+			rating: number
 			images: string[]
 			videos: string[]
 			createdAt: string
