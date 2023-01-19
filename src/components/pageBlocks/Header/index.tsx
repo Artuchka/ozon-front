@@ -13,11 +13,13 @@ import { AppDispatch } from "../../../store/store"
 import { updateFilters } from "../../../store/features/filter/filterSlice"
 import { useLocation, useNavigate } from "react-router-dom"
 import { debounce } from "lodash"
+import { selectOrder } from "../../../store/features/order/selector"
 
 export const Header = () => {
 	const [open, setOpen] = useState(false)
 	const [search, setSearch] = useState("")
 	const dispatch = useDispatch<AppDispatch>()
+	const { order } = useSelector(selectOrder)
 	const auth = useSelector(selectAuth)
 	const user = auth.role !== null
 	const { role } = auth
@@ -96,7 +98,7 @@ export const Header = () => {
 						/>
 
 						<StatusLink
-							data={3}
+							data={order.amountTotal || 0}
 							icon={<BsHandbag />}
 							link="/cart"
 							title="Корзина"

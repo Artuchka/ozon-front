@@ -42,9 +42,9 @@ export const Cart = () => {
 		<div className="cart-page">
 			<header className="heading">
 				<h1>Корзина</h1>
-				<span>{order?.items?.length} различных товаров</span>
+				<span>{order?.amountTotal}</span>
 			</header>
-			{order?.items?.length > 0 ? (
+			{order?.itemsLength > 0 ? (
 				<>
 					<div className="action-tab">
 						<SelectCheckbox
@@ -71,11 +71,11 @@ export const Cart = () => {
 						<div className="info">
 							<div className="buy-card-heading">
 								<h3>Ваша корзина</h3>
-								<span>{order?.items?.length} товара</span>
+								<span>{order?.amountTotal} товара</span>
 							</div>
 							<small className="subtotal">
 								<span className="title">
-									Товары ( {order?.items?.length} )
+									Товары ( {order?.amountTotal} )
 								</span>
 								<span className="value">
 									{order.subtotal} ₽

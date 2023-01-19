@@ -26,6 +26,8 @@ export type OrderType = {
 	shippingFee: number
 	subtotal: number
 	total: number
+	amountTotal: number
+	itemsLength: number
 	status: OrderStatusType
 }
 
