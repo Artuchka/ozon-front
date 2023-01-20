@@ -16,6 +16,7 @@ import { Reviews } from "./pages/Reviews"
 import { MyProducts } from "./pages/MyProducts"
 import { Cart } from "./pages/Cart"
 import { Checkout } from "./pages/Checkout"
+import { PaymentSuccess } from "./pages/PaymentSuccess"
 
 function App() {
 	const user = useSelector(selectAuth)
@@ -30,6 +31,7 @@ function App() {
 					>
 						<Route path="main" element={<Personal />} />
 						<Route path="reviews" element={<Reviews />} />
+						{/* <Route path="orders" element={<Reviews />} /> */}
 						<Route
 							path="products"
 							element={
@@ -70,6 +72,15 @@ function App() {
 						path="/checkout"
 						element={
 							<ProtectedRoute user={user} outlet={<Checkout />} />
+						}
+					/>
+					<Route
+						path="/paymentSuccess"
+						element={
+							<ProtectedRoute
+								user={user}
+								outlet={<PaymentSuccess />}
+							/>
 						}
 					/>
 					<Route path="/products" element={<Products />} />

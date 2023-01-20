@@ -28,9 +28,16 @@ export const Default = () => {
 	}, [username])
 
 	useEffect(() => {
-		if (!username || Object.keys(order).length > 0) return
+		if (
+			!username ||
+			Object.keys(order).length > 0 ||
+			order.status === "cart" ||
+			order.status === "pending" ||
+			order.status === "checkout"
+		)
+			return
 
-		console.log("trying")
+		console.log("CREATING CART")
 		console.log(username)
 		console.log(order)
 

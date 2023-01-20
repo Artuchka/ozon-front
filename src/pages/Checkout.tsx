@@ -43,6 +43,12 @@ export const Checkout = () => {
 	}
 	return (
 		<div className="checkout-page">
+			<h3>
+				Снизу тестовые данные карты (я не спишу с вас деняк, у меня
+				хватает)
+			</h3>
+			<p>4242</p>
+			<p>4242 4242 4242 4242</p>
 			{clientSecret && (
 				<Elements
 					options={options as StripeElementsOptions}

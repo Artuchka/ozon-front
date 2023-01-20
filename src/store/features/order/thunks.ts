@@ -77,6 +77,25 @@ export const getCart = createAsyncThunk(
 		}
 	}
 )
+export const getOrderByPaymentSecret = createAsyncThunk(
+	"orders/getOrderByPaymentSecret",
+	async (paymentSecret: string, thunkAPI) => {
+		try {
+			const resp = await ozonAPI(
+				`/orders/payment-secret/${paymentSecret}`,
+				{
+					method: "GET",
+				}
+			)
+
+			console.log({ data: resp.data })
+
+			return thunkAPI.fulfillWithValue(resp.data)
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response.msg)
+		}
+	}
+)
 
 export const createPaymentIntent = createAsyncThunk(
 	"orders/createPaymentIntent",

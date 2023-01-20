@@ -4,6 +4,7 @@ import {
 	createOrder,
 	createPaymentIntent,
 	getCart,
+	getOrderByPaymentSecret,
 	updateOrder,
 } from "./thunks"
 import { toast } from "react-toastify"
@@ -41,13 +42,17 @@ export type OrderType = {
 type InitialStateType = {
 	isLoading: boolean
 	order: OrderType
+	lastOrders: OrderType[]
 	haveTried: boolean
 }
+
+type OrdersMap = { [k: string]: OrderType }
 
 const initialState = {
 	haveTried: false,
 	isLoading: false,
 	order: {} as OrderType,
+	lastOrders: {},
 } as InitialStateType
 
 const orderSlice = createSlice({
@@ -128,6 +133,27 @@ const orderSlice = createSlice({
 			state.isLoading = false
 			toast.error(payload as string)
 		})
+
+		builder.addCase(getOrderByPaymentSecret.pending, (state) => {
+			state.isLoading = true
+		})
+		builder.addCase(
+			getOrderByPaymentSecret.fulfilled,
+			(state, { payload }) => {
+				const { msg, order } = payload
+				state.isLoading = false
+				state.lastOrders[order._id] = order
+
+				toast.success(msg)
+			}
+		)
+		builder.addCase(
+			getOrderByPaymentSecret.rejected,
+			(state, { payload }) => {
+				state.isLoading = false
+				toast.error(payload as string)
+			}
+		)
 	},
 })
 

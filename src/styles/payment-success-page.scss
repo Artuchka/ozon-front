@@ -1,0 +1,32 @@
+.payment-success-page {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	align-items: flex-start;
+
+	.heading,
+	.details {
+		display: grid;
+		grid-template-columns: 2rem auto;
+		place-items: center;
+		gap: 1rem;
+	}
+
+	.heading {
+		span {
+			font-weight: 600;
+		}
+		svg {
+			color: var(--success-color);
+			font-size: 2rem;
+		}
+	}
+	.details {
+		span {
+			font-weight: 500;
+		}
+		svg {
+			font-size: 1.8rem;
+		}
+	}
+}
