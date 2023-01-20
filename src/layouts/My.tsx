@@ -7,6 +7,7 @@ export const My = () => {
 	const links = [
 		{ path: "/my/main", name: "Учетная запись" },
 		{ path: "/my/reviews", name: "Мои отзывы" },
+		{ path: "/my/orders", name: "Мои заказы" },
 	]
 	const { role } = useSelector(selectAuth)
 	if (role === "vendor") {

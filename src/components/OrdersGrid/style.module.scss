@@ -1,0 +1,17 @@
+.wrapper {
+	// display: grid;
+	// grid-template-columns: repeat(1, 1fr);
+	// grid-auto-rows: minmax(250px, 1fr);
+	// gap: 0.5rem;
+
+	// @media (min-width: 700px) {
+	// 	grid-template-columns: repeat(2, 1fr);
+	// }
+	// @media (min-width: 900px) {
+	// 	grid-template-columns: repeat(3, 1fr);
+	// }
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 2rem;
+}
