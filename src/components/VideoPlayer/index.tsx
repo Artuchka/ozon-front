@@ -36,6 +36,7 @@ type PropType = {
 		"volume" | "play" | "fullscreen" | "theater" | "pip" | "progress"
 	>
 	onClick?: MouseEventHandler<HTMLDivElement>
+	shouldPlay?: boolean
 }
 
 export const VideoPlayer: FC<PropType> = ({
@@ -44,6 +45,7 @@ export const VideoPlayer: FC<PropType> = ({
 	colorTheme = "default",
 	controls = ["play", "fullscreen"],
 	onClick = () => {},
+	shouldPlay = true,
 }) => {
 	const [isPlaying, setPlaying] = useState(false)
 	const [isTheater, setTheater] = useState(false)
@@ -161,6 +163,14 @@ export const VideoPlayer: FC<PropType> = ({
 			exitFullscreen()
 		}
 	}, [isMini])
+
+	useEffect(() => {
+		if (shouldPlay) {
+			resumeVideo()
+		} else {
+			pauseVideo()
+		}
+	}, [shouldPlay])
 
 	// UNCOMMENT FOR KEYBOARD ACCESS
 	// useEffect(() => {
