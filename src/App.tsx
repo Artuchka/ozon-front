@@ -17,6 +17,7 @@ import { MyProducts } from "./pages/MyProducts"
 import { Cart } from "./pages/Cart"
 import { Checkout } from "./pages/Checkout"
 import { PaymentSuccess } from "./pages/PaymentSuccess"
+import { Orders } from "./pages/Orders"
 
 function App() {
 	const user = useSelector(selectAuth)
@@ -31,7 +32,7 @@ function App() {
 					>
 						<Route path="main" element={<Personal />} />
 						<Route path="reviews" element={<Reviews />} />
-						{/* <Route path="orders" element={<Reviews />} /> */}
+						<Route path="orders" element={<Orders />} />
 						<Route
 							path="products"
 							element={

@@ -21,11 +21,7 @@ export const PaymentSuccess = () => {
 	const searchParams = new URLSearchParams(search)
 	const orderId = searchParams.get("orderId") as string
 	const status = searchParams.get("redirect_status")
-	// const paymentIntent = searchParams.get("payment_intent")
-	// const paymentIntentClientSecret = searchParams.get(
-	// 	"payment_intent_client_secret"
-	// )
-	// console.log({ paymentIntent, status })
+
 	const paidOrder = Object.entries(lastOrders).find(([orderId, order]) => {
 		if (order._id === orderId) {
 			return true
@@ -35,15 +31,12 @@ export const PaymentSuccess = () => {
 
 	useEffect(() => {
 		if (status === "succeeded") {
-			console.log({ willUpdateOn: order._id })
-
 			dispatch(
 				updateOrder({
 					data: { status: "paid" } as OrderType,
 					orderId,
 				})
 			)
-			dispatch(getByOrderId(orderId as string))
 		}
 	}, [])
 

@@ -106,7 +106,7 @@ export const Header = () => {
 						<StatusLink
 							data={0}
 							icon={<BsBoxSeam />}
-							link="/orders"
+							link="/my/orders"
 							title="Заказы"
 						/>
 					</>

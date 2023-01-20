@@ -37,9 +37,7 @@ export const Default = () => {
 		)
 			return
 
-		console.log("CREATING CART")
-		console.log(username)
-		console.log(order)
+		console.log("CREATING CART = ", { username }, order)
 
 		dispatch(createOrder({ status: "cart" }))
 	}, [haveTried])

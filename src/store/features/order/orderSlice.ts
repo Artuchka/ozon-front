@@ -3,6 +3,7 @@ import {
 	addToCart,
 	createOrder,
 	createPaymentIntent,
+	getAllMyOrders,
 	getByOrderId,
 	getCart,
 	getOrderByPaymentSecret,
@@ -46,6 +47,10 @@ type InitialStateType = {
 	order: OrderType
 	lastOrders: OrdersMap
 	haveTried: boolean
+	allOrders: {
+		isLoading: boolean
+		orders: OrderType[]
+	}
 }
 
 const initialState = {
@@ -53,6 +58,7 @@ const initialState = {
 	isLoading: false,
 	order: {} as OrderType,
 	lastOrders: {} as OrdersMap,
+	allOrders: { isLoading: false, orders: [] },
 } as InitialStateType
 
 const orderSlice = createSlice({
@@ -173,6 +179,21 @@ const orderSlice = createSlice({
 		})
 		builder.addCase(getByOrderId.rejected, (state, { payload }) => {
 			state.isLoading = false
+			toast.error(payload as string)
+		})
+
+		builder.addCase(getAllMyOrders.pending, (state) => {
+			state.allOrders.isLoading = true
+		})
+		builder.addCase(getAllMyOrders.fulfilled, (state, { payload }) => {
+			const { msg, orders } = payload
+			state.allOrders.isLoading = false
+			state.allOrders.orders = orders
+
+			toast.success(msg)
+		})
+		builder.addCase(getAllMyOrders.rejected, (state, { payload }) => {
+			state.allOrders.isLoading = false
 			toast.error(payload as string)
 		})
 	},
