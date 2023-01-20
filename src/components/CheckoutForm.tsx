@@ -11,6 +11,8 @@ import {
 	StripePaymentElementOptions,
 } from "@stripe/stripe-js"
 import { ozonAPI } from "../axios/customFetch"
+import { useSelector } from "react-redux"
+import { selectOrder } from "../store/features/order/selector"
 
 export const CheckoutForm = () => {
 	const stripe = useStripe()
@@ -19,6 +21,7 @@ export const CheckoutForm = () => {
 	const [email, setEmail] = useState("")
 	const [message, setMessage] = useState<string | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
+	const { order } = useSelector(selectOrder)
 
 	useEffect(() => {
 		if (!stripe) {
@@ -78,7 +81,7 @@ export const CheckoutForm = () => {
 			elements,
 			confirmParams: {
 				// Make sure to change this to your payment completion page
-				return_url: `${window.location.origin}/paymentSuccess`,
+				return_url: `${window.location.origin}/paymentSuccess/?orderId=${order._id}`,
 			},
 		})
 

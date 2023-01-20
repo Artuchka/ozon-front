@@ -3,6 +3,7 @@ import {
 	addToCart,
 	createOrder,
 	createPaymentIntent,
+	getByOrderId,
 	getCart,
 	getOrderByPaymentSecret,
 	updateOrder,
@@ -38,21 +39,20 @@ export type OrderType = {
 	status: OrderStatusType
 	clientSecret: string
 }
+type OrdersMap = { [k: string]: OrderType }
 
 type InitialStateType = {
 	isLoading: boolean
 	order: OrderType
-	lastOrders: OrderType[]
+	lastOrders: OrdersMap
 	haveTried: boolean
 }
-
-type OrdersMap = { [k: string]: OrderType }
 
 const initialState = {
 	haveTried: false,
 	isLoading: false,
 	order: {} as OrderType,
-	lastOrders: {},
+	lastOrders: {} as OrdersMap,
 } as InitialStateType
 
 const orderSlice = createSlice({
@@ -64,9 +64,15 @@ const orderSlice = createSlice({
 			state.isLoading = true
 		})
 		builder.addCase(updateOrder.fulfilled, (state, { payload }) => {
-			const { msg, order } = payload
+			const { msg, order }: { msg: string; order: OrderType } = payload
 			state.isLoading = false
-			state.order = order
+
+			if (order.status === "paid" || order.status === "delievered") {
+				state.lastOrders[order._id] = order
+				console.log("GETTING", order.status)
+			} else {
+				state.order = order
+			}
 			toast.success(msg)
 		})
 		builder.addCase(updateOrder.rejected, (state, { payload }) => {
@@ -154,6 +160,21 @@ const orderSlice = createSlice({
 				toast.error(payload as string)
 			}
 		)
+
+		builder.addCase(getByOrderId.pending, (state) => {
+			state.isLoading = true
+		})
+		builder.addCase(getByOrderId.fulfilled, (state, { payload }) => {
+			const { msg, order } = payload
+			state.isLoading = false
+			state.lastOrders[order._id] = order
+
+			toast.success(msg)
+		})
+		builder.addCase(getByOrderId.rejected, (state, { payload }) => {
+			state.isLoading = false
+			toast.error(payload as string)
+		})
 	},
 })
 

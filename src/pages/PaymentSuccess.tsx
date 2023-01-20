@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import {
+	getByOrderId,
 	getOrderByPaymentSecret,
 	updateOrder,
 } from "../store/features/order/thunks"
@@ -18,14 +19,15 @@ export const PaymentSuccess = () => {
 	const { order, lastOrders } = useSelector(selectOrder)
 	const dispatch = useDispatch<AppDispatch>()
 	const searchParams = new URLSearchParams(search)
+	const orderId = searchParams.get("orderId") as string
 	const status = searchParams.get("redirect_status")
-	const paymentIntent = searchParams.get("payment_intent")
-	const paymentIntentClientSecret = searchParams.get(
-		"payment_intent_client_secret"
-	)
-	console.log({ paymentIntent, status })
+	// const paymentIntent = searchParams.get("payment_intent")
+	// const paymentIntentClientSecret = searchParams.get(
+	// 	"payment_intent_client_secret"
+	// )
+	// console.log({ paymentIntent, status })
 	const paidOrder = Object.entries(lastOrders).find(([orderId, order]) => {
-		if (order.clientSecret === paymentIntentClientSecret) {
+		if (order._id === orderId) {
 			return true
 		}
 	})?.[1]
@@ -33,15 +35,15 @@ export const PaymentSuccess = () => {
 
 	useEffect(() => {
 		if (status === "succeeded") {
+			console.log({ willUpdateOn: order._id })
+
 			dispatch(
 				updateOrder({
 					data: { status: "paid" } as OrderType,
-					orderId: order._id,
+					orderId,
 				})
 			)
-			dispatch(
-				getOrderByPaymentSecret(paymentIntentClientSecret as string)
-			)
+			dispatch(getByOrderId(orderId as string))
 		}
 	}, [])
 
