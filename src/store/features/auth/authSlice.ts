@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { login, loginJWT, logout, register, updateUser } from "./thunks"
 import { toast } from "react-toastify"
 
-type InitStateType = {
+export type UserType = {
 	token: string
 	_id: string
 	username: string
@@ -35,6 +35,7 @@ const initialState = {
 	location: null,
 	loading: true,
 }
+
 export type AuthType = typeof initialState
 
 export const authSlice = createSlice({

@@ -7,10 +7,12 @@ import {
 	getByOrderId,
 	getCart,
 	getOrderByPaymentSecret,
+	getSingleOrder,
 	updateOrder,
 } from "./thunks"
 import { toast } from "react-toastify"
 import { SingleProductType } from "../product/productSlice"
+import { UserType } from "../auth/authSlice"
 
 export type OrderItemType = {
 	_id: string
@@ -39,6 +41,7 @@ export type OrderType = {
 	itemsLength: number
 	status: OrderStatusType
 	clientSecret: string
+	user: UserType
 }
 type OrdersMap = { [k: string]: OrderType }
 
@@ -60,6 +63,7 @@ type InitialStateType = {
 		orders: OrderType[]
 		details: DetailsType
 	}
+	singleOrder: OrderType
 }
 
 const initialState = {
@@ -68,6 +72,7 @@ const initialState = {
 	order: {} as OrderType,
 	lastOrders: {} as OrdersMap,
 	allOrders: { isLoading: false, orders: [], details: {} as DetailsType },
+	singleOrder: {} as OrderType,
 } as InitialStateType
 
 const orderSlice = createSlice({
@@ -204,6 +209,21 @@ const orderSlice = createSlice({
 		})
 		builder.addCase(getAllMyOrders.rejected, (state, { payload }) => {
 			state.allOrders.isLoading = false
+			toast.error(payload as string)
+		})
+
+		builder.addCase(getSingleOrder.pending, (state) => {
+			state.isLoading = true
+		})
+		builder.addCase(getSingleOrder.fulfilled, (state, { payload }) => {
+			const { msg, order } = payload
+			state.isLoading = false
+			state.singleOrder = order
+
+			toast.success(msg)
+		})
+		builder.addCase(getSingleOrder.rejected, (state, { payload }) => {
+			state.isLoading = false
 			toast.error(payload as string)
 		})
 	},

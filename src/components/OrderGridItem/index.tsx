@@ -36,10 +36,10 @@ export const OrderGridItem: FC<OrderType> = (props) => {
 			</Link>
 			<main className={style.main}>
 				<div className={style["left-side"]}>
-					<div className={style["delievery-status"]}>
+					<div className={style["delivery-status"]}>
 						Доставка в пункт выдачи <span>{statusMap[status]}</span>
 					</div>
-					<div className={style["delievery-date"]}>
+					<div className={style["delivery-date"]}>
 						Дата доставки:
 						<span> {getIntlDate(Date.now())}</span>
 					</div>

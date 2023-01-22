@@ -93,6 +93,22 @@ export const getAllMyOrders = createAsyncThunk(
 		}
 	}
 )
+export const getSingleOrder = createAsyncThunk(
+	"orders/getSingleOrder",
+	async (orderId: string, thunkAPI) => {
+		try {
+			const resp = await ozonAPI(`/orders/${orderId}`, {
+				method: "GET",
+			})
+
+			console.log({ data: resp.data })
+
+			return thunkAPI.fulfillWithValue(resp.data)
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response.msg)
+		}
+	}
+)
 export const getOrderByPaymentSecret = createAsyncThunk(
 	"orders/getOrderByPaymentSecret",
 	async (paymentSecret: string, thunkAPI) => {
