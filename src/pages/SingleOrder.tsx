@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectOrder } from "../store/features/order/selector"
 import { useParams } from "react-router-dom"
 import { AppDispatch } from "../store/store"
-import { getSingleOrder } from "../store/features/order/thunks"
+import {
+	addToCart,
+	addToCartMany,
+	getSingleOrder,
+} from "../store/features/order/thunks"
 import { formatPhone, formatPrice, getIntlDate } from "../utils/intl"
 import { TfiLocationPin } from "react-icons/tfi"
 import { BiFace } from "react-icons/bi"
@@ -13,7 +17,7 @@ import { Loading } from "../components/Loading"
 import { toast } from "react-toastify"
 
 export const SingleOrder = () => {
-	const { isLoading, singleOrder } = useSelector(selectOrder)
+	const { isLoading, singleOrder, order } = useSelector(selectOrder)
 	const { orderId } = useParams()
 	const dispatch = useDispatch<AppDispatch>()
 	console.log({ orderId })
@@ -23,6 +27,11 @@ export const SingleOrder = () => {
 		dispatch(getSingleOrder(orderId as string))
 	}, [])
 
+	if (isLoading) {
+		return <Loading />
+	}
+	const { shippingFee, total, subtotal, user, items } = singleOrder
+
 	const handleCopyToClipboard = () => {
 		navigator.clipboard.writeText(orderId as string)
 		toast.success(`Номер ${orderId} скопирован в буфер обмена`, {
@@ -30,11 +39,14 @@ export const SingleOrder = () => {
 		})
 	}
 
-	if (isLoading) {
-		return <Loading />
+	const handleRepeatOrder = () => {
+		dispatch(
+			addToCartMany({
+				orderId: order._id,
+				items,
+			})
+		)
 	}
-	const { shippingFee, total, subtotal, user } = singleOrder
-
 	return (
 		<div className="single-order-page">
 			<header className="heading">
@@ -95,7 +107,10 @@ export const SingleOrder = () => {
 					<button className="btn btn--transparent btn--content btn--light">
 						Электронный чек
 					</button>
-					<button className="btn btn--transparent btn--content btn--light">
+					<button
+						className="btn btn--transparent btn--content btn--light"
+						onClick={handleRepeatOrder}
+					>
 						Повторить заказ
 					</button>
 					<button className="btn btn--transparent btn--content btn--light">

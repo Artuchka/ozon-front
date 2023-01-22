@@ -16,7 +16,6 @@ export const formatPrice = (price: number) => {
 export const formatPhone = (phoneNumberString: string) => {
 	const cleaned = ("" + phoneNumberString).replace(/\D/g, "")
 	const match = cleaned.match(/^(7|8|\+7)?(\d{3})(\d{3})(\d{2})(\d{2})$/)
-	console.log(match)
 
 	if (match) {
 		const intlCode = match[1] ? match[1] : ""

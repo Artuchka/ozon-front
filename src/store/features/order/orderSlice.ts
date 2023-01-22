@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
 	addToCart,
+	addToCartMany,
 	createOrder,
 	createPaymentIntent,
 	getAllMyOrders,
@@ -141,6 +142,21 @@ const orderSlice = createSlice({
 			toast.success(msg)
 		})
 		builder.addCase(addToCart.rejected, (state, { payload }) => {
+			state.isLoading = false
+			toast.error(payload as string)
+		})
+
+		builder.addCase(addToCartMany.pending, (state, { payload }) => {
+			state.isLoading = true
+		})
+		builder.addCase(addToCartMany.fulfilled, (state, { payload }) => {
+			const { msg, order } = payload
+			state.isLoading = false
+			state.order = order
+
+			toast.success(msg)
+		})
+		builder.addCase(addToCartMany.rejected, (state, { payload }) => {
 			state.isLoading = false
 			toast.error(payload as string)
 		})

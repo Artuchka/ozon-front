@@ -69,7 +69,7 @@ export const SingleProduct = () => {
 		_id,
 	} = singleProduct
 
-	const amountFound = order?.items?.filter((i) => i.product._id === _id)
+	const amountFound = order?.items?.filter((i) => i?.product?._id === _id)
 	const amount = amountFound?.length === 0 ? 0 : amountFound?.[0]?.amount
 
 	const radioTypes = types?.map((item: string) => {

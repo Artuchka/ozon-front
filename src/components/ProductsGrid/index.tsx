@@ -25,7 +25,7 @@ export const ProductsGrid: FC = () => {
 		<div className={`${style["products-grid"]} products`}>
 			{products.map((item) => {
 				const amountFound = order?.items?.filter(
-					(i) => i.product._id === item._id
+					(i) => i?.product?._id === item?._id
 				)
 				const amount =
 					amountFound?.length === 0 ? 0 : amountFound?.[0]?.amount

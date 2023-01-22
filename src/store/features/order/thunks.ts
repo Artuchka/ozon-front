@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { ozonAPI } from "../../../axios/customFetch"
-import { OrderType } from "./orderSlice"
+import { OrderItemType, OrderType } from "./orderSlice"
 
 export const createOrder = createAsyncThunk(
 	"orders/createOrder",
@@ -10,7 +10,6 @@ export const createOrder = createAsyncThunk(
 				method: "POST",
 				data: formData,
 			})
-			console.log({ data: resp.data })
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
@@ -30,7 +29,6 @@ export const updateOrder = createAsyncThunk(
 				method: "PATCH",
 				data: data,
 			})
-			console.log({ updatedData: resp.data })
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
@@ -61,6 +59,25 @@ export const addToCart = createAsyncThunk(
 	}
 )
 
+export const addToCartMany = createAsyncThunk(
+	"orders/addToCartMany",
+	async (
+		{ items, orderId }: { items: OrderItemType[]; orderId: string },
+		thunkAPI
+	) => {
+		try {
+			const { data } = await ozonAPI(`/orders/${orderId}`, {
+				method: "POST",
+				data: { items },
+			})
+
+			return thunkAPI.fulfillWithValue(data)
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response.msg)
+		}
+	}
+)
+
 export const getCart = createAsyncThunk(
 	"orders/getCart",
 	async (_, thunkAPI) => {
@@ -68,8 +85,6 @@ export const getCart = createAsyncThunk(
 			const resp = await ozonAPI(`/orders`, {
 				method: "GET",
 			})
-
-			console.log({ data: resp.data })
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
@@ -85,8 +100,6 @@ export const getAllMyOrders = createAsyncThunk(
 				method: "GET",
 			})
 
-			console.log({ data: resp.data })
-
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
 			return thunkAPI.rejectWithValue(error.response.msg)
@@ -100,8 +113,6 @@ export const getSingleOrder = createAsyncThunk(
 			const resp = await ozonAPI(`/orders/${orderId}`, {
 				method: "GET",
 			})
-
-			console.log({ data: resp.data })
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
@@ -119,8 +130,6 @@ export const getOrderByPaymentSecret = createAsyncThunk(
 					method: "GET",
 				}
 			)
-
-			console.log({ data: resp.data })
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
