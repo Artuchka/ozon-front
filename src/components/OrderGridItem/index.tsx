@@ -19,17 +19,21 @@ export const OrderGridItem: FC<OrderType> = (props) => {
 
 	return (
 		<div className={style.wrapper}>
-			<header className={style.heading}>
-				<div className={style.dateId}>
-					<div className={style.date}>{getIntlDate(Date.now())}</div>
-					<Link to={_id} className="btn btn--light btn--transparent">
-						{_id}
-					</Link>
-				</div>
-				<div className={style.total}>
-					<span>оплачено</span> <strong>{total} ₽</strong>
-				</div>
-			</header>
+			<Link to={_id}>
+				<header className={style.heading}>
+					<div className={style.dateId}>
+						<div className={style.date}>
+							{getIntlDate(Date.now())}
+						</div>
+						<button className="btn btn--light btn--transparent">
+							{_id}
+						</button>
+					</div>
+					<div className={style.total}>
+						<span>оплачено</span> <strong>{total} ₽</strong>
+					</div>
+				</header>
+			</Link>
 			<main className={style.main}>
 				<div className={style["left-side"]}>
 					<div className={style["delievery-status"]}>
@@ -39,7 +43,9 @@ export const OrderGridItem: FC<OrderType> = (props) => {
 						Дата доставки:
 						<span> {getIntlDate(Date.now())}</span>
 					</div>
-					<div className={style.rate}>
+					<div
+						className={`${style.rate} btn btn--middle btn--content btn--rounded btn--bold btn--text-small `}
+					>
 						Оценить товар{amountTotal > 1 ? "ы" : ""}
 					</div>
 				</div>

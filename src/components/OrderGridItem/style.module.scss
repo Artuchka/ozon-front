@@ -2,12 +2,16 @@
 	box-shadow: var(--shadow);
 	border-radius: 0.5em;
 	overflow: hidden;
+	a {
+		text-decoration: none;
+		color: black;
+	}
 	.heading {
 		padding: 1em 1.5em;
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
-		background-color: var(--primary-color-lightest);
+		background-color: var(--gray-bg-lighter);
 
 		.dateId {
 			display: flex;
@@ -46,6 +50,11 @@
 					background-color: var(--gray-btn-bg);
 					font-weight: 500;
 				}
+			}
+
+			.delievery-date {
+				color: var(--gray-btn-bg);
+				font-size: 0.9rem;
 			}
 		}
 

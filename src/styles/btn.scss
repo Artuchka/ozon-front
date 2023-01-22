@@ -31,6 +31,9 @@
 	&--short {
 		padding-block: 0.4em;
 	}
+	&--bold {
+		font-weight: 500;
+	}
 	&--black {
 		background-color: black;
 	}
@@ -44,6 +47,15 @@
 		text-decoration-style: dashed;
 		&:hover {
 			color: var(--primary-color);
+		}
+	}
+	&--middle {
+		// padding: 0;
+		// transition: color 0.1s ease;
+		color: var(--primary-color);
+		background-color: var(--primary-color-lightest);
+		&:hover {
+			background-color: var(--primary-color-lighter);
 		}
 	}
 	&--transparent {
