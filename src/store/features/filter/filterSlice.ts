@@ -1,5 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+type OrderStatusType =
+	| "all"
+	| "checkout"
+	| "paid"
+	| "delivered"
+	| "declined"
+	| "pending"
+
 export interface FilterType {
 	title?: string
 	imagesAmount?: number
@@ -14,6 +22,8 @@ export interface FilterType {
 	companies: string[]
 	tags: string[]
 	categories: string[]
+
+	orderFilters: { status: OrderStatusType }
 }
 type PayloadUpdateType = {
 	name: string //keyof FilterType
@@ -61,6 +71,7 @@ const initialState = {
 	companies: [],
 	categories: [],
 	tags: [],
+	orderFilters: { status: "all" },
 } as FilterType
 
 const filterSlice = createSlice({
@@ -91,9 +102,18 @@ const filterSlice = createSlice({
 			}
 			return { ...state, [name]: value, page: 1 }
 		},
+		updateOrderFilter(
+			state: FilterType,
+			{ payload: { name, value } }: { payload: PayloadUpdateType }
+		) {
+			return {
+				...state,
+				orderFilters: { ...state.orderFilters, [name]: value },
+			}
+		},
 	},
 })
 
-export const { updateFilters } = filterSlice.actions
+export const { updateFilters, updateOrderFilter } = filterSlice.actions
 
 export default filterSlice.reducer

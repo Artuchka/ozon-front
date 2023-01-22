@@ -42,6 +42,14 @@ export type OrderType = {
 }
 type OrdersMap = { [k: string]: OrderType }
 
+export type DetailsType = {
+	all: number
+	pending: number
+	paid: number
+	checkout: number
+	delivered: number
+	declined: number
+}
 type InitialStateType = {
 	isLoading: boolean
 	order: OrderType
@@ -50,6 +58,7 @@ type InitialStateType = {
 	allOrders: {
 		isLoading: boolean
 		orders: OrderType[]
+		details: DetailsType
 	}
 }
 
@@ -58,7 +67,7 @@ const initialState = {
 	isLoading: false,
 	order: {} as OrderType,
 	lastOrders: {} as OrdersMap,
-	allOrders: { isLoading: false, orders: [] },
+	allOrders: { isLoading: false, orders: [], details: {} as DetailsType },
 } as InitialStateType
 
 const orderSlice = createSlice({
@@ -186,9 +195,10 @@ const orderSlice = createSlice({
 			state.allOrders.isLoading = true
 		})
 		builder.addCase(getAllMyOrders.fulfilled, (state, { payload }) => {
-			const { msg, orders } = payload
+			const { msg, orders, details } = payload
 			state.allOrders.isLoading = false
 			state.allOrders.orders = orders
+			state.allOrders.details = details
 
 			toast.success(msg)
 		})

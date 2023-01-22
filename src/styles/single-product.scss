@@ -71,7 +71,8 @@ html {
 		flex-direction: column;
 		gap: 1rem;
 		padding: 1rem;
-		box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.2);
+		box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.15);
+		// box-shadow: var(--shadow);
 		border-radius: 0.5em;
 		height: max-content;
 		.price {

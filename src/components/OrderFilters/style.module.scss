@@ -1,0 +1,21 @@
+.wrapper {
+	// display: flex;
+	.options {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+		.option {
+			cursor: pointer;
+			color: var(--gray-text);
+			display: flex;
+			gap: 0.2rem;
+			h2 {
+				font-weight: 600;
+				font-size: 1.8rem;
+			}
+			&.active {
+				color: black;
+			}
+		}
+	}
+}
