@@ -17,7 +17,7 @@ import { selectAuth } from "../store/features/auth/selectors"
 
 export const Products = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { details, isLoading } = useSelector(selectProducts)
+	const { details } = useSelector(selectProducts)
 	const { title } = useSelector(selectFilters)
 	const { loading: gettingUser } = useSelector(selectAuth)
 	const amount = details.productsFound
@@ -37,9 +37,7 @@ export const Products = () => {
 			document.title = `Не нашли товаров`
 		}
 	}, [amount])
-	// if (isLoading) {
-	// 	return <Loading />
-	// }
+
 	return (
 		<div className="products-page">
 			<div className="stats">
