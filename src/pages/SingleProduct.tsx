@@ -51,7 +51,7 @@ export const SingleProduct = () => {
 	}, [singleProduct.images])
 
 	if (singleProduct.isLoading) {
-		return <Loading />
+		return <SingleProductSkeleton />
 	}
 
 	const {
@@ -100,11 +100,6 @@ export const SingleProduct = () => {
 				orderId: order._id,
 			})
 		)
-	}
-
-	// if (singleProduct.isLoading) {
-	if (true) {
-		return <SingleProductSkeleton />
 	}
 
 	return (

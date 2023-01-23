@@ -8,6 +8,7 @@ import { selectOrder } from "../store/features/order/selector"
 import { Loading } from "../components/Loading"
 import { AppDispatch } from "../store/store"
 import { createPaymentIntent } from "../store/features/order/thunks"
+import { CheckoutSkeleton } from "../components/pageBlocks/Skeletons/CheckoutSkeleton"
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -39,16 +40,25 @@ export const Checkout = () => {
 		appearance,
 	}
 	if (isLoading || clientSecret === "placeholder") {
-		return <Loading />
+		return (
+			<div className="checkout-page skeletons">
+				<CheckoutSkeleton />
+			</div>
+		)
 	}
 	return (
 		<div className="checkout-page">
-			<h3>
-				Снизу тестовые данные карты (я не спишу с вас деняк, у меня
-				хватает)
-			</h3>
-			<p>4242</p>
-			<p>4242 4242 4242 4242</p>
+			<div className="info">
+				<h3>
+					Снизу тестовые данные карты (я не спишу с вас деняк, у меня
+					хватает)
+				</h3>
+				<p>Номер карты: 4242 4242 4242 4242</p>
+				<p>Срок действия: 04/24</p>
+				<p>CVC: 424</p>
+				<p>email: Любой корректный</p>
+			</div>
+
 			{clientSecret && (
 				<Elements
 					options={options as StripeElementsOptions}

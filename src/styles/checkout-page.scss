@@ -1,16 +1,28 @@
 .checkout-page {
-	body {
-		font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-		font-size: 16px;
-		-webkit-font-smoothing: antialiased;
+	&.skeletons {
+		svg {
+			width: 500px;
+		}
+	}
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	font-size: 16px;
+	-webkit-font-smoothing: antialiased;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-direction: column;
+	gap: 2rem;
+
+	.info {
 		display: flex;
-		justify-content: center;
-		align-content: center;
-		height: 100vh;
-		width: 100vw;
+		flex-direction: column;
+		gap: 0.5rem;
+		max-width: 500px;
+		margin-inline: auto;
 	}
 
 	form {
+		margin-top: 1rem;
 		width: 30vw;
 		min-width: 500px;
 		align-self: center;
