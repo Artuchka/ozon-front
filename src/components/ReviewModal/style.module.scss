@@ -8,4 +8,16 @@
 		flex-direction: column;
 		gap: 0.5rem;
 	}
+
+	.preview-images,
+	.preview-videos {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		img,
+		video {
+			width: 100px;
+			object-fit: contain;
+		}
+	}
 }

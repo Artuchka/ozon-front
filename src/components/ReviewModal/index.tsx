@@ -17,10 +17,10 @@ import {
 	uploadImagesReview,
 	uploadVideosReview,
 } from "../../store/features/review/thunks"
-import { uploadImages } from "../../store/features/product/thunks"
+import { serverURL } from "../../axios/customFetch"
 
 export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
-	const { isModalOpen, edit } = useSelector(selectReviews)
+	const { isModalOpen, edit, isLoading } = useSelector(selectReviews)
 	const formRef = useRef(document.createElement("form"))
 	const dispatch = useDispatch<AppDispatch>()
 	const { isEdit, editId, imagePaths, videoPaths } = edit
@@ -93,6 +93,11 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 		}
 		dispatch(uploadVideosReview(formData))
 	}
+
+	const showingImages =
+		imagePaths.length > 0 ? imagePaths : edit.review.images
+	const showingVideos =
+		videoPaths.length > 0 ? videoPaths : edit.review.videos
 	return (
 		<Modal
 			open={isModalOpen}
@@ -103,6 +108,7 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 					dispatch(unsetEditReview())
 				}
 			}}
+			width="medium"
 		>
 			<h3>Вставьте и свои 5 копеек</h3>
 			<form onSubmit={handleSubmit} className={style.modal} ref={formRef}>
@@ -114,7 +120,7 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 						required
 						defaultValue={"заговоочек"}
 						name="title"
-						disabled={edit.isLoading}
+						disabled={edit.isLoading || isLoading}
 					/>
 					<input
 						className="input input--rounded"
@@ -123,7 +129,7 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 						placeholder="Введите комментарий"
 						required
 						defaultValue={"комментик"}
-						disabled={edit.isLoading}
+						disabled={edit.isLoading || isLoading}
 					/>
 					<input
 						className="input input--rounded"
@@ -134,7 +140,7 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 						max={5}
 						required
 						defaultValue={5}
-						disabled={edit.isLoading}
+						disabled={edit.isLoading || isLoading}
 					/>
 
 					<input
@@ -144,17 +150,35 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 						name="image"
 						accept="image/*"
 						onChange={handleFileChange}
+						disabled={edit.isLoading || isLoading}
 						// required={imagePaths?.length === 0}
 					/>
+					<div className={style["preview-images"]}>
+						{showingImages?.map((item) => {
+							return <img src={serverURL + item} alt="" />
+						})}
+					</div>
 					<input
 						type="file"
 						className="input input--rounded"
 						multiple
 						name="video"
-						// accept="image/*"
+						accept="video/*"
 						onChange={handleFileChange}
+						disabled={edit.isLoading || isLoading}
 						// required={imagePaths?.length === 0}
 					/>
+
+					<div className={style["preview-videos"]}>
+						{showingVideos?.map((item) => {
+							return (
+								<video
+									src={serverURL + item}
+									autoPlay={false}
+								/>
+							)
+						})}
+					</div>
 				</div>
 				<button
 					type="submit"

@@ -15,6 +15,8 @@ export type Review = {
 	title: string
 	comment: string
 	rating: number
+	images: string[]
+	videos: string[]
 	product: {
 		_id: string
 		images: string[]
