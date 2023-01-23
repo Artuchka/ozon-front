@@ -5,6 +5,7 @@ import { getAllBookmarks } from "../store/features/bookmark/thunks"
 import { selectBookmarks } from "../store/features/bookmark/selector"
 import { ProductItem } from "../components/ProductItem"
 import { Loading } from "../components/Loading"
+import { BookmarkSkeleton } from "../components/pageBlocks/Skeletons/BookmarkSkeleton"
 
 export const Bookmarks = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -19,7 +20,14 @@ export const Bookmarks = () => {
 		return (
 			<div className="bookmarks-page">
 				<h1>Избранное</h1>
-				<Loading />
+				<div className="bookmarks">
+					<BookmarkSkeleton />
+					<BookmarkSkeleton />
+					<BookmarkSkeleton />
+					<BookmarkSkeleton />
+					<BookmarkSkeleton />
+					<BookmarkSkeleton />
+				</div>
 			</div>
 		)
 	}

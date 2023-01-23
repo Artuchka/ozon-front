@@ -5,13 +5,21 @@ import { useSelector } from "react-redux"
 import { selectOrder } from "../../store/features/order/selector"
 import { Loading } from "../Loading"
 import { ozonAPI } from "../../axios/customFetch"
+import { CartItemSkeleton } from "../pageBlocks/Skeletons/CartItemSkeleton"
 
 export const CartItemsList = () => {
 	const { order, isLoading } = useSelector(selectOrder)
 	const { items } = order
 
 	if (isLoading) {
-		return <Loading />
+		return (
+			<div className={style.wrapper}>
+				<CartItemSkeleton />
+				<CartItemSkeleton />
+				<CartItemSkeleton />
+				<CartItemSkeleton />
+			</div>
+		)
 	}
 	return (
 		<div className={style.wrapper}>
