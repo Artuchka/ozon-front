@@ -14,12 +14,14 @@ import { updateFilters } from "../../../store/features/filter/filterSlice"
 import { useLocation, useNavigate } from "react-router-dom"
 import { debounce } from "lodash"
 import { selectOrder } from "../../../store/features/order/selector"
+import { selectBookmarks } from "../../../store/features/bookmark/selector"
 
 export const Header = () => {
 	const [open, setOpen] = useState(false)
 	const [search, setSearch] = useState("")
 	const dispatch = useDispatch<AppDispatch>()
-	const { order } = useSelector(selectOrder)
+	const { order, allOrders } = useSelector(selectOrder)
+	const { bookmarks } = useSelector(selectBookmarks)
 	const auth = useSelector(selectAuth)
 	const user = auth.role !== null
 	const { role } = auth
@@ -95,6 +97,7 @@ export const Header = () => {
 							link="/bookmarks"
 							title="Избранное"
 							color="var(--heart-color)"
+							data={bookmarks?.length || 0}
 						/>
 
 						<StatusLink
@@ -104,7 +107,7 @@ export const Header = () => {
 							title="Корзина"
 						/>
 						<StatusLink
-							data={0}
+							data={allOrders?.details?.["all"] || 0}
 							icon={<BsBoxSeam />}
 							link="/my/orders"
 							title="Заказы"

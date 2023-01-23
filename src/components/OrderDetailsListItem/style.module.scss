@@ -1,0 +1,65 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	.vendor {
+		color: var(--gray-text);
+	}
+	.card {
+		display: grid;
+		grid-template-columns: 100px auto 100px 190px;
+		gap: 1rem;
+		place-items: start;
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		.image {
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
+		}
+		.price {
+			h3 {
+				font-weight: 500;
+			}
+			span {
+				color: var(--gray-text);
+			}
+		}
+		.actions {
+			display: grid;
+			grid-template-columns: auto auto;
+			place-items: center;
+			gap: 0.5rem;
+			place-self: start center;
+
+			.heart {
+				svg {
+					fill: transparent;
+					stroke: var(--gray-text);
+					stroke-width: 10rem;
+				}
+				&:hover {
+					svg {
+						scale: 1.1;
+					}
+				}
+				&.bookmarked {
+					svg {
+						fill: var(--heart-color);
+						stroke: var(--heart-color);
+					}
+				}
+			}
+
+			.adder {
+				display: flex;
+				gap: 0.5rem;
+				align-items: center;
+			}
+		}
+	}
+}

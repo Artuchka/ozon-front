@@ -15,6 +15,7 @@ import {
 	getAllBookmarks,
 } from "../../store/features/bookmark/thunks"
 import { formatPrice } from "../../utils/intl"
+import { Link } from "react-router-dom"
 const selectAmountOptions = [
 	{ value: 1, label: "1" },
 	{ value: 2, label: "2" },
@@ -73,12 +74,13 @@ export const CartItem: FC<OrderItemType> = (props) => {
 
 	return (
 		<div className={style.wrapper}>
-			<img
-				className={style.image}
-				src={image ? serverURL + image : defaultImage}
-				alt=""
-			/>
-			<div className={style.title}>{title}</div>
+			<Link to={`/products/${productId}`} className={style.image}>
+				<img src={image ? serverURL + image : defaultImage} alt="" />
+			</Link>
+			<div className={style.title}>
+				{title.slice(0, 30)}
+				{title.length > 30 && "..."}
+			</div>
 			<div className={style["some-actions"]}>
 				<div className={style.credit}>
 					Частями по{" "}

@@ -24,7 +24,7 @@ export const StatusLink: FC<PropType> = ({
 				<div className={style.data}>
 					{typeof data === "string"
 						? data
-						: data > 99
+						: (data as number) > 99
 						? "99+"
 						: data.toString()}
 				</div>

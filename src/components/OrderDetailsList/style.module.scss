@@ -1,0 +1,9 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+
+	padding: 1rem;
+	border-radius: 0.5em;
+	box-shadow: var(--shadow);
+}

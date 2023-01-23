@@ -37,7 +37,8 @@ export const OrderFilters = () => {
 									: ""
 							}`}
 							onClick={() => handleStatusChange(option.value)}
-							data-value={option.value}
+							// data-value={option.value}
+							key={option.value}
 						>
 							<h2>{option.label}</h2>
 							<data>

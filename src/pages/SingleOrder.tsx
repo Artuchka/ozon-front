@@ -15,6 +15,7 @@ import { FiCreditCard } from "react-icons/fi"
 import { TbCopy } from "react-icons/tb"
 import { Loading } from "../components/Loading"
 import { toast } from "react-toastify"
+import { OrderDetailsList } from "../components/OrderDetailsList"
 
 export const SingleOrder = () => {
 	const { isLoading, singleOrder, order } = useSelector(selectOrder)
@@ -118,6 +119,8 @@ export const SingleOrder = () => {
 					</button>
 				</div>
 			</main>
+
+			<OrderDetailsList />
 		</div>
 	)
 }
