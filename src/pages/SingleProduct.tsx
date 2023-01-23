@@ -25,6 +25,7 @@ import { ImageVideoViewer } from "../components/ImageVideoViewer"
 import { OrderItemType, OrderType } from "../store/features/order/orderSlice"
 import { addToCart, updateOrder } from "../store/features/order/thunks"
 import { selectOrder } from "../store/features/order/selector"
+import { SingleProductSkeleton } from "../components/pageBlocks/Skeletons/SingleProductSkeleton"
 
 export const SingleProduct = () => {
 	const { id } = useParams()
@@ -100,6 +101,12 @@ export const SingleProduct = () => {
 			})
 		)
 	}
+
+	// if (singleProduct.isLoading) {
+	if (true) {
+		return <SingleProductSkeleton />
+	}
+
 	return (
 		<div className="single-product-page">
 			<ReviewModal productId={id || ""} />

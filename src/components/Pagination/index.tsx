@@ -31,6 +31,7 @@ export const Pagination = () => {
 							} btn  btn--rounded btn--square btn--no-padding `}
 							onClick={handleChange}
 							value={ind + 1}
+							disabled={Number(page) === ind + 1}
 						>
 							{ind + 1}
 						</button>

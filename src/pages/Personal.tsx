@@ -6,6 +6,7 @@ import { getIntlDate } from "../utils/intl"
 import { AppDispatch } from "../store/store"
 import { logout } from "../store/features/auth/thunks"
 import { UpdateModal, typeVariants } from "../components/UpdateModal"
+import { MyMainSkeleton } from "../components/pageBlocks/Skeletons/MyMainSkeleton"
 
 export const Personal = () => {
 	// const avatar = "/"
@@ -29,6 +30,7 @@ export const Personal = () => {
 		phone,
 		location,
 		gender,
+		loading: isLoading,
 	} = useSelector(selectAuth)
 
 	const avatar = `https://avatars.dicebear.com/api/croodles/${gender}/${
@@ -38,6 +40,10 @@ export const Personal = () => {
 	useEffect(() => {
 		document.title = `${username} Личный кабинет - OZON`
 	}, [])
+
+	if (isLoading) {
+		return <MyMainSkeleton />
+	}
 
 	return (
 		<div className="personal-page">
