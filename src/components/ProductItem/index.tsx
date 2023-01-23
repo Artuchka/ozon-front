@@ -18,6 +18,7 @@ import { addToCart, updateOrder } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
 import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"
 import { formatPrice } from "../../utils/intl"
+import { SlideImageViewer } from "../SlideImageViewer"
 
 export type ProductItemType = {
 	images: string[]
@@ -46,6 +47,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 		amount,
 	} = props
 	const image = images[0] === "" ? defaultImage : serverURL + images[0]
+	const preparedImages = images.map((item) => serverURL + item)
 
 	const { order } = useSelector(selectOrder)
 
@@ -101,7 +103,8 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 					onClick={handleAddBookmark}
 				/>
 				<Link to={`/products/${_id}`}>
-					<img src={image} alt="product image" />
+					{/* <img src={image} alt="product image" /> */}
+					<SlideImageViewer images={preparedImages} />
 				</Link>
 			</div>
 			<div className={style.price}>{formatPrice(price)} ₽</div>
