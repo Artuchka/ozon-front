@@ -78,8 +78,8 @@ export const CartItem: FC<OrderItemType> = (props) => {
 				<img src={image ? serverURL + image : defaultImage} alt="" />
 			</Link>
 			<div className={style.title}>
-				{title.slice(0, 30)}
-				{title.length > 30 && "..."}
+				{title?.slice(0, 30)}
+				{title?.length > 30 && "..."}
 			</div>
 			<div className={style["some-actions"]}>
 				<div className={style.credit}>

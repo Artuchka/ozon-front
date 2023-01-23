@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react"
+import React, { ChangeEvent, useEffect, useRef, useState } from "react"
 import { SelectCheckbox } from "../components/pageBlocks/inputs/SelectCheckbox"
 import { CartItemsList } from "../components/CartItemsList"
 import { useDispatch, useSelector } from "react-redux"
@@ -16,6 +16,8 @@ export const Cart = () => {
 
 	const { order, isLoading } = useSelector(selectOrder)
 	const { username } = useSelector(selectAuth)
+	const [promoMessage, setPromoMessage] = useState("")
+	const promoInputRef = useRef(document.createElement("input"))
 
 	const [selected, setSelected] = useState(["Выбрать все"])
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +42,27 @@ export const Cart = () => {
 		navigate("/checkout")
 	}
 
+	const handlePromoAdd = () => {
+		let newDiscount = { type: "minus", value: 100 }
+		let { value } = promoInputRef.current
+		value = value.toLowerCase()
+		if (value === "leto") {
+			newDiscount = { type: "minus", value: 1000 }
+		} else if (value === "zima") {
+			newDiscount = { type: "percentage", value: 0.9 }
+		} else {
+			setPromoMessage("Некорректный промокод")
+			return
+		}
+		dispatch(
+			updateOrder({
+				data: { discounts: [newDiscount] } as OrderType,
+				orderId: order._id,
+			})
+		)
+		setPromoMessage("Скидки подключены")
+	}
+
 	useEffect(() => {
 		if (!username || Object.keys(order).length > 0) {
 			return
@@ -49,9 +72,6 @@ export const Cart = () => {
 		console.log("after creating cart")
 	}, [])
 
-	if (isLoading) {
-		return <Loading />
-	}
 	return (
 		<div className="cart-page">
 			<header className="heading">
@@ -75,6 +95,27 @@ export const Cart = () => {
 						<CartItemsList />
 					</div>
 					<div className="buy-card">
+						<div className="promocode">
+							<div className="oneline">
+								<input
+									type="text"
+									className="input input--rounded input--not-required"
+									placeholder="Введите промокод"
+									ref={promoInputRef}
+								/>
+								<button
+									className="btn btn--contained btn--rounded btn--content"
+									onClick={handlePromoAdd}
+								>
+									ок
+								</button>
+							</div>
+							{promoMessage && (
+								<span className="promo-message">
+									{promoMessage}
+								</span>
+							)}
+						</div>
 						<button
 							className="btn btn--contained btn--success btn--rounded btn--tall btn--text-small"
 							onClick={handleCheckout}
