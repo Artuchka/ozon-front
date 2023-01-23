@@ -20,13 +20,13 @@ export const Default = () => {
 
 	useEffect(() => {
 		dispatch(loginJWT())
+		dispatch(getProductDetails())
 	}, [])
 
 	useEffect(() => {
 		if (!username) return
 
 		dispatch(getCart())
-		dispatch(getProductDetails())
 	}, [username])
 
 	useEffect(() => {

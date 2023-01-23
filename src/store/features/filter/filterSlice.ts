@@ -72,6 +72,7 @@ const initialState = {
 	categories: [],
 	tags: [],
 	orderFilters: { status: "all" },
+	page: 1,
 } as FilterType
 
 const filterSlice = createSlice({
@@ -84,7 +85,7 @@ const filterSlice = createSlice({
 		): FilterType | void => {
 			const { name, value, checked } = payload
 			if (name === "page") {
-				return { ...state, [`${name}`]: value }
+				return { ...state, [`${name}`]: parseInt(value as string) }
 			}
 			if (
 				name === "companies" ||

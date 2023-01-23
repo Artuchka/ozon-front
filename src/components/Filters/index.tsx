@@ -17,16 +17,13 @@ export type RangeType = { name: string; value: number }
 export const Filters = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const filter = useSelector(selectFilters)
-	const { details, isLoading } = useSelector(selectProducts)
+	const { details } = useSelector(selectProducts)
 	console.log(filter)
 
 	useEffect(() => {
 		dispatch(getAllProducts())
 	}, [filter])
 
-	if (isLoading) {
-		return <h1>loading</h1>
-	}
 	const {
 		minAverageRating,
 		minPrice: minPriceSelected,

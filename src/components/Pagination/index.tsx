@@ -8,12 +8,9 @@ import { selectFilters } from "../../store/features/filter/selector"
 
 export const Pagination = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { details, isLoading } = useSelector(selectProducts)
+	const { details } = useSelector(selectProducts)
 	const { page } = useSelector(selectFilters)
 
-	if (isLoading) {
-		return <div>Loading...</div>
-	}
 	const { pagesFound } = details
 
 	const handleChange = (e: MouseEvent<HTMLButtonElement>) => {
