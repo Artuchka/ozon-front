@@ -10,4 +10,11 @@
 	@media (min-width: 900px) {
 		grid-template-columns: repeat(3, 1fr);
 	}
+
+	&.skeletons {
+		& > * {
+			max-width: 200px;
+			height: 100%;
+		}
+	}
 }

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux"
 import { selectProducts } from "../../store/features/product/selectors"
 import { Loading } from "../Loading"
 import { selectOrder } from "../../store/features/order/selector"
+import { BookmarkSkeleton } from "../pageBlocks/Skeletons/BookmarkSkeleton"
 
 // type PropType = {
 // 	items: ProductItemType[]
@@ -14,7 +15,15 @@ export const ProductsGrid: FC = () => {
 	const { products, isLoading } = useSelector(selectProducts)
 	const { order } = useSelector(selectOrder)
 	if (isLoading) {
-		return <Loading />
+		return (
+			<div
+				className={`${style["products-grid"]} products ${style.skeletons}`}
+			>
+				<BookmarkSkeleton />
+				<BookmarkSkeleton />
+				<BookmarkSkeleton />
+			</div>
+		)
 	}
 
 	if (!products || products.length === 0) {

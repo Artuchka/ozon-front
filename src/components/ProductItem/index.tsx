@@ -28,7 +28,7 @@ export type ProductItemType = {
 	numOfReviews: number
 	editable?: boolean
 	_id: string
-	amount: number
+	amount?: number
 }
 // crossorigin=anonymos should work for images
 // or just set up cors correctly u stupid bih
@@ -116,6 +116,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 				{averageRating || 0} <AiOutlineStar className={style["star"]} />
 				{numOfReviews}
 			</div>
+
 			{amount === 0 && (
 				<button
 					className={"btn btn--rounded btn--contained btn--content"}
@@ -124,7 +125,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 					В корзину
 				</button>
 			)}
-			{amount > 0 && (
+			{(amount as number) > 0 && (
 				<button
 					className={
 						"btn btn--rounded btn--contained btn--content btn--warn"
