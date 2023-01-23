@@ -16,6 +16,7 @@ import { TbCopy } from "react-icons/tb"
 import { Loading } from "../components/Loading"
 import { toast } from "react-toastify"
 import { OrderDetailsList } from "../components/OrderDetailsList"
+import { OrderDetailsSkeleton } from "../components/pageBlocks/Skeletons/OrderDetailsSkeleton"
 
 export const SingleOrder = () => {
 	const { isLoading, singleOrder, order } = useSelector(selectOrder)
@@ -29,7 +30,11 @@ export const SingleOrder = () => {
 	}, [])
 
 	if (isLoading) {
-		return <Loading />
+		return (
+			<div className="single-order-page">
+				<OrderDetailsSkeleton />
+			</div>
+		)
 	}
 	const { shippingFee, total, subtotal, user, items } = singleOrder
 

@@ -12,9 +12,10 @@ import {
 	setOpenReviewModal,
 } from "../store/features/review/reviewSlice"
 import { ReviewModal } from "../components/ReviewModal"
+import { ReviewItemSkeleton } from "../components/pageBlocks/Skeletons/ReviewItemSkeleton"
 
 export const Reviews = () => {
-	const { myReviews } = useSelector(selectReviews)
+	const { myReviews, isLoading } = useSelector(selectReviews)
 	const dispatch = useDispatch<AppDispatch>()
 	useEffect(() => {
 		document.title = `Мои отзывы - OZON`
@@ -29,6 +30,21 @@ export const Reviews = () => {
 	}
 	const handleDeleteReview = (reviewId: string) => {
 		dispatch(deleteReview(reviewId))
+	}
+
+	if (isLoading) {
+		return (
+			<div className="my-reviews-page">
+				<ReviewModal />
+				<div className="reviews">
+					<ReviewItemSkeleton />
+					<ReviewItemSkeleton />
+					<ReviewItemSkeleton />
+					<ReviewItemSkeleton />
+					<ReviewItemSkeleton />
+				</div>
+			</div>
+		)
 	}
 
 	return (
