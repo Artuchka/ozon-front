@@ -99,6 +99,20 @@ export const getMyProducts = createAsyncThunk(
 		}
 	}
 )
+export const getProductDetails = createAsyncThunk(
+	"product/getProductDetails",
+	async (_, thunkAPI) => {
+		console.log("I WILL FETCH PRODUCT DETAILS")
+
+		try {
+			const resp = await ozonAPI(`/products/getDetails`)
+			return thunkAPI.fulfillWithValue(resp.data)
+		} catch (error: any) {
+			console.log("error caight = ", error)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
 export const getSingleProduct = createAsyncThunk(
 	"product/getSingleProduct",
 	async (id: string, thunkAPI) => {

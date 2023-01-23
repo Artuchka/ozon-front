@@ -11,6 +11,7 @@ import { createOrder, getCart } from "../store/features/order/thunks"
 import { selectAuth } from "./../store/features/auth/selectors"
 import { getAllBookmarks } from "../store/features/bookmark/thunks"
 import { selectOrder } from "../store/features/order/selector"
+import { getProductDetails } from "../store/features/product/thunks"
 
 export const Default = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -25,6 +26,7 @@ export const Default = () => {
 		if (!username) return
 
 		dispatch(getCart())
+		dispatch(getProductDetails())
 	}, [username])
 
 	useEffect(() => {

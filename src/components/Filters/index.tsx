@@ -100,21 +100,21 @@ export const Filters = () => {
 
 			<SelectCheckbox
 				title="Компания"
-				items={[...details.companies]}
+				items={[...details?.companies]}
 				selected={companies}
 				name="companies"
 				onChange={handleChange}
 			/>
 			<SelectCheckbox
 				title="Категория"
-				items={[...details.categories]}
+				items={[...details?.categories]}
 				selected={categories}
 				name="categories"
 				onChange={handleChange}
 			/>
 			<SelectCheckbox
 				title="Теги"
-				items={[...details.tags]}
+				items={[...details?.tags]}
 				selected={tags}
 				name="tags"
 				onChange={handleChange}

@@ -4,7 +4,10 @@ import { ProductsGrid } from "../components/ProductsGrid"
 import { Sort } from "../components/Sort"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
-import { getAllProducts } from "../store/features/product/thunks"
+import {
+	getAllProducts,
+	getProductDetails,
+} from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
 import { selectFilters } from "../store/features/filter/selector"
 import { Pagination } from "../components/Pagination"
@@ -21,6 +24,7 @@ export const Products = () => {
 
 	useEffect(() => {
 		if (gettingUser) return
+
 		dispatch(getAllProducts())
 		dispatch(getAllBookmarks())
 	}, [])

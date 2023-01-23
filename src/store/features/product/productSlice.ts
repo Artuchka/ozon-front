@@ -4,6 +4,7 @@ import {
 	fetchEdit,
 	getAllProducts,
 	getMyProducts,
+	getProductDetails,
 	getSingleProduct,
 	updateProduct,
 	uploadImages,
@@ -66,10 +67,11 @@ type ProductType = {
 }
 
 type DetailsType = {
-	maxPrice: number
-	minPrice: number
 	pagesFound: number
 	productsFound: number
+
+	maxPrice: number
+	minPrice: number
 	companies: string[]
 	categories: string[]
 	tags: string[]
@@ -102,7 +104,16 @@ type InitState = {
 const initialState = {
 	singleProduct: { isLoading: true },
 	isLoading: true,
-	details: { maxPrice: 0, minPrice: 0, pagesFound: 0, productsFound: 0 },
+	details: {
+		maxPrice: 0,
+		minPrice: 0,
+		pagesFound: 0,
+		productsFound: 0,
+
+		companies: [""],
+		categories: [""],
+		tags: [""],
+	},
 	creating: { isLoading: false },
 	edit: { isLoading: false, isEditing: false, editId: "" },
 } as InitState
@@ -154,11 +165,27 @@ export const productSlice = createSlice({
 		})
 		builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
 			const { products, details } = payload
-			state.details = details
+			state.details = { ...state.details, ...details }
 			state.products = products
+			console.log({ details })
+
 			state.isLoading = false
 		})
 		builder.addCase(getAllProducts.rejected, (state, action) => {
+			if (typeof action.payload === "string") toast.error(action.payload)
+			state.isLoading = false
+		})
+
+		builder.addCase(getProductDetails.pending, (state, action) => {
+			state.isLoading = true
+		})
+		builder.addCase(getProductDetails.fulfilled, (state, { payload }) => {
+			const { details } = payload
+			state.details = { ...state.details, ...details }
+			console.log({ details })
+			state.isLoading = false
+		})
+		builder.addCase(getProductDetails.rejected, (state, action) => {
 			if (typeof action.payload === "string") toast.error(action.payload)
 			state.isLoading = false
 		})
