@@ -231,7 +231,7 @@ function setupInputs(
 	inp.value = product.description
 
 	inp = formRef.current?.price
-	inp.value = product.price
+	inp.value = product.price.toString()
 
 	setSpecs(product.specs)
 	setCategories(product.categories)

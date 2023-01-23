@@ -21,6 +21,13 @@
 				object-fit: contain;
 			}
 		}
+		.title {
+			&:hover {
+				a {
+					color: var(--primary-color);
+				}
+			}
+		}
 		.price {
 			h3 {
 				font-weight: 500;
