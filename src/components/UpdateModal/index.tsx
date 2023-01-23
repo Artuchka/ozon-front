@@ -90,7 +90,7 @@ export const UpdateModal: FC<proptype> = ({
 				name="gender"
 				items={genderOptions}
 				className={style.GenderChange}
-				selected={gender || "male"}
+				selected={answer.gender || gender || "male"}
 				onChange={() => {}}
 			/>
 		)
