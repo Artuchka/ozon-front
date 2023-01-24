@@ -18,9 +18,6 @@ import { UserType } from "../auth/authSlice"
 export type OrderItemType = {
 	_id: string
 	product: SingleProductType
-	// price: number
-	// title: string
-	// image: string
 	amount: number
 }
 
@@ -91,6 +88,24 @@ const orderSlice = createSlice({
 		unselectOrderItemById(state, { payload }) {
 			state.selectedInCart = state.selectedInCart.filter(
 				(item) => item !== payload
+			)
+		},
+		filterSelectedInCart(state, { payload }) {
+			const { itemsToDelete } = payload
+			console.log({ itemsToDelete })
+
+			state.selectedInCart = state.selectedInCart.filter((item) =>
+				itemsToDelete.includes(item)
+			)
+		},
+		clearSelectedInCart(state) {
+			state.selectedInCart = []
+		},
+		selectManyInCart(state, { payload }) {
+			const { itemsToAdd } = payload
+			console.log({ itemsToAdd })
+			state.selectedInCart = Array.from(
+				new Set([...state.selectedInCart, ...itemsToAdd])
 			)
 		},
 	},
@@ -262,6 +277,12 @@ const orderSlice = createSlice({
 	},
 })
 
-export const { selectOrderItemById, unselectOrderItemById } = orderSlice.actions
+export const {
+	selectOrderItemById,
+	unselectOrderItemById,
+	filterSelectedInCart,
+	selectManyInCart,
+	clearSelectedInCart,
+} = orderSlice.actions
 
 export default orderSlice.reducer

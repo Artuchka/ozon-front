@@ -9,32 +9,47 @@ import { SelectCheckbox } from "../components/pageBlocks/inputs/SelectCheckbox"
 import { CartItemsList } from "../components/CartItemsList"
 import { useDispatch, useSelector } from "react-redux"
 import { selectOrder } from "../store/features/order/selector"
-import { createOrder, updateOrder } from "../store/features/order/thunks"
+import {
+	addToCartMany,
+	createOrder,
+	updateOrder,
+} from "../store/features/order/thunks"
 import { AppDispatch } from "../store/store"
 import { Loading } from "../components/Loading"
 import { selectAuth } from "../store/features/auth/selectors"
 import { formatPrice } from "../utils/intl"
 import { useNavigate } from "react-router-dom"
-import { OrderType } from "../store/features/order/orderSlice"
+import {
+	OrderItemType,
+	OrderType,
+	clearSelectedInCart,
+	filterSelectedInCart,
+	selectManyInCart,
+	selectOrderItemById,
+	unselectOrderItemById,
+} from "../store/features/order/orderSlice"
+import { SingleCheckbox } from "../components/pageBlocks/inputs/SingleCheckbox"
 
 export const Cart = () => {
 	const dispatch = useDispatch<AppDispatch>()
 
-	const { order, isLoading } = useSelector(selectOrder)
+	const { order, selectedInCart } = useSelector(selectOrder)
 	const { username } = useSelector(selectAuth)
 	const [promoMessage, setPromoMessage] = useState("")
 	const promoInputRef = useRef(document.createElement("input"))
 
-	const [selected, setSelected] = useState(["Выбрать все"])
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, checked, value } = e.target
-		console.log({ name, checked })
-		setSelected((prev) => {
-			if (checked) {
-				return [...prev, value]
-			}
-			return prev.filter((v) => v !== value)
-		})
+	const orderIds = order?.items?.map((item) => {
+		return item.product._id
+	})
+
+	const [allSelected, setAllSelected] = useState(false)
+	const handleAllSelectedToggle = (e: ChangeEvent<HTMLInputElement>) => {
+		if (!allSelected) {
+			dispatch(selectManyInCart({ itemsToAdd: orderIds }))
+		} else {
+			dispatch(clearSelectedInCart())
+		}
+		setAllSelected((prev) => !prev)
 	}
 
 	const navigate = useNavigate()
@@ -94,6 +109,17 @@ export const Cart = () => {
 		promoInputRef.current.focus()
 	}
 
+	const handleRemoveSelected = () => {
+		const itemsToDelete = selectedInCart.map((item) => {
+			return {
+				product: { _id: item },
+				amount: 0,
+			} as OrderItemType
+		})
+		dispatch(addToCartMany({ items: itemsToDelete, orderId: order._id }))
+		dispatch(filterSelectedInCart({ itemsToDelete }))
+	}
+
 	useEffect(() => {
 		if (!username || Object.keys(order).length > 0) {
 			return
@@ -112,13 +138,17 @@ export const Cart = () => {
 			{order?.itemsLength > 0 ? (
 				<>
 					<div className="action-tab">
-						<SelectCheckbox
-							items={["Выбрать все"]}
-							onChange={handleChange}
+						<SingleCheckbox
 							name="selectAll"
-							selected={selected}
+							onChange={handleAllSelectedToggle}
+							itemId="selectAll"
+							selected={allSelected ? ["selectAll"] : []}
+							title="Выбрать все"
 						/>
-						<button className="btn btn--warn btn--content">
+						<button
+							className="btn btn--warn btn--content"
+							onClick={handleRemoveSelected}
+						>
 							Удалить выбранные
 						</button>
 					</div>

@@ -1,5 +1,6 @@
 .wrapper {
 	input {
+		cursor: pointer;
 		position: relative;
 		margin-right: 0.5rem;
 		&::after {
@@ -28,5 +29,10 @@
 				color: var(--primary-color);
 			}
 		}
+	}
+
+	.title {
+		cursor: pointer;
+		margin-left: 0.5rem;
 	}
 }

@@ -6,10 +6,18 @@ type PropType = {
 	itemId: string
 	selected: string[]
 	className?: string
+	title?: string
 }
 
 export const SingleCheckbox: FC<PropType> = (props) => {
-	const { name = "different", itemId, onChange, selected, className } = props
+	const {
+		name = "different",
+		itemId,
+		onChange,
+		selected,
+		className,
+		title,
+	} = props
 	return (
 		<div className={`${style.wrapper} ${className || ""}`}>
 			<input
@@ -20,6 +28,11 @@ export const SingleCheckbox: FC<PropType> = (props) => {
 				onChange={onChange}
 				checked={selected.includes(itemId)}
 			/>
+			{title && (
+				<label htmlFor={itemId} className={style.title}>
+					{title}
+				</label>
+			)}
 		</div>
 	)
 }
