@@ -107,7 +107,6 @@ export const CreateNew = () => {
 		if (
 			companies.length === 0 ||
 			categories.length === 0 ||
-			specs.length === 0 ||
 			tags.length === 0
 		) {
 			toast.error("Please fill companies, categories, specs, tags")

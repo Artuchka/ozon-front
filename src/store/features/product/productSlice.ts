@@ -147,11 +147,11 @@ export const productSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(createProduct.pending, (state, action) => {
+		builder.addCase(createProduct.pending, (state) => {
 			console.log("pending")
 			state.creating.isLoading = true
 		})
-		builder.addCase(createProduct.fulfilled, (state, action) => {
+		builder.addCase(createProduct.fulfilled, (state) => {
 			state.creating.isLoading = false
 			toast.success("created product")
 		})
