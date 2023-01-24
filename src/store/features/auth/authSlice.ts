@@ -102,7 +102,7 @@ export const authSlice = createSlice({
 		builder.addCase(updateUser.fulfilled, (state, action) => {
 			const { msg, user } = action.payload
 			toast(msg)
-			return { ...state, ...user }
+			return { ...state, ...user, loading: false }
 		})
 		builder.addCase(updateUser.rejected, (state, action: any) => {
 			toast.error(action.payload)
