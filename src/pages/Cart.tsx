@@ -71,9 +71,22 @@ export const Cart = () => {
 		setPromoMessage(`${value.toUpperCase()} применён`)
 	}
 
-	const handlePromoKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
-		console.log(e)
+	const handleDiscountRemove = (discountName: string) => {
+		const updatedDiscounts = order.discounts.filter(
+			(item) => item.name !== discountName
+		)
 
+		dispatch(
+			updateOrder({
+				data: {
+					discounts: updatedDiscounts,
+				} as OrderType,
+				orderId: order._id,
+			})
+		)
+	}
+
+	const handlePromoKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.code !== "Enter") return
 
 		handlePromoAdd()
@@ -175,10 +188,24 @@ export const Cart = () => {
 											}
 
 											return (
-												<span className="discount-name">
-													- {discountValue} за `
-													{item.name}`
-												</span>
+												<div
+													className="discount-item"
+													key={item.name}
+												>
+													<span className="discount-name">
+														- {discountValue} за `
+														{item.name}`
+													</span>
+													<strong
+														onClick={() =>
+															handleDiscountRemove(
+																item.name
+															)
+														}
+													>
+														&times;
+													</strong>
+												</div>
 											)
 										})}
 										<span className="value">

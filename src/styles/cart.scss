@@ -109,10 +109,23 @@
 				display: flex;
 				flex-direction: column;
 				align-items: flex-end;
-				.discount-name {
-					text-transform: uppercase;
-					font-weight: 600;
-					color: var(--success-color);
+				.discount-item {
+					display: flex;
+					align-items: center;
+					gap: 0.5rem;
+					.discount-name {
+						text-transform: uppercase;
+						font-weight: 600;
+						color: var(--success-color);
+					}
+					strong {
+						font-size: 1.7rem;
+						cursor: pointer;
+						transition: color 0.2s ease-in-out;
+						&:hover {
+							color: var(--error-color);
+						}
+					}
 				}
 			}
 		}
