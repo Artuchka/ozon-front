@@ -13,7 +13,7 @@ export const createOrder = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -32,7 +32,9 @@ export const updateOrder = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			console.log({ error })
+
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -54,7 +56,7 @@ export const addToCart = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -73,7 +75,7 @@ export const addToCartMany = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -88,7 +90,7 @@ export const getCart = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -102,7 +104,7 @@ export const getAllMyOrders = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -116,7 +118,7 @@ export const getSingleOrder = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -133,7 +135,7 @@ export const getOrderByPaymentSecret = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -149,7 +151,7 @@ export const getByOrderId = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
@@ -166,7 +168,7 @@ export const createPaymentIntent = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			return thunkAPI.rejectWithValue(error.response.msg)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
