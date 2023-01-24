@@ -11,9 +11,10 @@
 	// height: max-content;
 
 	box-shadow: 0 0 0 100vmax whitesmoke;
-	clip-path: inset(0 -100%);
+	clip-path: inset(0 -100% -12rem -100%);
 	background-color: whitesmoke;
 	padding-bottom: 2rem;
+	margin-bottom: 10rem;
 
 	.heading {
 		grid-area: stats;
