@@ -103,6 +103,20 @@
 			}
 		}
 
+		.discounts {
+			margin-top: 1rem;
+			.list {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				.discount-name {
+					text-transform: uppercase;
+					font-weight: 600;
+					color: var(--success-color);
+				}
+			}
+		}
+
 		.total {
 			margin-top: 2rem;
 			margin-bottom: 0.5rem;

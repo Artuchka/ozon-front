@@ -49,24 +49,26 @@ export const Cart = () => {
 	}
 
 	const handlePromoAdd = () => {
-		let newDiscount = { type: "minus", value: 100 }
+		let newDiscount = { type: "minus", value: 0, name: "" }
 		let { value } = promoInputRef.current
 		value = value.toLowerCase()
 		if (value === "leto") {
-			newDiscount = { type: "minus", value: 1000 }
+			newDiscount = { type: "minus", value: 1000, name: value }
 		} else if (value === "zima") {
-			newDiscount = { type: "percentage", value: 0.9 }
+			newDiscount = { type: "percentage", value: 0.9, name: value }
 		} else {
 			setPromoMessage("Некорректный промокод")
 			return
 		}
 		dispatch(
 			updateOrder({
-				data: { discounts: [newDiscount] } as OrderType,
+				data: {
+					discounts: [...order.discounts, newDiscount],
+				} as OrderType,
 				orderId: order._id,
 			})
 		)
-		setPromoMessage("Скидки подключены")
+		setPromoMessage(`${value.toUpperCase()} применён`)
 	}
 
 	const handlePromoKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -161,12 +163,31 @@ export const Cart = () => {
 							{order?.discounts?.length > 0 && (
 								<small className="discounts">
 									<span>Скидка</span>
-									<span className="value">
-										{formatPrice(
-											order.total - order.subtotal
-										)}{" "}
-										₽
-									</span>
+									<div className="list">
+										{order?.discounts?.map((item) => {
+											const discountValue = `-${
+												item.type === "percentage"
+													? 100 - item.value * 100
+													: item.value
+											}${
+												item.type === "percentage"
+													? " %"
+													: " ₽"
+											}`
+											return (
+												<span className="discount-name">
+													{discountValue} за `
+													{item.name}`
+												</span>
+											)
+										})}
+										<span className="value">
+											{formatPrice(
+												order.total - order.subtotal
+											)}{" "}
+											₽
+										</span>
+									</div>
 								</small>
 							)}
 							<div className="total">

@@ -27,6 +27,7 @@ export type OrderItemType = {
 type OrderDiscountType = {
 	type: "minus" | "percentage"
 	value: number
+	name: string
 }
 
 type OrderStatusType = "cart" | "checkout" | "pending" | "paid" | "delievered"
