@@ -60,7 +60,7 @@ export const UpdateModal: FC<proptype> = ({
 	}, [open])
 
 	// storing actual input values
-	const handleChange = (e: ChangeEvent<HTMLFormElement>) => {
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
 
 		setAnswer((prev) => {
@@ -80,7 +80,6 @@ export const UpdateModal: FC<proptype> = ({
 		dispatch(updateUser(answer))
 		setDefaultAnswer(answer)
 		setOpen(false)
-		// toast.success("Сохранено!")
 	}
 
 	if (type === "gender") {
@@ -91,7 +90,7 @@ export const UpdateModal: FC<proptype> = ({
 				items={genderOptions}
 				className={style.GenderChange}
 				selected={answer.gender || gender || "male"}
-				onChange={() => {}}
+				onChange={handleChange}
 			/>
 		)
 	}
@@ -103,14 +102,18 @@ export const UpdateModal: FC<proptype> = ({
 					className="input input--rounded"
 					placeholder="Введите имя"
 					name="firstName"
-					value={answer.firstName || defaultAnswer.firstName}
+					value={
+						answer.firstName || defaultAnswer.firstName || "temp"
+					}
+					onChange={handleChange}
 				/>
 				<input
 					type="text"
 					className="input input--rounded"
 					placeholder="Введите фамилию"
 					name="lastName"
-					value={answer.lastName || defaultAnswer.lastName}
+					value={answer.lastName || defaultAnswer.lastName || "temp"}
+					onChange={handleChange}
 				/>
 			</>
 		)
@@ -122,7 +125,8 @@ export const UpdateModal: FC<proptype> = ({
 				className="input input--rounded"
 				placeholder="Введите телефон"
 				name="phone"
-				value={answer["phone"] || defaultAnswer["phone"]}
+				value={answer["phone"] || defaultAnswer["phone"] || "temp"}
+				onChange={handleChange}
 			/>
 		)
 	}
@@ -133,7 +137,8 @@ export const UpdateModal: FC<proptype> = ({
 				className="input input--rounded"
 				placeholder="Введите почту"
 				name="email"
-				value={answer.email || defaultAnswer.email}
+				value={answer.email || defaultAnswer.email || "temp"}
+				onChange={handleChange}
 			/>
 		)
 	}
@@ -145,14 +150,16 @@ export const UpdateModal: FC<proptype> = ({
 				name="birthday"
 				value={
 					answer.birthday?.split(".")[0] ||
-					defaultAnswer.birthday?.split(".")[0]
+					defaultAnswer.birthday?.split(".")[0] ||
+					"1969-08-21T00:01"
 				}
+				onChange={handleChange}
 			/>
 		)
 	}
 	return (
 		<Modal open={open} setOpen={setOpen}>
-			<form onChange={handleChange} onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<h3>Главное - правильно</h3>
 				{body}
 				<button
