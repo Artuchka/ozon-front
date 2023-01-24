@@ -17,6 +17,7 @@ import {
 import { addToCart } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
 import { Loading } from "../Loading"
+import { AdderOrderItemSkeleton } from "../pageBlocks/Skeletons/AdderOrderItemSkeleton"
 
 export const OrderDetailsListItem: FC<OrderItemType> = (props) => {
 	const { images, title, price, _id: productId, vendor } = props?.product
@@ -74,7 +75,7 @@ export const OrderDetailsListItem: FC<OrderItemType> = (props) => {
 				</div>
 				<div className={style.actions}>
 					{isLoading ? (
-						<Loading />
+						<AdderOrderItemSkeleton />
 					) : (
 						<>
 							{amountInCart === 0 && (
