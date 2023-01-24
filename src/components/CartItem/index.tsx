@@ -1,6 +1,11 @@
 import React, { ChangeEvent, FC } from "react"
 import style from "./style.module.scss"
-import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"
+import {
+	OrderItemType,
+	OrderType,
+	selectOrderItemById,
+	unselectOrderItemById,
+} from "../../store/features/order/orderSlice"
 import defaultImage from "./../../assets/images/404bg.jpeg"
 import { serverURL } from "../../axios/customFetch"
 import { SelectDropdown } from "../pageBlocks/inputs/SelectDropdown"
@@ -16,6 +21,7 @@ import {
 } from "../../store/features/bookmark/thunks"
 import { formatPrice } from "../../utils/intl"
 import { Link } from "react-router-dom"
+import { SingleCheckbox } from "../pageBlocks/inputs/SingleCheckbox"
 const selectAmountOptions = [
 	{ value: 1, label: "1" },
 	{ value: 2, label: "2" },
@@ -36,7 +42,7 @@ export const CartItem: FC<OrderItemType> = (props) => {
 	const image = images?.[0]
 
 	const dispatch = useDispatch<AppDispatch>()
-	const { order } = useSelector(selectOrder)
+	const { order, selectedInCart } = useSelector(selectOrder)
 	const { bookmarks } = useSelector(selectBookmarks)
 	const isBookmarked = !!bookmarks.find(
 		(item) => item.product._id === productId
@@ -72,8 +78,24 @@ export const CartItem: FC<OrderItemType> = (props) => {
 		)
 	}
 
+	const handleItemSelect = (e: ChangeEvent<HTMLInputElement>) => {
+		const { value, checked } = e.target
+
+		if (checked) {
+			dispatch(selectOrderItemById(value))
+		} else {
+			dispatch(unselectOrderItemById(value))
+		}
+	}
 	return (
 		<div className={style.wrapper}>
+			<SingleCheckbox
+				itemId={productId}
+				onChange={handleItemSelect}
+				name="cart"
+				selected={selectedInCart}
+				className={style.selectInput}
+			/>
 			<Link to={`/products/${productId}`} className={style.image}>
 				<img src={image ? serverURL + image : defaultImage} alt="" />
 			</Link>

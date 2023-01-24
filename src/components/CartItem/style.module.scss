@@ -1,10 +1,10 @@
 .wrapper {
 	display: grid;
 	grid-template-areas:
-		"image title price amount"
-		"image some-actions price amount"
-		"image some-actions price amount";
-	grid-template-columns: 100px auto 120px 70px;
+		"select-input image title price amount"
+		"select-input image some-actions price amount"
+		"select-input image some-actions price amount";
+	grid-template-columns: 1.5rem 100px auto 120px 70px;
 	grid-template-rows: 2rem 1rem 1rem;
 	gap: 1rem;
 
@@ -20,6 +20,11 @@
 		bottom: -1rem;
 		left: 0;
 		right: 0;
+	}
+
+	.selectInput {
+		grid-area: select-input;
+		place-self: center center;
 	}
 
 	.image {

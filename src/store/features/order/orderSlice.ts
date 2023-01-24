@@ -66,6 +66,7 @@ type InitialStateType = {
 		details: DetailsType
 	}
 	singleOrder: OrderType
+	selectedInCart: string[]
 }
 
 const initialState = {
@@ -75,12 +76,24 @@ const initialState = {
 	lastOrders: {} as OrdersMap,
 	allOrders: { isLoading: false, orders: [], details: {} as DetailsType },
 	singleOrder: {} as OrderType,
+	selectedInCart: [],
 } as InitialStateType
 
 const orderSlice = createSlice({
 	name: "order",
 	initialState,
-	reducers: {},
+	reducers: {
+		selectOrderItemById(state, { payload }) {
+			if (!state.selectedInCart.includes(payload)) {
+				state.selectedInCart.push(payload)
+			}
+		},
+		unselectOrderItemById(state, { payload }) {
+			state.selectedInCart = state.selectedInCart.filter(
+				(item) => item !== payload
+			)
+		},
+	},
 	extraReducers(builder) {
 		builder.addCase(updateOrder.pending, (state, { payload }) => {
 			state.isLoading = true
@@ -248,5 +261,7 @@ const orderSlice = createSlice({
 		})
 	},
 })
+
+export const { selectOrderItemById, unselectOrderItemById } = orderSlice.actions
 
 export default orderSlice.reducer
