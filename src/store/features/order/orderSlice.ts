@@ -86,6 +86,7 @@ const orderSlice = createSlice({
 		})
 		builder.addCase(updateOrder.fulfilled, (state, { payload }) => {
 			const { msg, order }: { msg: string; order: OrderType } = payload
+			console.log({ payload })
 
 			if (order.status === "paid" || order.status === "delievered") {
 				state.lastOrders[order._id] = order
@@ -97,6 +98,8 @@ const orderSlice = createSlice({
 			toast.success(msg)
 		})
 		builder.addCase(updateOrder.rejected, (state, { payload }) => {
+			console.log({ payload })
+
 			state.isLoading = false
 			toast.error(payload as string)
 		})

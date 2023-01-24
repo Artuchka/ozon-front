@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react"
+import React, {
+	ChangeEvent,
+	KeyboardEvent,
+	useEffect,
+	useRef,
+	useState,
+} from "react"
 import { SelectCheckbox } from "../components/pageBlocks/inputs/SelectCheckbox"
 import { CartItemsList } from "../components/CartItemsList"
 import { useDispatch, useSelector } from "react-redux"
@@ -63,6 +69,16 @@ export const Cart = () => {
 		setPromoMessage("Скидки подключены")
 	}
 
+	const handlePromoKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+		console.log(e)
+
+		if (e.code !== "Enter") return
+
+		handlePromoAdd()
+		promoInputRef.current.value = ""
+		promoInputRef.current.focus()
+	}
+
 	useEffect(() => {
 		if (!username || Object.keys(order).length > 0) {
 			return
@@ -102,6 +118,7 @@ export const Cart = () => {
 									className="input input--rounded input--not-required"
 									placeholder="Введите промокод"
 									ref={promoInputRef}
+									onKeyUp={handlePromoKeyUp}
 								/>
 								<button
 									className="btn btn--contained btn--rounded btn--content"
@@ -111,9 +128,9 @@ export const Cart = () => {
 								</button>
 							</div>
 							{promoMessage && (
-								<span className="promo-message">
+								<small className="promo-message">
 									{promoMessage}
-								</span>
+								</small>
 							)}
 						</div>
 						<button
