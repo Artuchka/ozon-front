@@ -165,18 +165,18 @@ export const Cart = () => {
 									<span>Скидка</span>
 									<div className="list">
 										{order?.discounts?.map((item) => {
-											const discountValue = `-${
-												item.type === "percentage"
-													? 100 - item.value * 100
-													: item.value
-											}${
-												item.type === "percentage"
-													? " %"
-													: " ₽"
-											}`
+											let discountValue = ""
+											if (item.type === "percentage") {
+												discountValue = `${
+													100 - item.value * 100
+												} %`
+											} else {
+												discountValue = `${item.value} ₽`
+											}
+
 											return (
 												<span className="discount-name">
-													{discountValue} за `
+													- {discountValue} за `
 													{item.name}`
 												</span>
 											)
