@@ -41,6 +41,9 @@ export type OrderType = {
 	status: OrderStatusType
 	clientSecret: string
 	user: UserType
+	createdAt: Date
+	updatedAt: Date
+	paidAt: Date
 }
 type OrdersMap = { [k: string]: OrderType }
 

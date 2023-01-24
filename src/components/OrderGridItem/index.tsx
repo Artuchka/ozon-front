@@ -15,7 +15,8 @@ const statusMap = {
 }
 
 export const OrderGridItem: FC<OrderType> = (props) => {
-	const { _id, total, amountTotal, status, items, itemsLength } = props
+	const { _id, total, amountTotal, status, items, itemsLength, paidAt } =
+		props
 
 	return (
 		<div className={style.wrapper}>
@@ -23,7 +24,7 @@ export const OrderGridItem: FC<OrderType> = (props) => {
 				<header className={style.heading}>
 					<div className={style.dateId}>
 						<div className={style.date}>
-							{getIntlDate(Date.now())}
+							{paidAt ? getIntlDate(new Date(paidAt)) : "bad"}
 						</div>
 						<button className="btn btn--light btn--transparent">
 							{_id}
