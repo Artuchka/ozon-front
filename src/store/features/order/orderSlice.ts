@@ -65,7 +65,10 @@ type InitialStateType = {
 		orders: OrderType[]
 		details: DetailsType
 	}
-	singleOrder: OrderType
+	singleOrder: {
+		isLoading: boolean
+		order: OrderType
+	}
 	selectedInCart: string[]
 }
 
@@ -75,7 +78,7 @@ const initialState = {
 	order: {} as OrderType,
 	lastOrders: {} as OrdersMap,
 	allOrders: { isLoading: false, orders: [], details: {} as DetailsType },
-	singleOrder: {} as OrderType,
+	singleOrder: { order: {} as OrderType, isLoading: false },
 	selectedInCart: [],
 } as InitialStateType
 
@@ -264,17 +267,17 @@ const orderSlice = createSlice({
 		})
 
 		builder.addCase(getSingleOrder.pending, (state) => {
-			state.isLoading = true
+			state.singleOrder.isLoading = true
 		})
 		builder.addCase(getSingleOrder.fulfilled, (state, { payload }) => {
 			const { msg, order } = payload
-			state.isLoading = false
-			state.singleOrder = order
+			state.singleOrder.isLoading = false
+			state.singleOrder.order = order
 
 			toast.success(msg)
 		})
 		builder.addCase(getSingleOrder.rejected, (state, { payload }) => {
-			state.isLoading = false
+			state.singleOrder.isLoading = false
 			toast.error(payload as string)
 		})
 	},

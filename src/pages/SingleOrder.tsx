@@ -29,14 +29,14 @@ export const SingleOrder = () => {
 		dispatch(getSingleOrder(orderId as string))
 	}, [])
 
-	if (isLoading) {
+	if (singleOrder.isLoading) {
 		return (
 			<div className="single-order-page">
 				<OrderDetailsSkeleton />
 			</div>
 		)
 	}
-	const { shippingFee, total, subtotal, user, items } = singleOrder
+	const { shippingFee, total, subtotal, user, items } = singleOrder.order
 
 	const handleCopyToClipboard = () => {
 		navigator.clipboard.writeText(orderId as string)

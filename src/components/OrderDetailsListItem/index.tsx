@@ -16,12 +16,13 @@ import {
 } from "../../store/features/bookmark/thunks"
 import { addToCart } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
+import { Loading } from "../Loading"
 
 export const OrderDetailsListItem: FC<OrderItemType> = (props) => {
 	const { images, title, price, _id: productId, vendor } = props?.product
 	const { amount } = props
 
-	const { order } = useSelector(selectOrder)
+	const { order, isLoading } = useSelector(selectOrder)
 	const { bookmarks } = useSelector(selectBookmarks)
 	const isBookmarked = !!bookmarks.find(
 		(item) => item.product._id === productId
@@ -72,38 +73,44 @@ export const OrderDetailsListItem: FC<OrderItemType> = (props) => {
 					)}
 				</div>
 				<div className={style.actions}>
-					{amountInCart === 0 && (
-						<button
-							className="btn btn--middle btn--content"
-							onClick={() => handleSetAmount(amount)}
-						>
-							В корзину
-						</button>
-					)}
-					{amountInCart > 0 && (
-						<div className={style.adder}>
-							<button
-								className={
-									"btn btn--middle btn--content btn--small-padding btn--square"
-								}
-								onClick={() =>
-									handleSetAmount(amountInCart - 1)
-								}
-							>
-								<AiOutlineMinus />
-							</button>
-							<span>{amountInCart} шт.</span>
-							<button
-								className={
-									"btn btn--middle btn--content btn--square btn--small-padding"
-								}
-								onClick={() =>
-									handleSetAmount(amountInCart + 1)
-								}
-							>
-								<AiOutlinePlus />
-							</button>
-						</div>
+					{isLoading ? (
+						<Loading />
+					) : (
+						<>
+							{amountInCart === 0 && (
+								<button
+									className="btn btn--middle btn--content"
+									onClick={() => handleSetAmount(amount)}
+								>
+									В корзину
+								</button>
+							)}
+							{amountInCart > 0 && (
+								<div className={style.adder}>
+									<button
+										className={
+											"btn btn--middle btn--content btn--small-padding btn--square"
+										}
+										onClick={() =>
+											handleSetAmount(amountInCart - 1)
+										}
+									>
+										<AiOutlineMinus />
+									</button>
+									<span>{amountInCart} шт.</span>
+									<button
+										className={
+											"btn btn--middle btn--content btn--square btn--small-padding"
+										}
+										onClick={() =>
+											handleSetAmount(amountInCart + 1)
+										}
+									>
+										<AiOutlinePlus />
+									</button>
+								</div>
+							)}
+						</>
 					)}
 					<button
 						onClick={handleAddBookmark}

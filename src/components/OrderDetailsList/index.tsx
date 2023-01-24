@@ -9,7 +9,7 @@ export const OrderDetailsList = () => {
 
 	return (
 		<div className={style.wrapper}>
-			{singleOrder?.items?.map((item) => {
+			{singleOrder?.order?.items?.map((item) => {
 				console.log(item)
 
 				return <OrderDetailsListItem key={item._id} {...item} />
