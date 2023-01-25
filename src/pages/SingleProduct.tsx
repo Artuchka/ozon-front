@@ -26,6 +26,11 @@ import { OrderItemType, OrderType } from "../store/features/order/orderSlice"
 import { addToCart, updateOrder } from "../store/features/order/thunks"
 import { selectOrder } from "../store/features/order/selector"
 import { SingleProductSkeleton } from "../components/pageBlocks/Skeletons/SingleProductSkeleton"
+import { Link } from "react-router-dom"
+import { selectFilters } from "../store/features/filter/selector"
+import { MdNavigateNext } from "react-icons/md"
+import { GiPlayerNext } from "react-icons/gi"
+import { GrNext } from "react-icons/gr"
 
 export const SingleProduct = () => {
 	const { id } = useParams()
@@ -33,6 +38,7 @@ export const SingleProduct = () => {
 	const { singleProduct } = useSelector(selectProducts)
 	const { edit } = useSelector(selectReviews)
 	const { order } = useSelector(selectOrder)
+
 	const dispatch = useDispatch<AppDispatch>()
 	const orderConfigRef = useRef(document.createElement("form"))
 	const playerRef = React.useRef(null)
@@ -68,6 +74,7 @@ export const SingleProduct = () => {
 		activeImage,
 		vendor,
 		_id,
+		categories,
 	} = singleProduct
 
 	const amountFound = order?.items?.filter((i) => i?.product?._id === _id)
@@ -105,6 +112,24 @@ export const SingleProduct = () => {
 	return (
 		<div className="single-product-page">
 			<ReviewModal productId={id || ""} />
+
+			<div className="sugar">
+				<Link to="/products">Продукты</Link>
+				<GrNext />
+				<div className="categories">
+					{categories?.map((item) => {
+						return (
+							<Link
+								key={item}
+								to={`/products?categories=${item}`}
+								className="category"
+							>
+								{item}
+							</Link>
+						)
+					})}
+				</div>
+			</div>
 
 			<div className="stats">
 				<div className="title">{title}</div>

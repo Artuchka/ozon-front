@@ -5,19 +5,55 @@ html {
 .single-product-page {
 	display: grid;
 	grid-template-areas:
+		"sugar sugar sugar sugar"
 		"stats stats stats stats"
 		"scroll active-image info buy-card"
 		"description description description description"
 		"all-specs all-specs all-specs all-specs"
 		"reviews reviews reviews reviews";
 	grid-template-columns: 100px 300px auto 250px;
-	grid-template-rows: 70px 280px auto;
+	grid-template-rows: 1.4rem 70px 280px auto;
 	gap: 1rem;
 	.scroll {
 		grid-area: scroll;
 	}
 	h3 {
 		font-weight: 500;
+	}
+
+	.sugar {
+		grid-area: sugar;
+		display: flex;
+		gap: 0.5rem;
+
+		a {
+			text-decoration: none;
+			color: black;
+			&:hover {
+				color: var(--primary-color);
+			}
+		}
+
+		.categories {
+			display: flex;
+			gap: 2rem;
+
+			.category {
+				position: relative;
+				&:not(:first-child):before {
+					pointer-events: none;
+					content: "";
+					position: absolute;
+					width: 0.5rem;
+					aspect-ratio: 1/1;
+					background-color: var(--gray-bg);
+					border-radius: 50%;
+					top: 50%;
+					left: -1rem;
+					transform: translateY(-90%) translateX(-50%);
+				}
+			}
+		}
 	}
 	.stats {
 		grid-area: stats;

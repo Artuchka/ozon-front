@@ -46,12 +46,9 @@ export const Filters = () => {
 			checked = e.target.checked
 		}
 
-		console.log({ name, value, checked })
 		if (checked) {
-			console.log({ name, value, checked })
 			dispatch(updateFilters({ name, value, checked }))
 		} else {
-			console.log({ name, value })
 			dispatch(updateFilters({ name, value }))
 		}
 	}
@@ -79,13 +76,6 @@ export const Filters = () => {
 	}
 	return (
 		<form className="filters">
-			{/* <SelectCheckbox
-				title="Категория"
-				items={[...details?.categories]}
-				selected={categories}
-				name="categories"
-				onChange={handleChange}
-			/> */}
 			<SelectList
 				title="Категория"
 				items={["любая", ...details?.categories]}
@@ -130,29 +120,10 @@ export const Filters = () => {
 }
 
 /*
-<Switch
-title="Рассрочка без доплаты"
-name="credit"
-onChange={handleChange}
-/>
-<Switch title="Доставка" name="delivery" onChange={handleChange} />
-
-			<SelectList
-				name="list"
-				title="Категория"
-				items={[...dataComplex]}
-				onChange={handleChange}
-			/>
-<SelectCheckbox
-	title="бренды"
-	items={[...data]}
-	name="checkbox"
+	<Switch
+	title="Рассрочка без доплаты"
+	name="credit"
 	onChange={handleChange}
-/>
-<SelectRadio
-	name="radio"
-	title="Срок доставки"
-	items={[...dataComplex]}
-	onChange={handleChange}
-/>
+	/>
+	<Switch title="Доставка" name="delivery" onChange={handleChange} />
 */
