@@ -167,7 +167,6 @@ export const productSlice = createSlice({
 			const { products, details } = payload
 			state.details = { ...state.details, ...details }
 			state.products = products
-			console.log({ details })
 
 			state.isLoading = false
 		})
@@ -182,7 +181,7 @@ export const productSlice = createSlice({
 		builder.addCase(getProductDetails.fulfilled, (state, { payload }) => {
 			const { details } = payload
 			state.details = { ...state.details, ...details }
-			console.log({ details })
+			// console.log({ details })
 			state.isLoading = false
 		})
 		builder.addCase(getProductDetails.rejected, (state, action) => {

@@ -8,6 +8,18 @@ type OrderStatusType =
 	| "declined"
 	| "pending"
 
+export const allowedFilterInQuery = [
+	"sort",
+	"limit",
+	"categories",
+	"page",
+	"numOfReviews",
+	"minPrice",
+	"maxPrice",
+	"title",
+	"minAverageRating",
+]
+
 export interface FilterType {
 	title?: string
 	imagesAmount?: number
@@ -25,8 +37,8 @@ export interface FilterType {
 
 	orderFilters: { status: OrderStatusType }
 }
-type PayloadUpdateType = {
-	name: string //keyof FilterType
+export type PayloadUpdateType = {
+	name: keyof FilterType
 	value: string | number | boolean
 	checked?: boolean
 }
@@ -113,6 +125,14 @@ const filterSlice = createSlice({
 				state["page"] = 1
 				return state
 			}
+			if (typeof state[name] === "number") {
+				return {
+					...state,
+					[name]: parseFloat(value as string),
+					page: 1,
+				}
+			}
+
 			return { ...state, [name]: value, page: 1 }
 		},
 		updateOrderFilter(

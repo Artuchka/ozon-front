@@ -102,8 +102,6 @@ export const getMyProducts = createAsyncThunk(
 export const getProductDetails = createAsyncThunk(
 	"product/getProductDetails",
 	async (_, thunkAPI) => {
-		console.log("I WILL FETCH PRODUCT DETAILS")
-
 		try {
 			const resp = await ozonAPI(`/products/getDetails`)
 			return thunkAPI.fulfillWithValue(resp.data)

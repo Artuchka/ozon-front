@@ -5,23 +5,63 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { getAllProducts } from "../../store/features/product/thunks"
 import {
+	PayloadUpdateType,
+	allowedFilterInQuery,
 	ratingOptions,
 	updateFilters,
 } from "../../store/features/filter/filterSlice"
 import { selectFilters } from "../../store/features/filter/selector"
+import { FilterType } from "../../store/features/filter/filterSlice"
 import { useEffect } from "react"
 import { selectProducts } from "../../store/features/product/selectors"
 import { SelectCheckbox } from "../pageBlocks/inputs/SelectCheckbox"
 import { SelectList } from "../pageBlocks/inputs/SelectList"
+import { useSearchParams } from "react-router-dom"
 
+function getFilterQueryObject(filter: {}): {} {
+	const allowedEntries = Object.entries(filter).filter(([key, value]) => {
+		return allowedFilterInQuery.includes(key)
+	})
+
+	const allowedObject = Object.fromEntries(allowedEntries)
+
+	return allowedObject
+}
 export type RangeType = { name: string; value: number }
 export const Filters = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const filter = useSelector(selectFilters)
 	const { details } = useSelector(selectProducts)
-	// console.log(filter)
+	const [search, setSearch] = useSearchParams()
 
 	useEffect(() => {
+		const params = Object.fromEntries(search)
+		const paramsArray = Object.entries(params)
+
+		paramsArray.forEach(([key, value]) => {
+			if (allowedFilterInQuery.includes(key)) {
+				console.log({ key, value })
+
+				if (key === "categories") {
+					dispatch(
+						updateFilters({
+							name: key,
+							value: value,
+							checked: true,
+						} as PayloadUpdateType)
+					)
+				} else {
+					dispatch(
+						updateFilters({ name: key, value } as PayloadUpdateType)
+					)
+				}
+			}
+		})
+		// setSearch({ ...params, new: "123" })
+	}, [])
+
+	useEffect(() => {
+		setSearch(getFilterQueryObject(filter))
 		dispatch(getAllProducts())
 	}, [filter])
 
@@ -47,9 +87,11 @@ export const Filters = () => {
 		}
 
 		if (checked) {
-			dispatch(updateFilters({ name, value, checked }))
+			dispatch(
+				updateFilters({ name, value, checked } as PayloadUpdateType)
+			)
 		} else {
-			dispatch(updateFilters({ name, value }))
+			dispatch(updateFilters({ name, value } as PayloadUpdateType))
 		}
 	}
 	const handleRangeChange = (e: RangeType) => {
@@ -72,7 +114,7 @@ export const Filters = () => {
 			return
 		}
 
-		dispatch(updateFilters({ name, value }))
+		dispatch(updateFilters({ name, value } as PayloadUpdateType))
 	}
 	return (
 		<form className="filters">

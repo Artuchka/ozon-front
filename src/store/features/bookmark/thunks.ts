@@ -4,10 +4,8 @@ import { ozonAPI } from "../../../axios/customFetch"
 export const getAllBookmarks = createAsyncThunk(
 	"bookmarks/getAll",
 	async (_, thunkAPI) => {
-		console.log("getting")
 		try {
 			const resp = await ozonAPI.get("/bookmarks")
-			console.log(resp)
 
 			return resp.data
 		} catch (error: any) {
