@@ -17,6 +17,7 @@ import {
 import { PayloadUpdateType } from "../../store/features/filter/filterSlice"
 import { debounce } from "lodash"
 import { updateOrder } from "../../store/features/order/thunks"
+import { isCoordsEqual } from "../../utils/coords"
 
 export const SelectDeliveryMap = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -88,6 +89,7 @@ export const SelectDeliveryMap = () => {
 			updateOrder({
 				data: {
 					deliveryCoordinates: chosenCoord,
+					isCustomCoordinates: isCustomCoord,
 				} as OrderType,
 				orderId: order._id,
 			})
@@ -180,8 +182,4 @@ export const SelectDeliveryMap = () => {
 			</button>
 		</div>
 	)
-}
-
-function isCoordsEqual(coords: [number, number], expected: [number, number]) {
-	return coords[0] === expected[0] && coords[1] === expected[1]
 }

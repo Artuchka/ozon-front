@@ -77,8 +77,7 @@ export const SingleOrder = () => {
 						<h3>Доставка в пункт выдачи</h3>
 						<p>
 							Пункт Ozon,{" "}
-							{singleOrder?.street?.name || "ул. Ленина"},{" "}
-							{singleOrder?.street?.description || "Москва"}
+							{singleOrder?.street || "ул. Ленина,Москва"},
 						</p>
 					</div>
 				</div>

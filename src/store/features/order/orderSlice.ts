@@ -76,6 +76,7 @@ export type OrderType = {
 	updatedAt: Date
 	paidAt: Date
 	deliveryCoordinates: [number, number]
+	isCustomCoordinates: boolean
 }
 type OrdersMap = { [k: string]: OrderType }
 
@@ -100,7 +101,7 @@ type OrderInitialStateType = {
 	singleOrder: {
 		isLoading: boolean
 		order: OrderType
-		street: { name: string; description: string }
+		street: string
 	}
 	selectedInCart: string[]
 
@@ -118,7 +119,7 @@ const initialState = {
 	singleOrder: {
 		order: {} as OrderType,
 		isLoading: false,
-		street: { name: "", description: "" },
+		street: "",
 	},
 	selectedInCart: [],
 	deliveryCoords: deliveryDefault[0].value,

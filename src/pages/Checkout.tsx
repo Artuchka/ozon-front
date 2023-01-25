@@ -10,6 +10,7 @@ import { AppDispatch } from "../store/store"
 import { createPaymentIntent } from "../store/features/order/thunks"
 import { CheckoutSkeleton } from "../components/pageBlocks/Skeletons/CheckoutSkeleton"
 import { SelectDeliveryMap } from "../components/SelectDeliveryMap"
+import { isCoordsEqual } from "../utils/coords"
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -62,14 +63,16 @@ export const Checkout = () => {
 			</div>
 
 			<div className="stripe-form">
-				{clientSecret && (
-					<Elements
-						options={options as StripeElementsOptions}
-						stripe={stripePromise}
-					>
-						<CheckoutForm />
-					</Elements>
-				)}
+				{clientSecret &&
+					order?.deliveryCoordinates &&
+					!isCoordsEqual([0, 0], order?.deliveryCoordinates) && (
+						<Elements
+							options={options as StripeElementsOptions}
+							stripe={stripePromise}
+						>
+							<CheckoutForm />
+						</Elements>
+					)}
 			</div>
 		</div>
 	)
