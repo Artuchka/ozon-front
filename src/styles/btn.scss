@@ -84,7 +84,9 @@
 	&--contained {
 		background-color: var(--primary-color);
 		color: white;
-
+		&:hover {
+			background-color: var(--primary-color-light);
+		}
 		&.btn--warn {
 			background-color: var(--error-color);
 			&:hover {

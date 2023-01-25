@@ -9,21 +9,35 @@ import { selectOrder } from "../../store/features/order/selector"
 import { Switch } from "../pageBlocks/inputs/Switch"
 import { AppDispatch } from "../../store/store"
 import {
+	OrderType,
 	PayloadUpdateOrderType,
 	deliveryDefault,
 	updateDeliveryCoords,
 } from "../../store/features/order/orderSlice"
 import { PayloadUpdateType } from "../../store/features/filter/filterSlice"
 import { debounce } from "lodash"
+import { updateOrder } from "../../store/features/order/thunks"
 
 export const SelectDeliveryMap = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { deliveryCoords, isCustomCoord, customCoord } =
+	const { order, deliveryCoords, isCustomCoord, customCoord } =
 		useSelector(selectOrder)
+
 	const defaultState = {
 		center: deliveryDefault[0].value,
 		zoom: 10,
 	}
+
+	const preparedDeliveryCoords = deliveryDefault.map((item) => {
+		return { ...item, value: item.value.join(";") }
+	})
+
+	const chosenCoord = isCustomCoord
+		? customCoord.map((item) => parseFloat(item.toFixed(6)))
+		: deliveryCoords
+
+	const chosenCoordsString = `[${chosenCoord.join(", ")}]`
+
 	const handleCoordSelect = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value, checked } = e.target
 		console.log({ name, value })
@@ -69,15 +83,16 @@ export const SelectDeliveryMap = () => {
 		)
 	}
 
-	const preparedDeliveryCoords = deliveryDefault.map((item) => {
-		return { ...item, value: item.value.join(";") }
-	})
-
-	const chosenCoord = `[${
-		isCustomCoord
-			? customCoord.map((item) => item.toFixed(6)).join(", ")
-			: deliveryCoords.join(", ")
-	}]`
+	const handlePinSave = () => {
+		dispatch(
+			updateOrder({
+				data: {
+					deliveryCoordinates: chosenCoord,
+				} as OrderType,
+				orderId: order._id,
+			})
+		)
+	}
 
 	return (
 		<div className={style.wrapper}>
@@ -100,7 +115,7 @@ export const SelectDeliveryMap = () => {
 				/>
 				<div className={style.result}>
 					<span>Выбрана точка с координатами</span>
-					<span>{chosenCoord}</span>
+					<span>{chosenCoordsString}</span>
 				</div>
 			</div>
 			<div className={style.map}>
@@ -157,6 +172,12 @@ export const SelectDeliveryMap = () => {
 					</Map>
 				</YMaps>
 			</div>
+			<button
+				className={`btn btn--contained ${style.saveButton}`}
+				onClick={handlePinSave}
+			>
+				Сохранить
+			</button>
 		</div>
 	)
 }

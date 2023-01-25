@@ -75,6 +75,7 @@ export type OrderType = {
 	createdAt: Date
 	updatedAt: Date
 	paidAt: Date
+	deliveryCoordinates: [number, number]
 }
 type OrdersMap = { [k: string]: OrderType }
 

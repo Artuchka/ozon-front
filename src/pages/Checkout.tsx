@@ -27,10 +27,10 @@ export const Checkout = () => {
 	const { clientSecret } = order
 	const dispatch = useDispatch<AppDispatch>()
 
-	// useEffect(() => {
-	// 	// Create PaymentIntent as soon as the page loads
-	// 	dispatch(createPaymentIntent(order._id))
-	// }, [])
+	useEffect(() => {
+		// Create PaymentIntent as soon as the page loads
+		dispatch(createPaymentIntent(order._id))
+	}, [])
 
 	const appearance: appereanceType = {
 		theme: "stripe",
@@ -40,13 +40,13 @@ export const Checkout = () => {
 		clientSecret,
 		appearance,
 	}
-	// if (isLoading || clientSecret === "placeholder") {
-	// 	return (
-	// 		<div className="checkout-page skeletons">
-	// 			<CheckoutSkeleton />
-	// 		</div>
-	// 	)
-	// }
+	if (isLoading || clientSecret === "placeholder") {
+		return (
+			<div className="checkout-page skeletons">
+				<CheckoutSkeleton />
+			</div>
+		)
+	}
 	return (
 		<div className="checkout-page">
 			<SelectDeliveryMap />
@@ -61,14 +61,16 @@ export const Checkout = () => {
 				<p>email: Любой корректный</p>
 			</div>
 
-			{/* {clientSecret && (
-				<Elements
-					options={options as StripeElementsOptions}
-					stripe={stripePromise}
-				>
-					<CheckoutForm />
-				</Elements>
-			)} */}
+			<div className="stripe-form">
+				{clientSecret && (
+					<Elements
+						options={options as StripeElementsOptions}
+						stripe={stripePromise}
+					>
+						<CheckoutForm />
+					</Elements>
+				)}
+			</div>
 		</div>
 	)
 }

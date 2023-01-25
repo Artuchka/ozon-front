@@ -2,6 +2,7 @@
 	margin: 0 auto;
 	display: grid;
 	grid-template-columns: 400px 500px;
+	grid-template-rows: auto 50px;
 	gap: 1rem;
 
 	.coords {
@@ -36,5 +37,8 @@
 	}
 	.map {
 		outline: 1px solid var(--primary-color);
+	}
+	.saveButton {
+		grid-column: 1/-1;
 	}
 }
