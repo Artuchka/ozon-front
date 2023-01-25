@@ -8,6 +8,7 @@ import { QRCodeSVG } from "qrcode.react"
 import {
 	addToCart,
 	addToCartMany,
+	createRefund,
 	getSingleOrder,
 } from "../store/features/order/thunks"
 import { formatPhone, formatPrice, getIntlDate } from "../utils/intl"
@@ -56,6 +57,9 @@ export const SingleOrder = () => {
 				items,
 			})
 		)
+	}
+	const handleRefundOrder = () => {
+		dispatch(createRefund(orderId as string))
 	}
 
 	return (
@@ -136,7 +140,10 @@ export const SingleOrder = () => {
 					>
 						Повторить заказ
 					</button>
-					<button className="btn btn--transparent btn--content btn--light">
+					<button
+						className="btn btn--transparent btn--content btn--light"
+						onClick={handleRefundOrder}
+					>
 						Вернуть товары
 					</button>
 				</div>

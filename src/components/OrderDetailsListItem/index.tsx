@@ -54,7 +54,7 @@ export const OrderDetailsListItem: FC<OrderItemType> = (props) => {
 	return (
 		<div className={style.wrapper}>
 			<div className={style.vendor}>
-				{vendor.firstName} {vendor.lastName}
+				{vendor?.firstName} {vendor?.lastName}
 			</div>
 			<div className={style.card}>
 				<div className={style.image}>

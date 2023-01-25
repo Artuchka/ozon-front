@@ -3,7 +3,10 @@ import style from "./style.module.scss"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { selectFilters } from "../../store/features/filter/selector"
-import { updateOrderFilter } from "../../store/features/filter/filterSlice"
+import {
+	FilterType,
+	updateOrderFilter,
+} from "../../store/features/filter/filterSlice"
 import { selectOrder } from "../../store/features/order/selector"
 import { DetailsType } from "../../store/features/order/orderSlice"
 
@@ -13,7 +16,7 @@ const FilterOptions = [
 	{ value: "pending", label: "В работе" },
 	{ value: "paid", label: "Оплаченные" },
 	{ value: "delievered", label: "Доставленные" },
-	{ value: "declined", label: "Отмененные" },
+	{ value: "refunded", label: "Возвращены" },
 ] as { value: keyof DetailsType; label: string }[]
 
 export const OrderFilters = () => {
@@ -22,7 +25,9 @@ export const OrderFilters = () => {
 	const { allOrders } = useSelector(selectOrder)
 
 	const handleStatusChange = (value: string) => {
-		dispatch(updateOrderFilter({ name: "status", value }))
+		dispatch(
+			updateOrderFilter({ name: "status" as keyof FilterType, value })
+		)
 	}
 
 	return (

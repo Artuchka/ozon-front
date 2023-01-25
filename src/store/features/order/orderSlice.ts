@@ -4,6 +4,7 @@ import {
 	addToCartMany,
 	createOrder,
 	createPaymentIntent,
+	createRefund,
 	getAllMyOrders,
 	getByOrderId,
 	getCart,
@@ -86,7 +87,7 @@ export type DetailsType = {
 	paid: number
 	checkout: number
 	delivered: number
-	declined: number
+	refunded: number
 }
 type AddressType = { street: string; isCustomAddress: boolean }
 type OrderInitialStateType = {
@@ -271,6 +272,22 @@ const orderSlice = createSlice({
 		})
 		builder.addCase(createPaymentIntent.rejected, (state, { payload }) => {
 			state.isLoading = false
+			toast.error(payload as string)
+		})
+
+		builder.addCase(createRefund.pending, (state, { payload }) => {
+			state.singleOrder.isLoading = true
+		})
+		builder.addCase(createRefund.fulfilled, (state, { payload }) => {
+			const { msg, order } = payload
+			state.singleOrder.isLoading = false
+			state.singleOrder.order = order
+			console.log({ order })
+
+			toast.success(msg)
+		})
+		builder.addCase(createRefund.rejected, (state, { payload }) => {
+			state.singleOrder.isLoading = false
 			toast.error(payload as string)
 		})
 

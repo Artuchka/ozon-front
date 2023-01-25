@@ -12,6 +12,7 @@ const statusMap = {
 	pending: "Оплата идет",
 	paid: "Оплачено",
 	delievered: "Получено",
+	refunded: "Возвращено",
 }
 
 export const OrderGridItem: FC<OrderType> = (props) => {
