@@ -88,6 +88,7 @@ export type DetailsType = {
 	delivered: number
 	declined: number
 }
+type AddressType = { street: string; isCustomAddress: boolean }
 type OrderInitialStateType = {
 	isLoading: boolean
 	order: OrderType
@@ -101,7 +102,7 @@ type OrderInitialStateType = {
 	singleOrder: {
 		isLoading: boolean
 		order: OrderType
-		street: string
+		address: AddressType
 	}
 	selectedInCart: string[]
 
@@ -119,7 +120,7 @@ const initialState = {
 	singleOrder: {
 		order: {} as OrderType,
 		isLoading: false,
-		street: "",
+		address: { street: "", isCustomAddress: false },
 	},
 	selectedInCart: [],
 	deliveryCoords: deliveryDefault[0].value,
@@ -329,10 +330,10 @@ const orderSlice = createSlice({
 			state.singleOrder.isLoading = true
 		})
 		builder.addCase(getSingleOrder.fulfilled, (state, { payload }) => {
-			const { msg, order, street } = payload
+			const { msg, order, address } = payload
 			state.singleOrder.isLoading = false
 			state.singleOrder.order = order
-			state.singleOrder.street = street
+			state.singleOrder.address = address
 
 			toast.success(msg)
 		})
