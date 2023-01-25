@@ -76,8 +76,9 @@ export const SingleOrder = () => {
 					<div className="text">
 						<h3>Доставка в пункт выдачи</h3>
 						<p>
-							Пункт Ozon, Россия, Санкт-Петербург, Измайловский
-							проспект, 16/30
+							Пункт Ozon,{" "}
+							{singleOrder?.street?.name || "ул. Ленина"},{" "}
+							{singleOrder?.street?.description || "Москва"}
 						</p>
 					</div>
 				</div>
