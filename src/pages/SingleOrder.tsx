@@ -20,7 +20,19 @@ import { Loading } from "../components/Loading"
 import { toast } from "react-toastify"
 import { OrderDetailsList } from "../components/OrderDetailsList"
 import { OrderDetailsSkeleton } from "../components/pageBlocks/Skeletons/OrderDetailsSkeleton"
+import {
+	DetailsType,
+	OrderStatusType,
+} from "../store/features/order/orderSlice"
 
+const statusMap = {
+	cart: "оплата идет",
+	pending: "оплата идет",
+	paid: "оплачен",
+	checkout: "ожидает оплаты",
+	delivered: "доставлен",
+	refunded: "возвращен",
+}
 export const SingleOrder = () => {
 	const [QRcodeShow, setQRcodeShow] = useState(false)
 	const { isLoading, singleOrder, order } = useSelector(selectOrder)
@@ -40,8 +52,16 @@ export const SingleOrder = () => {
 			</div>
 		)
 	}
-	const { shippingFee, total, subtotal, user, items, paidAt, createdAt } =
-		singleOrder.order
+	const {
+		shippingFee,
+		total,
+		subtotal,
+		user,
+		items,
+		paidAt,
+		createdAt,
+		status,
+	} = singleOrder.order
 
 	const handleCopyToClipboard = () => {
 		navigator.clipboard.writeText(orderId as string)
@@ -71,6 +91,10 @@ export const SingleOrder = () => {
 				</h2>
 				<div className="date">
 					от{" "}
+					{getIntlDate(new Date(paidAt || createdAt || Date.now()))}
+				</div>
+				<div className="status">
+					{statusMap[status as OrderStatusType]} от{" "}
 					{getIntlDate(new Date(paidAt || createdAt || Date.now()))}
 				</div>
 			</header>

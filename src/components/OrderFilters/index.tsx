@@ -15,7 +15,7 @@ const FilterOptions = [
 	{ value: "checkout", label: "Ожидают оплаты" },
 	{ value: "pending", label: "В работе" },
 	{ value: "paid", label: "Оплаченные" },
-	{ value: "delievered", label: "Доставленные" },
+	{ value: "delivered", label: "Доставленные" },
 	{ value: "refunded", label: "Возвращены" },
 ] as { value: keyof DetailsType; label: string }[]
 

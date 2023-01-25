@@ -59,7 +59,13 @@ type OrderDiscountType = {
 	name: string
 }
 
-type OrderStatusType = "cart" | "checkout" | "pending" | "paid" | "delievered"
+export type OrderStatusType =
+	| "cart"
+	| "checkout"
+	| "pending"
+	| "paid"
+	| "delivered"
+	| "refunded"
 
 export type OrderType = {
 	_id: string
@@ -184,7 +190,7 @@ const orderSlice = createSlice({
 			const { msg, order }: { msg: string; order: OrderType } = payload
 			console.log({ payload })
 
-			if (order.status === "paid" || order.status === "delievered") {
+			if (order.status === "paid" || order.status === "delivered") {
 				state.lastOrders[order._id] = order
 				console.log("GETTING", order.status)
 			} else {

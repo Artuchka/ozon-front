@@ -11,7 +11,7 @@ const statusMap = {
 	checkout: "Оплата",
 	pending: "Оплата идет",
 	paid: "Оплачено",
-	delievered: "Получено",
+	delivered: "Получено",
 	refunded: "Возвращено",
 }
 
