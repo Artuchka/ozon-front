@@ -3,7 +3,7 @@ import styles from "./style.module.scss"
 
 type ItemType = {
 	label: string
-	value: string
+	value: string | number
 }
 
 type PropTypes = {
@@ -11,30 +11,33 @@ type PropTypes = {
 	onChange: ChangeEventHandler<HTMLInputElement>
 	title: string
 	name: string
-	items: ItemType[]
+	items: string[]
+	selected: string[]
 }
 export const SelectList: FC<PropTypes> = ({
 	title = "title",
 	name = "name",
 	onChange,
-	items = [{ label: "первый", value: "first" }],
+	items = ["first"],
 	className,
+	selected,
 }) => {
 	return (
 		<div className={`${className} ${styles.selectList}`}>
 			<h4 className={styles.title}>{title}</h4>
 			<ul className={styles.list}>
-				{items.map(({ label, value }) => {
+				{items.map((item) => {
 					return (
-						<div className={styles.row} key={value}>
+						<div className={styles.row} key={item}>
 							<input
 								type="radio"
-								id={`${name}${value}`}
+								id={item}
 								name={name}
-								value={value}
+								value={item}
 								onChange={onChange}
+								checked={selected.includes(item)}
 							/>
-							<label htmlFor={`${name}${value}`}>{label}</label>
+							<label htmlFor={item}>{item}</label>
 						</div>
 					)
 				})}
