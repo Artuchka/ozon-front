@@ -179,7 +179,7 @@ const createQueryParams = (params: FilterType) => {
 	if (tags.length > 0) {
 		query += `&tags=${tags.join(",")}`
 	}
-	if (categories.length > 0) {
+	if (categories.length > 0 && categories[0] !== "любая") {
 		query += `&categories=${categories.join(",")}`
 	}
 

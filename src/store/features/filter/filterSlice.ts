@@ -69,7 +69,7 @@ const initialState = {
 	minPrice: 0,
 	maxPrice: 1000,
 	companies: [],
-	categories: [],
+	categories: ["любая"],
 	tags: [],
 	orderFilters: { status: "all" },
 	page: 1,
@@ -87,19 +87,31 @@ const filterSlice = createSlice({
 			if (name === "page") {
 				return { ...state, [`${name}`]: parseInt(value as string) }
 			}
-			if (
-				name === "companies" ||
-				name === "categories" ||
-				name === "tags"
-			) {
+
+			if (name === "categories") {
+				if (checked) {
+					return {
+						...state,
+						[name]: [value.toString()],
+						page: 1,
+					}
+				}
+				state[name] = []
+				state["page"] = 1
+				return state
+			}
+
+			if (name === "companies" || name === "tags") {
 				if (checked) {
 					return {
 						...state,
 						[name]: [...state[name], value.toString()],
+						page: 1,
 					}
 				}
 				state[name] = state[name].filter((v) => v !== value.toString())
-				return
+				state["page"] = 1
+				return state
 			}
 			return { ...state, [name]: value, page: 1 }
 		},

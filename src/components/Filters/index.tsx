@@ -12,13 +12,14 @@ import { selectFilters } from "../../store/features/filter/selector"
 import { useEffect } from "react"
 import { selectProducts } from "../../store/features/product/selectors"
 import { SelectCheckbox } from "../pageBlocks/inputs/SelectCheckbox"
+import { SelectList } from "../pageBlocks/inputs/SelectList"
 
 export type RangeType = { name: string; value: number }
 export const Filters = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const filter = useSelector(selectFilters)
 	const { details } = useSelector(selectProducts)
-	console.log(filter)
+	// console.log(filter)
 
 	useEffect(() => {
 		dispatch(getAllProducts())
@@ -35,16 +36,17 @@ export const Filters = () => {
 	const { minPrice: minPriceExisting, maxPrice: maxPriceExisting } = details
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		let { name } = e.target
-		let value = ""
+		const { name, value } = e.target
 		let checked = null
 
-		if (e.target.matches('input[type="checkbox"]')) {
-			value = e.target.value
+		if (
+			e.target.matches('input[type="checkbox"]') ||
+			e.target.matches('input[type="radio"]')
+		) {
 			checked = e.target.checked
-		} else {
-			value = e.target.value
 		}
+
+		console.log({ name, value, checked })
 		if (checked) {
 			console.log({ name, value, checked })
 			dispatch(updateFilters({ name, value, checked }))
@@ -56,15 +58,15 @@ export const Filters = () => {
 	const handleRangeChange = (e: RangeType) => {
 		const { name, value } = e
 
-		console.log("---------")
+		// console.log("---------")
 
-		console.log("trying to update from")
-		console.log({ minPriceSelected, maxPriceSelected })
+		// console.log("trying to update from")
+		// console.log({ minPriceSelected, maxPriceSelected })
 
-		console.log("to")
-		console.log({ name, value })
+		// console.log("to")
+		// console.log({ name, value })
 
-		console.log("---------")
+		// console.log("---------")
 
 		if (
 			(name === "minPrice" && value === minPriceSelected) ||
@@ -77,6 +79,20 @@ export const Filters = () => {
 	}
 	return (
 		<form className="filters">
+			{/* <SelectCheckbox
+				title="Категория"
+				items={[...details?.categories]}
+				selected={categories}
+				name="categories"
+				onChange={handleChange}
+			/> */}
+			<SelectList
+				title="Категория"
+				items={["любая", ...details?.categories]}
+				selected={categories}
+				name="categories"
+				onChange={handleChange}
+			/>
 			<SelectRadio
 				name="minAverageRating"
 				title="Оценка"
@@ -100,13 +116,6 @@ export const Filters = () => {
 				items={[...details?.companies]}
 				selected={companies}
 				name="companies"
-				onChange={handleChange}
-			/>
-			<SelectCheckbox
-				title="Категория"
-				items={[...details?.categories]}
-				selected={categories}
-				name="categories"
 				onChange={handleChange}
 			/>
 			<SelectCheckbox
