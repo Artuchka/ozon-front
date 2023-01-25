@@ -17,14 +17,34 @@ import { UserType } from "../auth/authSlice"
 
 export const deliveryDefault = [
 	{
-		label: "РоссияРоссия РоссияРоссия Россия, г. Санкт-Петербург, пр-кт Измайловский 24\\161",
-		value: [53.1231, 5.4123] as [number, number],
+		label: "Измайловский проспект, 24/161, Санкт-Петербург, 190005",
+		value: [59.909567, 30.307927],
 	},
 	{
-		label: "Second label",
-		value: [53, 55] as [number, number],
+		label: "1-я Красноармейская улица, 1/21, Санкт-Петербург, 190005",
+		value: [59.916365, 30.31576],
 	},
-]
+	{
+		label: "Московский проспект, 4АД, Санкт-Петербург, 190031",
+		value: [59.9252, 30.318877],
+	},
+	{
+		label: "Московский проспект, 9В, Санкт-Петербург",
+		value: [59.921489, 30.314368],
+	},
+	{
+		label: "Большая Подьяческая улица, 30, Санкт-Петербург, 190068",
+		value: [59.920817, 30.305591],
+	},
+	{
+		label: "Садовая улица, 62, Санкт-Петербург, 190068",
+		value: [59.921155, 30.302393],
+	},
+	{
+		label: "набережная Адмиралтейского канала, 2Т, Санкт-Петербург, 190000",
+		value: [59.929275, 30.2882],
+	},
+] as { label: string; value: [number, number] }[]
 
 export type OrderItemType = {
 	_id: string
@@ -84,6 +104,7 @@ type OrderInitialStateType = {
 
 	deliveryCoords: [number, number]
 	isCustomCoord: boolean
+	customCoord: [number, number]
 }
 
 const initialState = {
@@ -96,6 +117,7 @@ const initialState = {
 	selectedInCart: [],
 	deliveryCoords: deliveryDefault[0].value,
 	isCustomCoord: false,
+	customCoord: deliveryDefault[0].value,
 } as OrderInitialStateType
 
 export type PayloadUpdateOrderType = {
@@ -139,8 +161,10 @@ const orderSlice = createSlice({
 			state,
 			{ payload }: { payload: PayloadUpdateOrderType }
 		) {
-			const { name, value } = payload
-			state[name] = value
+			if (!(state.isCustomCoord && payload.name === "deliveryCoords")) {
+				const { name, value } = payload
+				state[name] = value
+			}
 		},
 	},
 	extraReducers(builder) {

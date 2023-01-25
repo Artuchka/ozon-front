@@ -1,4 +1,8 @@
 .checkout-page {
+	// box-shadow: 0 0 0 100vmax var(--gray-bg-light);
+	// clip-path: inset(0 -100% -12rem -100%);
+	// background-color: var(--gray-bg-light);
+
 	&.skeletons {
 		svg {
 			width: 500px;

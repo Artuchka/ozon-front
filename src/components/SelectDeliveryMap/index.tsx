@@ -1,5 +1,6 @@
-import React, { ChangeEvent } from "react"
+import React, { ChangeEvent, useCallback } from "react"
 import style from "./style.module.scss"
+import imageHomePin from "./../../assets/images/pin2.png"
 
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps"
 import { SelectRadio } from "../pageBlocks/inputs/SelectRadio"
@@ -13,13 +14,15 @@ import {
 	updateDeliveryCoords,
 } from "../../store/features/order/orderSlice"
 import { PayloadUpdateType } from "../../store/features/filter/filterSlice"
+import { debounce } from "lodash"
 
 export const SelectDeliveryMap = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { deliveryCoords, isCustomCoord } = useSelector(selectOrder)
+	const { deliveryCoords, isCustomCoord, customCoord } =
+		useSelector(selectOrder)
 	const defaultState = {
-		center: [59.909599542115195, 30.307893688003148],
-		zoom: 11,
+		center: deliveryDefault[0].value,
+		zoom: 10,
 	}
 	const handleCoordSelect = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value, checked } = e.target
@@ -39,11 +42,43 @@ export const SelectDeliveryMap = () => {
 			} as PayloadUpdateOrderType)
 		)
 	}
-	console.log(deliveryCoords)
-	console.log({ isCustomCoord })
+
+	const debouncedCustomChange = useCallback(
+		debounce((e: any) => {
+			const value =
+				e["_sourceEvent"]["originalEvent"]["target"]["geometry"][
+					"_coordinates"
+				]
+
+			dispatch(
+				updateDeliveryCoords({
+					name: "customCoord",
+					value,
+				} as PayloadUpdateOrderType)
+			)
+		}, 300),
+		[]
+	)
+
+	const handlePinClick = (coords: [number, number]) => {
+		dispatch(
+			updateDeliveryCoords({
+				name: "deliveryCoords",
+				value: coords,
+			} as PayloadUpdateOrderType)
+		)
+	}
+
 	const preparedDeliveryCoords = deliveryDefault.map((item) => {
 		return { ...item, value: item.value.join(";") }
 	})
+
+	const chosenCoord = `[${
+		isCustomCoord
+			? customCoord.map((item) => item.toFixed(6)).join(", ")
+			: deliveryCoords.join(", ")
+	}]`
+
 	return (
 		<div className={style.wrapper}>
 			<div className={style.coords}>
@@ -63,35 +98,60 @@ export const SelectDeliveryMap = () => {
 					selected={isCustomCoord}
 					className={style.customSwitch}
 				/>
+				<div className={style.result}>
+					<span>Выбрана точка с координатами</span>
+					<span>{chosenCoord}</span>
+				</div>
 			</div>
 			<div className={style.map}>
 				<YMaps>
 					<Map
 						width={500}
-						height={350}
+						height={400}
 						defaultState={defaultState}
-						onLoad={(e) => {
-							console.log(e)
+						state={{
+							center: deliveryCoords,
+							zoom: 12,
 						}}
 					>
-						<Placemark
-							geometry={[59.909599542115195, 30.307893688003148]}
-							properties={{ iconCaption: "fad" }}
-							options={{ preset: "islands#circleDotIcon" }}
-						/>
+						{deliveryDefault.map((item) => {
+							const isActive = isCoordsEqual(
+								deliveryCoords,
+								item.value
+							)
+							return (
+								<Placemark
+									key={item.label}
+									geometry={item.value}
+									properties={{
+										iconCaption: isActive ? item.label : "",
+									}}
+									instanceRef={(inst) => {
+										inst?.events?.add("click", () =>
+											handlePinClick(item.value)
+										)
+									}}
+									options={{
+										preset: isActive
+											? "islands#circleDotIcon"
+											: "islands#Icon",
+										iconColor: "#005bff",
+									}}
+								/>
+							)
+						})}
 						{isCustomCoord && (
 							<Placemark
-								geometry={[
-									59.909599542115195, 30.407893688003148,
-								]}
-								options={{ draggable: true }}
-								onDrag={(e: any) => {
-									const res =
-										e["_sourceEvent"]["originalEvent"][
-											"target"
-										]["geometry"]["_coordinates"]
-									console.log(res)
+								geometry={deliveryCoords}
+								options={{
+									draggable: true,
+									preset: "islands#dotIcon",
+									iconColor: "#005bff",
+									iconLayout: "default#image",
+									iconImageHref: imageHomePin,
+									iconImageSize: [60, 60],
 								}}
+								onDrag={(e: any) => debouncedCustomChange(e)}
 							/>
 						)}
 					</Map>
@@ -99,4 +159,8 @@ export const SelectDeliveryMap = () => {
 			</div>
 		</div>
 	)
+}
+
+function isCoordsEqual(coords: [number, number], expected: [number, number]) {
+	return coords[0] === expected[0] && coords[1] === expected[1]
 }

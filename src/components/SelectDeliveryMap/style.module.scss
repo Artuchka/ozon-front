@@ -2,19 +2,39 @@
 	margin: 0 auto;
 	display: grid;
 	grid-template-columns: 400px 500px;
+	gap: 1rem;
 
 	.coords {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-		padding-bottom: 4rem;
 		gap: 2rem;
 		.prepared {
 			overflow-y: auto;
 			padding-left: 1rem;
+			max-height: 250px;
+			&::-webkit-scrollbar {
+				background-color: var(--primary-color-lighter);
+			}
+			&::-webkit-scrollbar-thumb {
+				background-color: var(--primary-color);
+			}
 		}
 		.customSwitch {
 			padding-left: 1rem;
 		}
+
+		.result {
+			padding-left: 1rem;
+			display: flex;
+			flex-direction: column;
+			gap: 0.3em;
+			span:nth-child(2) {
+				color: var(--primary-color);
+				font-size: 1.3rem;
+			}
+		}
+	}
+	.map {
+		outline: 1px solid var(--primary-color);
 	}
 }
