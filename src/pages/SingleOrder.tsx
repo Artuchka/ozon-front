@@ -1,8 +1,10 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { selectOrder } from "../store/features/order/selector"
 import { useParams } from "react-router-dom"
 import { AppDispatch } from "../store/store"
+import { QRCodeSVG } from "qrcode.react"
+
 import {
 	addToCart,
 	addToCartMany,
@@ -19,6 +21,7 @@ import { OrderDetailsList } from "../components/OrderDetailsList"
 import { OrderDetailsSkeleton } from "../components/pageBlocks/Skeletons/OrderDetailsSkeleton"
 
 export const SingleOrder = () => {
+	const [QRcodeShow, setQRcodeShow] = useState(false)
 	const { isLoading, singleOrder, order } = useSelector(selectOrder)
 	const { orderId } = useParams()
 	const dispatch = useDispatch<AppDispatch>()
@@ -36,7 +39,8 @@ export const SingleOrder = () => {
 			</div>
 		)
 	}
-	const { shippingFee, total, subtotal, user, items } = singleOrder.order
+	const { shippingFee, total, subtotal, user, items, paidAt, createdAt } =
+		singleOrder.order
 
 	const handleCopyToClipboard = () => {
 		navigator.clipboard.writeText(orderId as string)
@@ -53,6 +57,7 @@ export const SingleOrder = () => {
 			})
 		)
 	}
+
 	return (
 		<div className="single-order-page">
 			<header className="heading">
@@ -60,7 +65,10 @@ export const SingleOrder = () => {
 					Заказ №{orderId}
 					<TbCopy onClick={handleCopyToClipboard} className="copy" />
 				</h2>
-				<div className="date">от {getIntlDate(Date.now())} </div>
+				<div className="date">
+					от{" "}
+					{getIntlDate(new Date(paidAt || createdAt || Date.now()))}
+				</div>
 			</header>
 			<main className="main-info">
 				<div className="delivery">
@@ -110,9 +118,14 @@ export const SingleOrder = () => {
 					</div>
 				</div>
 				<div className="actions">
-					<button className="btn btn--transparent btn--content btn--light">
-						Электронный чек
-					</button>
+					{paidAt && (
+						<button
+							className="btn btn--transparent btn--content btn--light"
+							onClick={() => setQRcodeShow(true)}
+						>
+							Электронный чек
+						</button>
+					)}
 					<button
 						className="btn btn--transparent btn--content btn--light"
 						onClick={handleRepeatOrder}
@@ -123,6 +136,13 @@ export const SingleOrder = () => {
 						Вернуть товары
 					</button>
 				</div>
+				{QRcodeShow && (
+					<QRCodeSVG
+						value="https://github.com/Artuchka"
+						bgColor="var(--gray-bg-lighter)"
+						className="qrcode"
+					/>
+				)}
 			</main>
 
 			<OrderDetailsList />

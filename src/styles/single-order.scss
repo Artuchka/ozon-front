@@ -25,7 +25,8 @@
 		display: grid;
 		grid-template-areas:
 			"delivery totals actions"
-			"recipient totals actions";
+			"recipient totals actions"
+			"qrcode qrcode qrcode";
 		grid-template-columns: 1fr 1fr 150px;
 		gap: 1.5rem;
 		background-color: var(--gray-bg-lighter);
@@ -37,6 +38,10 @@
 		}
 
 		line-height: 1.3rem;
+		.qrcode {
+			grid-area: qrcode;
+			place-self: end;
+		}
 		.delivery {
 			grid-area: delivery;
 		}
