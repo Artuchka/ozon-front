@@ -15,6 +15,17 @@ import { toast } from "react-toastify"
 import { SingleProductType } from "../product/productSlice"
 import { UserType } from "../auth/authSlice"
 
+export const deliveryDefault = [
+	{
+		label: "РоссияРоссия РоссияРоссия Россия, г. Санкт-Петербург, пр-кт Измайловский 24\\161",
+		value: [53.1231, 5.4123] as [number, number],
+	},
+	{
+		label: "Second label",
+		value: [53, 55] as [number, number],
+	},
+]
+
 export type OrderItemType = {
 	_id: string
 	product: SingleProductType
@@ -55,7 +66,7 @@ export type DetailsType = {
 	delivered: number
 	declined: number
 }
-type InitialStateType = {
+type OrderInitialStateType = {
 	isLoading: boolean
 	order: OrderType
 	lastOrders: OrdersMap
@@ -70,6 +81,9 @@ type InitialStateType = {
 		order: OrderType
 	}
 	selectedInCart: string[]
+
+	deliveryCoords: [number, number]
+	isCustomCoord: boolean
 }
 
 const initialState = {
@@ -80,7 +94,14 @@ const initialState = {
 	allOrders: { isLoading: false, orders: [], details: {} as DetailsType },
 	singleOrder: { order: {} as OrderType, isLoading: false },
 	selectedInCart: [],
-} as InitialStateType
+	deliveryCoords: deliveryDefault[0].value,
+	isCustomCoord: false,
+} as OrderInitialStateType
+
+export type PayloadUpdateOrderType = {
+	name: keyof OrderInitialStateType
+	value: any
+}
 
 const orderSlice = createSlice({
 	name: "order",
@@ -113,6 +134,13 @@ const orderSlice = createSlice({
 			state.selectedInCart = Array.from(
 				new Set([...state.selectedInCart, ...itemsToAdd])
 			)
+		},
+		updateDeliveryCoords(
+			state,
+			{ payload }: { payload: PayloadUpdateOrderType }
+		) {
+			const { name, value } = payload
+			state[name] = value
 		},
 	},
 	extraReducers(builder) {
@@ -289,6 +317,7 @@ export const {
 	filterSelectedInCart,
 	selectManyInCart,
 	clearSelectedInCart,
+	updateDeliveryCoords,
 } = orderSlice.actions
 
 export default orderSlice.reducer

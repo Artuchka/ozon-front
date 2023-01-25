@@ -1,0 +1,20 @@
+.wrapper {
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: 400px 500px;
+
+	.coords {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding-bottom: 4rem;
+		gap: 2rem;
+		.prepared {
+			overflow-y: auto;
+			padding-left: 1rem;
+		}
+		.customSwitch {
+			padding-left: 1rem;
+		}
+	}
+}

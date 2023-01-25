@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.2",
     "@reduxjs/toolkit": "^1.9.1",
     "@stripe/react-stripe-js": "^1.16.3",
     "@stripe/stripe-js": "^1.46.0",

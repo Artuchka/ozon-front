@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { VideoPlayer } from "../components/VideoPlayer"
-import videoURL from "./../assets/video/попутчик.mp4"
+
 export const Landing = () => {
 	useEffect(() => {
 		document.title = "OZON - Интернет-магазин"

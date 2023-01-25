@@ -10,6 +10,7 @@ type PropTypes = {
 	name: string
 	selected: number | string
 	items: ItemType[]
+	isBlurred?: boolean
 }
 
 export const SelectRadio: FC<PropTypes> = ({
@@ -27,15 +28,20 @@ export const SelectRadio: FC<PropTypes> = ({
 			value: "second",
 		},
 	],
+	isBlurred,
 	className,
 }) => {
 	return (
-		<div className={`${className} ${styles.selectList}`}>
+		<div
+			className={`${className} ${styles.selectList} ${
+				isBlurred ? styles.blurred : ""
+			}`}
+		>
 			<h4 className={styles.title}>{title}</h4>
 			<ul className={styles.list}>
 				{items.map(({ value, label }) => {
 					return (
-						<div className={styles.row} key={value}>
+						<div className={styles.row} key={`${label}${value}`}>
 							<input
 								type="radio"
 								id={`${name}${value}`}

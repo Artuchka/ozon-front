@@ -9,6 +9,7 @@ import { Loading } from "../components/Loading"
 import { AppDispatch } from "../store/store"
 import { createPaymentIntent } from "../store/features/order/thunks"
 import { CheckoutSkeleton } from "../components/pageBlocks/Skeletons/CheckoutSkeleton"
+import { SelectDeliveryMap } from "../components/SelectDeliveryMap"
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -26,10 +27,10 @@ export const Checkout = () => {
 	const { clientSecret } = order
 	const dispatch = useDispatch<AppDispatch>()
 
-	useEffect(() => {
-		// Create PaymentIntent as soon as the page loads
-		dispatch(createPaymentIntent(order._id))
-	}, [])
+	// useEffect(() => {
+	// 	// Create PaymentIntent as soon as the page loads
+	// 	dispatch(createPaymentIntent(order._id))
+	// }, [])
 
 	const appearance: appereanceType = {
 		theme: "stripe",
@@ -39,15 +40,16 @@ export const Checkout = () => {
 		clientSecret,
 		appearance,
 	}
-	if (isLoading || clientSecret === "placeholder") {
-		return (
-			<div className="checkout-page skeletons">
-				<CheckoutSkeleton />
-			</div>
-		)
-	}
+	// if (isLoading || clientSecret === "placeholder") {
+	// 	return (
+	// 		<div className="checkout-page skeletons">
+	// 			<CheckoutSkeleton />
+	// 		</div>
+	// 	)
+	// }
 	return (
 		<div className="checkout-page">
+			<SelectDeliveryMap />
 			<div className="info">
 				<h3>
 					Снизу тестовые данные карты (я не спишу с вас деняк, у меня
@@ -59,14 +61,14 @@ export const Checkout = () => {
 				<p>email: Любой корректный</p>
 			</div>
 
-			{clientSecret && (
+			{/* {clientSecret && (
 				<Elements
 					options={options as StripeElementsOptions}
 					stripe={stripePromise}
 				>
 					<CheckoutForm />
 				</Elements>
-			)}
+			)} */}
 		</div>
 	)
 }
