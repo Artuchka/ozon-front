@@ -22,6 +22,12 @@ type StatInitialStateType = {
 	singleStat: {
 		isLoading: boolean
 		stat: StatsType
+		actionsHistory: [
+			ActionsDetails[],
+			ActionsDetails[],
+			ActionsDetails[],
+			ActionsDetails[]
+		][]
 	}
 }
 
@@ -31,13 +37,20 @@ const initialState = {
 	singleStat: {
 		stat: {} as StatsType,
 		isLoading: false,
+		actionsHistory: [],
 	},
 } as StatInitialStateType
 
 const statsSlice = createSlice({
 	name: "stats",
 	initialState,
-	reducers: {},
+	reducers: {
+		setActionsHistory(state, { payload }) {
+			console.log("setting")
+
+			state.singleStat.actionsHistory = payload
+		},
+	},
 	extraReducers(builder) {
 		builder.addCase(
 			getSingleStatByProductId.pending,
@@ -63,5 +76,7 @@ const statsSlice = createSlice({
 		)
 	},
 })
+
+export const { setActionsHistory } = statsSlice.actions
 
 export default statsSlice.reducer

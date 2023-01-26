@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useEffect } from "react"
 import {
 	Chart as ChartJS,
 	RadialLinearScale,
@@ -11,8 +11,11 @@ import {
 	ChartData,
 } from "chart.js"
 import { Radar } from "react-chartjs-2"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { selectStats } from "../store/features/stats/selectors"
+import { setActionsHistory } from "../store/features/stats/statsSlice"
+import { AppDispatch } from "../store/store"
+import { Loading } from "./Loading"
 
 ChartJS.register(
 	RadialLinearScale,
@@ -28,28 +31,11 @@ const backgrounds = [
 	"rgba(232, 185, 171, 0.7)",
 	"rgba(224, 152, 145, 0.7)",
 	"rgba(203, 118, 158, 0.7)",
-	// "rgba(204, 255, 102, 0.7)",
-	// "rgba(216, 17, 89, 0.7)",
-	// "rgba(251, 177, 60, 0.7)",
-	// "rgba(232, 218, 178, 0.7)",
+	"rgba(204, 255, 102, 0.7)",
+	"rgba(216, 17, 89, 0.7)",
+	"rgba(251, 177, 60, 0.7)",
+	"rgba(232, 218, 178, 0.7)",
 ]
-
-const options = {
-	// legend: {
-	// 	position: "top",
-	// },
-	// title: {
-	// 	display: true,
-	// 	text: "Chart.js Radar Chart",
-	// },
-	scale: {
-		// reverse: false,
-		gridLines: {},
-		// ticks: {
-		// 	beginAtZero: true,
-		// },
-	},
-}
 
 interface RadarProps {
 	options: ChartOptions<"radar">
@@ -58,35 +44,19 @@ interface RadarProps {
 
 type PropType = {}
 export const RadarChart: FC<PropType> = (props) => {
+	const dispatch = useDispatch<AppDispatch>()
 	const { singleStat } = useSelector(selectStats)
-	const { stat } = singleStat
-	const { visits, bookmarked, bought, refunded } = stat
+	const { stat, actionsHistory } = singleStat
 
-	const oneDay = 1000 * 60 * 60 * 24
-	const calculatedDataNow = [visits, bought, bookmarked, refunded]
-
-	const actionsDataForDays = [calculatedDataNow]
-
-	const extraDaysAmount = Math.min(backgrounds.length, 10)
-
-	for (let dayNumber = 1; dayNumber <= extraDaysAmount; dayNumber++) {
-		const prevCalculatedData =
-			actionsDataForDays[actionsDataForDays.length - 1]
-		const newCalculatedData = prevCalculatedData.map((actionsArray) => {
-			return actionsArray.filter(
-				(item) =>
-					Date.now() - new Date(item.date).getTime() >
-					dayNumber * oneDay
-			)
-		})
-		actionsDataForDays.push(newCalculatedData)
+	if (singleStat.isLoading) {
+		return <Loading />
 	}
 
-	const calculatedDataForDays = actionsDataForDays.map((dayData) => {
-		return dayData.map((actionArray) => actionArray.length)
+	const calculatedDataForDays = actionsHistory?.map((dayData) => {
+		return dayData.map((actionArray) => actionArray?.length)
 	})
 
-	const datasets = calculatedDataForDays.map((item, index) => {
+	const datasets = calculatedDataForDays?.map((item, index) => {
 		let label = ""
 		if (index === 0) {
 			label = `Сегодня`
@@ -110,7 +80,6 @@ export const RadarChart: FC<PropType> = (props) => {
 			pointHoverBorderColor: "rgb(255, 99, 132)",
 		}
 	})
-	console.log(datasets)
 	datasets[0].hidden = false
 
 	const data = {
@@ -146,13 +115,7 @@ export const RadarChart: FC<PropType> = (props) => {
 								],
 								padding: 20,
 								backdropPadding: 8,
-								// nasty case.....
-								// borderRadius: {
-								// 	topLeft: 10,
-								// 	topRight: 10,
-								// 	bottomLeft: 10,
-								// 	bottomRight: 10,
-								// },
+
 								font: {
 									size: 18,
 									family: "main",
