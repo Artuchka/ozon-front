@@ -18,9 +18,9 @@ export const Sort: FC = () => {
 		console.log("clicked")
 
 		const { name, value } = e.target
-		console.log({ name, value })
+		// console.log({ name, value })
 
-		dispatch(updateFilters({ name, value } as PayloadUpdateType))
+		dispatch(updateFilters({ name, value } as any))
 	}
 
 	return (
