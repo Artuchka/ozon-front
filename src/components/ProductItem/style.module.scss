@@ -12,6 +12,41 @@
 			color: var(--primary-color);
 		}
 	}
+
+	.actions {
+		display: flex;
+
+		.edit {
+			flex-grow: 1;
+			text-align: center;
+			padding-block: 0.4rem;
+
+			&:hover {
+				background-color: var(--primary-color-lighter);
+			}
+		}
+		.stats {
+			flex-grow: 1;
+
+			&:hover {
+				background-color: var(--primary-color-lighter);
+
+				svg {
+					scale: 1.1;
+				}
+			}
+			a {
+				text-decoration: none;
+				width: 100%;
+				svg {
+					width: 100%;
+					transition: scale 200ms ease-in-out;
+					font-size: 1.3rem;
+				}
+				color: var(--primary-color);
+			}
+		}
+	}
 	.image {
 		position: relative;
 		width: 100%;

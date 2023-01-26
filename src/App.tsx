@@ -19,6 +19,8 @@ import { Checkout } from "./pages/Checkout"
 import { PaymentSuccess } from "./pages/PaymentSuccess"
 import { Orders } from "./pages/Orders"
 import { SingleOrder } from "./pages/SingleOrder"
+import { AllStats } from "./pages/AllStats"
+import { SingleStat } from "./pages/SingleStat"
 
 function App() {
 	const user = useSelector(selectAuth)
@@ -44,6 +46,26 @@ function App() {
 								<ProtectedRoute
 									user={user}
 									outlet={<MyProducts />}
+									roles={["vendor"]}
+								/>
+							}
+						/>
+						<Route
+							path="stats"
+							element={
+								<ProtectedRoute
+									user={user}
+									outlet={<AllStats />}
+									roles={["vendor"]}
+								/>
+							}
+						/>
+						<Route
+							path="stats/:productId"
+							element={
+								<ProtectedRoute
+									user={user}
+									outlet={<SingleStat />}
 									roles={["vendor"]}
 								/>
 							}

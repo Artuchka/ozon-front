@@ -33,6 +33,7 @@ const statusMap = {
 	delivered: "доставлен",
 	refunded: "возвращен",
 }
+
 export const SingleOrder = () => {
 	const [QRcodeShow, setQRcodeShow] = useState(false)
 	const { isLoading, singleOrder, order } = useSelector(selectOrder)
@@ -60,6 +61,7 @@ export const SingleOrder = () => {
 		items,
 		paidAt,
 		createdAt,
+		updatedAt,
 		status,
 	} = singleOrder.order
 
@@ -95,7 +97,9 @@ export const SingleOrder = () => {
 				</div>
 				<div className="status">
 					{statusMap[status as OrderStatusType]} от{" "}
-					{getIntlDate(new Date(paidAt || createdAt || Date.now()))}
+					{getIntlDate(
+						new Date(updatedAt || createdAt || Date.now())
+					)}
 				</div>
 			</header>
 			<main className="main-info">

@@ -19,6 +19,7 @@ import { selectOrder } from "../../store/features/order/selector"
 import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"
 import { formatPrice } from "../../utils/intl"
 import { SlideImageViewer } from "../SlideImageViewer"
+import { MdQueryStats } from "react-icons/md"
 
 export type ProductItemType = {
 	images: string[]
@@ -27,6 +28,7 @@ export type ProductItemType = {
 	averageRating: number
 	numOfReviews: number
 	editable?: boolean
+	stats?: boolean
 	_id: string
 	amount?: number
 }
@@ -45,6 +47,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 		numOfReviews,
 		editable = null,
 		amount,
+		stats = null,
 	} = props
 	const image = images[0] === "" ? defaultImage : serverURL + images[0]
 	const preparedImages = images.map((item) => serverURL + item)
@@ -87,14 +90,23 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 	}
 	return (
 		<div className={`${style.product}`}>
-			{editable && (
-				<div
-					className={`${style.edit} btn btn--light btn--transparent`}
-					onClick={handleEdit}
-				>
-					Edit
-				</div>
-			)}
+			<div className={style.actions}>
+				{editable && (
+					<div
+						className={`${style.edit} btn btn--light btn--transparent btn--content`}
+						onClick={handleEdit}
+					>
+						Edit
+					</div>
+				)}
+				{stats && (
+					<div className={`${style.stats} `}>
+						<Link to={`/my/stats/${_id}`}>
+							<MdQueryStats />
+						</Link>
+					</div>
+				)}
+			</div>
 			<div className={style.image}>
 				<AiFillHeart
 					className={`${style.heart} ${

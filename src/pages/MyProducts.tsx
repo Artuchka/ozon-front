@@ -37,6 +37,7 @@ export const MyProducts = () => {
 						key={product._id}
 						{...product}
 						editable={true}
+						stats={true}
 					/>
 				)
 			})}

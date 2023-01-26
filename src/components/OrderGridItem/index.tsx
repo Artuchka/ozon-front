@@ -8,9 +8,9 @@ import { Link } from "react-router-dom"
 
 const statusMap = {
 	cart: "Корзина",
-	checkout: "Оплата",
+	checkout: "Ожидает оплаты",
 	pending: "Оплата идет",
-	paid: "Оплачено",
+	paid: "Оплачен",
 	delivered: "Получено",
 	refunded: "Возвращено",
 }
