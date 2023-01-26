@@ -13,6 +13,7 @@ type StatsType = {
 	visits: ActionsDetails[]
 	bought: ActionsDetails[]
 	refunded: ActionsDetails[]
+	bookmarked: ActionsDetails[]
 }
 
 type StatInitialStateType = {

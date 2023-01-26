@@ -5,6 +5,7 @@ import { Loading } from "../components/Loading"
 import { AppDispatch } from "../store/store"
 import { getSingleStatByProductId } from "../store/features/stats/thunks"
 import { useParams } from "react-router-dom"
+import { RadarChart } from "../components/RadarChart"
 
 export const SingleStat = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -31,9 +32,10 @@ export const SingleStat = () => {
 		<div className="single-stat-page">
 			Статистика по товару
 			<div className="product">product id = {product?._id}</div>
-			<div className="visits">{JSON.stringify(visits)}</div>
+			{/* <div className="visits">{JSON.stringify(visits)}</div> */}
 			{/* <div className="bought">{bought}</div>
 			<div className="refunded">{refunded}</div> */}
+			<RadarChart />
 		</div>
 	)
 }

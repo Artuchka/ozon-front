@@ -58,6 +58,33 @@
 			height: 100%;
 			object-fit: cover;
 		}
+
+		.heart {
+			position: absolute;
+			z-index: 1;
+			font-size: 2rem;
+			right: 0.2rem;
+			top: 0.2rem;
+			fill: white;
+			stroke: var(--primary-color);
+			stroke-width: 5rem;
+			transition: fill 0.3s ease-in-out, stroke 0.4s ease-in-out,
+				scale 0.1s ease-in-out;
+			cursor: pointer;
+			&:hover {
+				fill: var(--heart-color);
+				stroke: var(--heart-color);
+				scale: 1.6;
+			}
+
+			&.bookmarked {
+				fill: var(--heart-color);
+				stroke: var(--heart-color);
+				&:hover {
+					scale: 1.2;
+				}
+			}
+		}
 	}
 	.name {
 		text-decoration: none;
@@ -73,32 +100,6 @@
 			position: relative;
 			top: -0.1rem;
 			color: var(--rating-color);
-		}
-	}
-
-	.heart {
-		position: absolute;
-		font-size: 2rem;
-		right: 0.2rem;
-		top: 0.2rem;
-		fill: white;
-		stroke: var(--primary-color);
-		stroke-width: 5rem;
-		transition: fill 0.3s ease-in-out, stroke 0.4s ease-in-out,
-			scale 0.1s ease-in-out;
-		cursor: pointer;
-		&:hover {
-			fill: var(--heart-color);
-			stroke: var(--heart-color);
-			scale: 1.6;
-		}
-
-		&.bookmarked {
-			fill: var(--heart-color);
-			stroke: var(--heart-color);
-			&:hover {
-				scale: 1.2;
-			}
 		}
 	}
 }
