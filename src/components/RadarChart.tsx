@@ -7,6 +7,8 @@ import {
 	Filler,
 	Tooltip,
 	Legend,
+	ChartOptions,
+	ChartData,
 } from "chart.js"
 import { Radar } from "react-chartjs-2"
 import { useSelector } from "react-redux"
@@ -31,6 +33,29 @@ const backgrounds = [
 	// "rgba(251, 177, 60, 0.7)",
 	// "rgba(232, 218, 178, 0.7)",
 ]
+
+const options = {
+	// legend: {
+	// 	position: "top",
+	// },
+	// title: {
+	// 	display: true,
+	// 	text: "Chart.js Radar Chart",
+	// },
+	scale: {
+		// reverse: false,
+		gridLines: {},
+		// ticks: {
+		// 	beginAtZero: true,
+		// },
+	},
+}
+
+interface RadarProps {
+	options: ChartOptions<"radar">
+	data: ChartData<"radar">
+}
+
 type PropType = {}
 export const RadarChart: FC<PropType> = (props) => {
 	const { singleStat } = useSelector(selectStats)
@@ -38,7 +63,7 @@ export const RadarChart: FC<PropType> = (props) => {
 	const { visits, bookmarked, bought, refunded } = stat
 
 	const oneDay = 1000 * 60 * 60 * 24
-	const calculatedDataNow = [visits, bookmarked, bought, refunded]
+	const calculatedDataNow = [visits, bought, bookmarked, refunded]
 
 	const actionsDataForDays = [calculatedDataNow]
 
@@ -78,14 +103,66 @@ export const RadarChart: FC<PropType> = (props) => {
 			backgroundColor: backgrounds?.[index],
 			borderColor: "rgba(255, 99, 132, 1)",
 			borderWidth: 2,
+			hidden: true,
+			pointBackgroundColor: "rgb(255, 99, 132)",
+			pointBorderColor: "#fff",
+			pointHoverBackgroundColor: "#fff",
+			pointHoverBorderColor: "rgb(255, 99, 132)",
 		}
 	})
 	console.log(datasets)
+	datasets[0].hidden = false
 
 	const data = {
-		labels: ["Просмотров", "В закладках", "Покупок", "Возвратов"],
+		labels: ["Просмотров", "Покупок", "В закладках", "Возвратов"],
 		datasets: datasets.reverse(),
 	}
 
-	return <Radar data={data} />
+	return (
+		<Radar
+			data={data}
+			options={
+				{
+					scales: {
+						r: {
+							min: 0,
+							ticks: {
+								stepSize: 1,
+							},
+							angleLines: {
+								color: "rgb(0 0 0 / 0.9)",
+							},
+							grid: {
+								color: ["rgb(30 30 30 / 0.3)"],
+							},
+
+							pointLabels: {
+								color: "white",
+								backdropColor: [
+									"#005bff",
+									"#10c44c",
+									"#efb61c",
+									"red",
+								],
+								padding: 20,
+								backdropPadding: 8,
+								// nasty case.....
+								// borderRadius: {
+								// 	topLeft: 10,
+								// 	topRight: 10,
+								// 	bottomLeft: 10,
+								// 	bottomRight: 10,
+								// },
+								font: {
+									size: 18,
+									family: "main",
+									weight: "500",
+								},
+							},
+						},
+					},
+				} as unknown as RadarProps["options"]
+			}
+		/>
+	)
 }
