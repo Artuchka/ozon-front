@@ -1,10 +1,8 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
-import { getAllBookmarks } from "../store/features/bookmark/thunks"
 import { selectBookmarks } from "../store/features/bookmark/selector"
 import { ProductItem } from "../components/ProductItem"
-import { Loading } from "../components/Loading"
 import { BookmarkSkeleton } from "../components/pageBlocks/Skeletons/BookmarkSkeleton"
 
 export const Bookmarks = () => {

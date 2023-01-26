@@ -4,15 +4,11 @@ import { ProductsGrid } from "../components/ProductsGrid"
 import { Sort } from "../components/Sort"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
-import {
-	getAllProducts,
-	getProductDetails,
-} from "../store/features/product/thunks"
+import { getAllProducts } from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
 import { selectFilters } from "../store/features/filter/selector"
 import { Pagination } from "../components/Pagination"
 import { getAllBookmarks } from "../store/features/bookmark/thunks"
-import { Loading } from "../components/Loading"
 import { selectAuth } from "../store/features/auth/selectors"
 
 export const Products = () => {

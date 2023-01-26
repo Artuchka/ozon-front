@@ -14,7 +14,6 @@ import {
 	deliveryDefault,
 	updateDeliveryCoords,
 } from "../../store/features/order/orderSlice"
-import { PayloadUpdateType } from "../../store/features/filter/filterSlice"
 import { debounce } from "lodash"
 import { updateOrder } from "../../store/features/order/thunks"
 import { isCoordsEqual } from "../../utils/coords"

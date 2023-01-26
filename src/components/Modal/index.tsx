@@ -2,7 +2,6 @@ import React, { FC, ReactNode, useEffect } from "react"
 import style from "./style.module.scss"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "../../store/store"
-import { unsetEditReview } from "../../store/features/review/reviewSlice"
 
 type PropType = {
 	open: boolean

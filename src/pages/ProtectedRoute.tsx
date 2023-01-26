@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react"
+import React, { FC } from "react"
 import { Link } from "react-router-dom"
 import { AuthType } from "../store/features/auth/authSlice"
 

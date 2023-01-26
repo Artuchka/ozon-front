@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../store/store"
 import { getAllStats } from "../store/features/stats/thunks"
 import { selectStats } from "../store/features/stats/selectors"
-import {
-	ActionHistoryType,
-	ActionsDetails,
-	StatsType,
-} from "../store/features/stats/statsSlice"
+import { ActionsDetails, StatsType } from "../store/features/stats/statsSlice"
 import { Loading } from "../components/Loading"
 import { StatGraphs } from "../components/StatGraphs"
 import { setAllActionsHistory } from "../store/features/stats/statsSlice"

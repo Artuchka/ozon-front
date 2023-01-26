@@ -11,7 +11,6 @@ import {
 	updateFilters,
 } from "../../store/features/filter/filterSlice"
 import { selectFilters } from "../../store/features/filter/selector"
-import { FilterType } from "../../store/features/filter/filterSlice"
 import { useEffect } from "react"
 import { selectProducts } from "../../store/features/product/selectors"
 import { SelectCheckbox } from "../pageBlocks/inputs/SelectCheckbox"

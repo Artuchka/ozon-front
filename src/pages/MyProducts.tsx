@@ -4,7 +4,6 @@ import { AppDispatch } from "../store/store"
 import { selectProducts } from "../store/features/product/selectors"
 import { getMyProducts } from "../store/features/product/thunks"
 import { ProductItem } from "../components/ProductItem"
-import { ProductsGrid } from "../components/ProductsGrid"
 import { getAllBookmarks } from "../store/features/bookmark/thunks"
 import { BookmarkSkeleton } from "../components/pageBlocks/Skeletons/BookmarkSkeleton"
 

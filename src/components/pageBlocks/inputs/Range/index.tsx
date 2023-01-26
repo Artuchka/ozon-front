@@ -1,14 +1,7 @@
-import React, {
-	ChangeEventHandler,
-	FC,
-	useCallback,
-	useRef,
-	useState,
-} from "react"
+import React, { FC, useCallback, useState } from "react"
 
 import styles from "./style.module.scss"
 import { useEffect } from "react"
-import { RangeType } from "../../../Filters"
 import { debounce } from "lodash"
 // import debounce from "lodash.debounce"
 

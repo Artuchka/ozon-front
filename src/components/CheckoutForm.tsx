@@ -7,10 +7,8 @@ import {
 } from "@stripe/react-stripe-js"
 import {
 	PaymentIntentResult,
-	StripeLinkAuthenticationElementChangeEvent,
 	StripePaymentElementOptions,
 } from "@stripe/stripe-js"
-import { ozonAPI } from "../axios/customFetch"
 import { useSelector } from "react-redux"
 import { selectOrder } from "../store/features/order/selector"
 

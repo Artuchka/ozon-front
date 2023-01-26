@@ -2,8 +2,6 @@ import React, { FC, useState } from "react"
 import style from "./style.module.scss"
 import { RadarChart } from "../RadarChart"
 import { AreaChart, ChartPropType } from "../AreaChart"
-import { useSelector } from "react-redux"
-import { selectStats } from "../../store/features/stats/selectors"
 
 export const StatGraphs: FC<ChartPropType> = ({ data }) => {
 	const [graph, setGraph] = useState("linear")

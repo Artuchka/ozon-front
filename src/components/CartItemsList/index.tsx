@@ -1,10 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import style from "./style.module.scss"
 import { CartItem } from "../CartItem"
 import { useSelector } from "react-redux"
 import { selectOrder } from "../../store/features/order/selector"
-import { Loading } from "../Loading"
-import { ozonAPI } from "../../axios/customFetch"
 import { CartItemSkeleton } from "../pageBlocks/Skeletons/CartItemSkeleton"
 
 export const CartItemsList = () => {

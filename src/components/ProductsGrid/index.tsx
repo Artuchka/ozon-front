@@ -1,9 +1,8 @@
 import React, { FC } from "react"
-import { ProductItem, ProductItemType } from "../ProductItem"
+import { ProductItem } from "../ProductItem"
 import style from "./style.module.scss"
 import { useSelector } from "react-redux"
 import { selectProducts } from "../../store/features/product/selectors"
-import { Loading } from "../Loading"
 import { selectOrder } from "../../store/features/order/selector"
 import { BookmarkSkeleton } from "../pageBlocks/Skeletons/BookmarkSkeleton"
 

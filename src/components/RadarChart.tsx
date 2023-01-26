@@ -13,7 +13,6 @@ import {
 import { Radar } from "react-chartjs-2"
 import { useDispatch, useSelector } from "react-redux"
 import { selectStats } from "../store/features/stats/selectors"
-import { setActionsHistory } from "../store/features/stats/statsSlice"
 import { AppDispatch } from "../store/store"
 import { Loading } from "./Loading"
 import { ChartPropType } from "./AreaChart"

@@ -6,7 +6,6 @@ import { AppDispatch } from "../store/store"
 import { QRCodeSVG } from "qrcode.react"
 
 import {
-	addToCart,
 	addToCartMany,
 	createRefund,
 	getSingleOrder,
@@ -16,14 +15,10 @@ import { TfiLocationPin } from "react-icons/tfi"
 import { BiFace } from "react-icons/bi"
 import { FiCreditCard } from "react-icons/fi"
 import { TbCopy } from "react-icons/tb"
-import { Loading } from "../components/Loading"
 import { toast } from "react-toastify"
 import { OrderDetailsList } from "../components/OrderDetailsList"
 import { OrderDetailsSkeleton } from "../components/pageBlocks/Skeletons/OrderDetailsSkeleton"
-import {
-	DetailsType,
-	OrderStatusType,
-} from "../store/features/order/orderSlice"
+import { OrderStatusType } from "../store/features/order/orderSlice"
 
 const statusMap = {
 	cart: "оплата идет",

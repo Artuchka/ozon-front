@@ -1,7 +1,6 @@
 import React, {
 	ChangeEvent,
 	FormEvent,
-	FormEventHandler,
 	MouseEvent,
 	RefObject,
 	useEffect,
@@ -17,7 +16,6 @@ import {
 	updateProduct,
 	uploadImages,
 } from "../store/features/product/thunks"
-import axios from "axios"
 import { ozonAPI, serverURL } from "../axios/customFetch"
 import { selectProducts } from "../store/features/product/selectors"
 import {
@@ -26,7 +24,7 @@ import {
 } from "../components/pageBlocks/inputs/PropertyInput"
 import { InputMultiple } from "../components/pageBlocks/inputs/InputMultiple"
 import { toast } from "react-toastify"
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import qs from "query-string"
 import {
 	SingleProductType,

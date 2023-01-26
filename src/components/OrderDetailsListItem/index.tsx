@@ -1,6 +1,5 @@
 import React, { FC } from "react"
 import style from "./style.module.scss"
-import { SingleProductType } from "../../store/features/product/productSlice"
 import { OrderItemType } from "../../store/features/order/orderSlice"
 import { Link } from "react-router-dom"
 import { serverURL } from "../../axios/customFetch"
@@ -16,7 +15,6 @@ import {
 } from "../../store/features/bookmark/thunks"
 import { addToCart } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
-import { Loading } from "../Loading"
 import { AdderOrderItemSkeleton } from "../pageBlocks/Skeletons/AdderOrderItemSkeleton"
 
 export const OrderDetailsListItem: FC<OrderItemType> = (props) => {

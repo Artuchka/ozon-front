@@ -1,6 +1,5 @@
 import React, { FC } from "react"
 import style from "./style.module.scss"
-import { SingleProductType } from "../../store/features/product/productSlice"
 import { OrderType } from "../../store/features/order/orderSlice"
 import { getIntlDate } from "../../utils/intl"
 import { serverURL } from "../../axios/customFetch"

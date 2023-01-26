@@ -11,10 +11,8 @@ import {
 	Legend,
 } from "chart.js"
 import { Line } from "react-chartjs-2"
-import { useSelector } from "react-redux"
 import { cloneDeep } from "lodash"
 import style from "./style.module.scss"
-import { selectStats } from "../../store/features/stats/selectors"
 import { ActionHistoryType } from "../../store/features/stats/statsSlice"
 
 ChartJS.register(

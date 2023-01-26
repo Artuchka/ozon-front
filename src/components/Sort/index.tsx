@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, useState } from "react"
-import style from "./style.module.scss"
 import {
+	PayloadUpdateType,
 	limitOptions,
 	sortOptions,
 	updateFilters,
@@ -20,7 +20,7 @@ export const Sort: FC = () => {
 		const { name, value } = e.target
 		console.log({ name, value })
 
-		dispatch(updateFilters({ name, value }))
+		dispatch(updateFilters({ name, value } as PayloadUpdateType))
 	}
 
 	return (

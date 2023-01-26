@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler, FC } from "react"
+import React, { ChangeEventHandler, FC } from "react"
 import styles from "./style.module.scss"
 
 type ItemType = {

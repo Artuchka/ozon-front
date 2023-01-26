@@ -1,4 +1,4 @@
-import React, { MouseEvent, MouseEventHandler } from "react"
+import React, { MouseEvent } from "react"
 import style from "./style.module.scss"
 import { useDispatch, useSelector } from "react-redux"
 import { selectProducts } from "../../store/features/product/selectors"

@@ -2,7 +2,6 @@ import React, { ChangeEvent, FC } from "react"
 import style from "./style.module.scss"
 import {
 	OrderItemType,
-	OrderType,
 	selectOrderItemById,
 	unselectOrderItemById,
 } from "../../store/features/order/orderSlice"
@@ -11,7 +10,7 @@ import { serverURL } from "../../axios/customFetch"
 import { SelectDropdown } from "../pageBlocks/inputs/SelectDropdown"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
-import { addToCart, updateOrder } from "../../store/features/order/thunks"
+import { addToCart } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
 import { selectBookmarks } from "../../store/features/bookmark/selector"
 import {

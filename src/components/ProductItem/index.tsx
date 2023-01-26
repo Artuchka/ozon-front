@@ -13,13 +13,8 @@ import {
 	getAllBookmarks,
 } from "../../store/features/bookmark/thunks"
 import { selectBookmarks } from "../../store/features/bookmark/selector"
-import {
-	SingleProductType,
-	setEdit,
-} from "../../store/features/product/productSlice"
-import { addToCart, updateOrder } from "../../store/features/order/thunks"
+import { addToCart } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
-import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"
 import { formatPrice } from "../../utils/intl"
 import { SlideImageViewer } from "../SlideImageViewer"
 import { MdQueryStats } from "react-icons/md"

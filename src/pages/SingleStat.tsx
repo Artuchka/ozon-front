@@ -1,12 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { selectStats } from "../store/features/stats/selectors"
 import { Loading } from "../components/Loading"
 import { AppDispatch } from "../store/store"
 import { getSingleStatByProductId } from "../store/features/stats/thunks"
 import { useParams } from "react-router-dom"
-import { RadarChart } from "../components/RadarChart"
-import { AreaChart } from "../components/AreaChart"
 import {
 	ActionsDetails,
 	setActionsHistory,

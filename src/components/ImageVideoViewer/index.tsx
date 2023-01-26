@@ -1,12 +1,5 @@
-import React, {
-	FC,
-	useEffect,
-	useState,
-	DetailedHTMLProps,
-	HtmlHTMLAttributes,
-} from "react"
+import React, { FC, useEffect, useState } from "react"
 import style from "./style.module.scss"
-import { serverURL } from "../../axios/customFetch"
 import { Modal } from "../Modal"
 
 import { IoMdArrowRoundForward, IoMdArrowRoundBack } from "react-icons/io"

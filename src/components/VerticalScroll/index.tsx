@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { FC, useRef } from "react"
 import style from "./style.module.scss"
 import { SlArrowUp, SlArrowDown } from "react-icons/sl"
 import { useDispatch, useSelector } from "react-redux"

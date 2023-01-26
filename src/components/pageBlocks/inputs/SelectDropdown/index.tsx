@@ -1,15 +1,7 @@
-import React, {
-	ChangeEvent,
-	ChangeEventHandler,
-	FC,
-	MouseEventHandler,
-	useEffect,
-	useState,
-} from "react"
+import React, { ChangeEventHandler, FC, useEffect, useState } from "react"
 import style from "./style.module.scss"
 import { optionType } from "../../../../store/features/filter/filterSlice"
 
-import { GiTriangleTarget } from "react-icons/gi"
 import { BsTriangleFill } from "react-icons/bs"
 
 type propType = {

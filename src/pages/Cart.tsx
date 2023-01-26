@@ -5,7 +5,6 @@ import React, {
 	useRef,
 	useState,
 } from "react"
-import { SelectCheckbox } from "../components/pageBlocks/inputs/SelectCheckbox"
 import { CartItemsList } from "../components/CartItemsList"
 import { useDispatch, useSelector } from "react-redux"
 import { selectOrder } from "../store/features/order/selector"
@@ -15,7 +14,6 @@ import {
 	updateOrder,
 } from "../store/features/order/thunks"
 import { AppDispatch } from "../store/store"
-import { Loading } from "../components/Loading"
 import { selectAuth } from "../store/features/auth/selectors"
 import { formatPrice } from "../utils/intl"
 import { useNavigate } from "react-router-dom"
@@ -25,8 +23,6 @@ import {
 	clearSelectedInCart,
 	filterSelectedInCart,
 	selectManyInCart,
-	selectOrderItemById,
-	unselectOrderItemById,
 } from "../store/features/order/orderSlice"
 import { SingleCheckbox } from "../components/pageBlocks/inputs/SingleCheckbox"
 

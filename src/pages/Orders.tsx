@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { selectOrder } from "../store/features/order/selector"
+import { useDispatch } from "react-redux"
 import { getAllMyOrders } from "../store/features/order/thunks"
 import { AppDispatch } from "../store/store"
 import { OrdersGrid } from "../components/OrdersGrid"

@@ -1,10 +1,6 @@
 import React, { useEffect } from "react"
 import { useLocation, useParams } from "react-router-dom"
-import {
-	getByOrderId,
-	getOrderByPaymentSecret,
-	updateOrder,
-} from "../store/features/order/thunks"
+import { updateOrder } from "../store/features/order/thunks"
 import { OrderType } from "../store/features/order/orderSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { selectOrder } from "../store/features/order/selector"
