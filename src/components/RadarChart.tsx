@@ -84,7 +84,7 @@ export const RadarChart: FC<PropType> = (props) => {
 
 	const data = {
 		labels: ["Просмотров", "В закладках", "Покупок", "Возвратов"],
-		datasets: datasets,
+		datasets: datasets.reverse(),
 	}
 
 	return <Radar data={data} />
