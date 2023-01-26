@@ -13,6 +13,9 @@ export const StatGraphs: FC<ChartPropType> = ({ data }) => {
 			return prev === "linear" ? "radar" : "linear"
 		})
 	}
+
+	if (!data || !data.length) return <h2>bad data input</h2>
+
 	return (
 		<div className={style.wrapper}>
 			<button

@@ -12,6 +12,7 @@ export const My = () => {
 	const { role } = useSelector(selectAuth)
 	if (role === "vendor") {
 		links.push({ path: "/my/products", name: "Мои товары" })
+		links.push({ path: "/my/stats", name: "Общая cтатистика" })
 	}
 	return (
 		<div className="my-layout">

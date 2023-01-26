@@ -1,19 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getSingleStatByProductId } from "./thunks"
+import { getAllStats, getSingleStatByProductId } from "./thunks"
 import { toast } from "react-toastify"
 import { SingleProductType } from "../product/productSlice"
 
-type ActionsDetails = {
+export type ActionsDetails = {
 	date: Date
 	user: string
 }
 
-type StatsType = {
+export type StatsType = {
 	product: SingleProductType
 	visits: ActionsDetails[]
 	bought: ActionsDetails[]
 	refunded: ActionsDetails[]
 	bookmarked: ActionsDetails[]
+	productDetails?: SingleProductType[]
 }
 
 export type ActionHistoryType = [
@@ -24,8 +25,11 @@ export type ActionHistoryType = [
 ][]
 
 type StatInitialStateType = {
-	isLoading: boolean
-	stats: StatsType[]
+	allStats: {
+		isLoading: boolean
+		stats: StatsType[]
+		actionsHistory: ActionHistoryType
+	}
 	singleStat: {
 		isLoading: boolean
 		stat: StatsType
@@ -34,8 +38,11 @@ type StatInitialStateType = {
 }
 
 const initialState = {
-	stats: [],
-	isLoading: false,
+	allStats: {
+		stats: [],
+		isLoading: false,
+		actionsHistory: [],
+	},
 	singleStat: {
 		stat: {} as StatsType,
 		isLoading: false,
@@ -51,6 +58,11 @@ const statsSlice = createSlice({
 			console.log("setting")
 
 			state.singleStat.actionsHistory = payload
+		},
+		setAllActionsHistory(state, { payload }) {
+			console.log("setting all = ", payload)
+
+			state.allStats.actionsHistory = payload
 		},
 	},
 	extraReducers(builder) {
@@ -76,9 +88,24 @@ const statsSlice = createSlice({
 				toast.error(payload as string)
 			}
 		)
+
+		builder.addCase(getAllStats.pending, (state, { payload }) => {
+			state.allStats.isLoading = true
+		})
+		builder.addCase(getAllStats.fulfilled, (state, { payload }) => {
+			const { msg, stats } = payload
+			state.allStats.stats = stats
+			state.allStats.isLoading = false
+			// console.log({ stats })
+		})
+		builder.addCase(getAllStats.rejected, (state, { payload }) => {
+			state.allStats.isLoading = false
+
+			toast.error(payload as string)
+		})
 	},
 })
 
-export const { setActionsHistory } = statsSlice.actions
+export const { setActionsHistory, setAllActionsHistory } = statsSlice.actions
 
 export default statsSlice.reducer

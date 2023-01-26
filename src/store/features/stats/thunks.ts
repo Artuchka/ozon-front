@@ -15,3 +15,17 @@ export const getSingleStatByProductId = createAsyncThunk(
 		}
 	}
 )
+export const getAllStats = createAsyncThunk(
+	"stats/getAllStats",
+	async (_, thunkAPI) => {
+		try {
+			const resp = await ozonAPI(`/statistics`, {
+				method: "GET",
+			})
+
+			return thunkAPI.fulfillWithValue(resp.data)
+		} catch (error: any) {
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
