@@ -78,7 +78,7 @@ const initialState = {
 	sort: sortOptions[0].value,
 	limit: limitOptions[2].value,
 	minAverageRating: 5,
-	minPrice: 120,
+	minPrice: 1,
 	maxPrice: 1000,
 	companies: [],
 	categories: ["любая"],
