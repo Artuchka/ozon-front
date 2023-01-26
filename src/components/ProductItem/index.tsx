@@ -13,7 +13,10 @@ import {
 	getAllBookmarks,
 } from "../../store/features/bookmark/thunks"
 import { selectBookmarks } from "../../store/features/bookmark/selector"
-import { setEdit } from "../../store/features/product/productSlice"
+import {
+	SingleProductType,
+	setEdit,
+} from "../../store/features/product/productSlice"
 import { addToCart, updateOrder } from "../../store/features/order/thunks"
 import { selectOrder } from "../../store/features/order/selector"
 import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"

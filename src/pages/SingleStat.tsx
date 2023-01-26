@@ -8,6 +8,9 @@ import { useParams } from "react-router-dom"
 import { RadarChart } from "../components/RadarChart"
 import { AreaChart } from "../components/AreaChart"
 import { setActionsHistory } from "../store/features/stats/statsSlice"
+import { toast } from "react-toastify"
+import { ProductItem } from "../components/ProductItem"
+import { ProductCard } from "../components/ProductCard"
 
 export const SingleStat = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -39,12 +42,14 @@ export const SingleStat = () => {
 
 	const handleGraphToggle = () => {
 		setGraph((prev) => {
-			return prev === "linear" ? "radial" : "linear"
+			return prev === "linear" ? "radar" : "linear"
 		})
 	}
 
 	useEffect(() => {
 		dispatch(getSingleStatByProductId(productId as string))
+
+		toast("Разные виды чартов дают лучшее представление о успехах продаж!")
 	}, [])
 
 	useEffect(() => {
@@ -63,13 +68,20 @@ export const SingleStat = () => {
 	}
 	return (
 		<div className="single-stat-page">
-			Статистика по товару
-			<div className="product">product id = {product?._id}</div>
-			<button className="btn btn--middle" onClick={handleGraphToggle}>
-				{graph === "radial" && "Показать линейный"}
-				{graph === "linear" && "Показать радиальнй"}
+			<h2>
+				Статистика по товару <small>(артикул: {productId})</small>
+			</h2>
+			<div className="product-card">
+				<ProductCard {...product} />
+			</div>
+			<button
+				className="btn btn--contained btn--tall"
+				onClick={handleGraphToggle}
+			>
+				{graph === "radar" && "Показать линейный"}
+				{graph === "linear" && "Показать радарный"}
 			</button>
-			{graph === "radial" && <RadarChart />}
+			{graph === "radar" && <RadarChart />}
 			{graph === "linear" && <AreaChart />}
 		</div>
 	)

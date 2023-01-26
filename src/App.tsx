@@ -19,7 +19,6 @@ import { Checkout } from "./pages/Checkout"
 import { PaymentSuccess } from "./pages/PaymentSuccess"
 import { Orders } from "./pages/Orders"
 import { SingleOrder } from "./pages/SingleOrder"
-import { AllStats } from "./pages/AllStats"
 import { SingleStat } from "./pages/SingleStat"
 
 function App() {
@@ -46,16 +45,6 @@ function App() {
 								<ProtectedRoute
 									user={user}
 									outlet={<MyProducts />}
-									roles={["vendor"]}
-								/>
-							}
-						/>
-						<Route
-							path="stats"
-							element={
-								<ProtectedRoute
-									user={user}
-									outlet={<AllStats />}
 									roles={["vendor"]}
 								/>
 							}
