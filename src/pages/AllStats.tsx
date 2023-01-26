@@ -31,7 +31,6 @@ export const AllStats = () => {
 	return (
 		<div>
 			<StatGraphs data={allStats?.actionsHistory} />
-			<h1>12fasd</h1>
 		</div>
 	)
 }
@@ -39,13 +38,15 @@ export const AllStats = () => {
 const oneDay = 1000 * 60 * 60 * 24
 const daysAmount = 5
 function getActionsHistory(stats: StatsType[]) {
+	console.log("before = ", { stats })
+
 	const { visits, bought, bookmarked, refunded } = stats?.reduce(
 		(agg, cur) => {
 			return {
-				visits: [...agg.visits, ...cur.visits],
-				bought: [...agg.bought, ...cur.bought],
-				bookmarked: [...agg.bookmarked, ...cur.bookmarked],
-				refunded: [...agg.refunded, ...cur.refunded],
+				visits: [...agg?.visits, ...(cur?.visits || [])],
+				bought: [...agg?.bought, ...(cur?.bought || [])],
+				bookmarked: [...agg?.bookmarked, ...(cur?.bookmarked || [])],
+				refunded: [...agg?.refunded, ...(cur?.refunded || [])],
 			}
 		},
 		{

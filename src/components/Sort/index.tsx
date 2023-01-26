@@ -20,7 +20,7 @@ export const Sort: FC = () => {
 		const { name, value } = e.target
 		// console.log({ name, value })
 
-		dispatch(updateFilters({ name, value } as any))
+		dispatch(updateFilters({ name, value } as PayloadUpdateType))
 	}
 
 	return (

@@ -22,19 +22,24 @@ export const OrdersGrid: FC = () => {
 			</div>
 		)
 	}
+	const filteredOrders = allOrders?.orders?.filter(
+		(order) =>
+			!(order.subtotal === 0) &&
+			(orderFilters.status === "all" ||
+				orderFilters.status === order.status)
+	)
 	return (
 		<div className={style.wrapper}>
-			{allOrders?.orders
-				?.filter(
-					(order) =>
-						!(order.subtotal === 0) &&
-						(orderFilters.status === "all" ||
-							orderFilters.status === order.status)
-				)
-				// ?.slice(0, 3)
-				?.map((order) => {
+			{filteredOrders?.length === 0 ? (
+				<div className={style.placeholder}>
+					<h2>Покамест пусто</h2>
+					<p>Ждём пополнения?</p>
+				</div>
+			) : (
+				filteredOrders?.map((order) => {
 					return <OrderGridItem key={order._id} {...order} />
-				})}
+				})
+			)}
 		</div>
 	)
 }

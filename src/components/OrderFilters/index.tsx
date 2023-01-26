@@ -12,8 +12,8 @@ import { DetailsType } from "../../store/features/order/orderSlice"
 
 const FilterOptions = [
 	{ value: "all", label: "Все" },
-	{ value: "checkout", label: "Ожидают оплаты" },
-	{ value: "pending", label: "В работе" },
+	// { value: "checkout", label: "" },
+	{ value: "pending", label: "Ожидают оплаты" },
 	{ value: "paid", label: "Оплаченные" },
 	{ value: "delivered", label: "Доставленные" },
 	{ value: "refunded", label: "Возвращены" },
