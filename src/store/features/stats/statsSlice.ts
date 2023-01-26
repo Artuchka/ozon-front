@@ -55,7 +55,7 @@ const statsSlice = createSlice({
 	initialState,
 	reducers: {
 		setActionsHistory(state, { payload }) {
-			console.log("setting")
+			console.log("setting single = ", payload)
 
 			state.singleStat.actionsHistory = payload
 		},
