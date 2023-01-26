@@ -16,6 +16,7 @@ import { selectStats } from "../store/features/stats/selectors"
 import { setActionsHistory } from "../store/features/stats/statsSlice"
 import { AppDispatch } from "../store/store"
 import { Loading } from "./Loading"
+import { ChartPropType } from "./AreaChart"
 
 ChartJS.register(
 	RadialLinearScale,
@@ -42,11 +43,9 @@ interface RadarProps {
 	data: ChartData<"radar">
 }
 
-type PropType = {}
-export const RadarChart: FC<PropType> = (props) => {
+export const RadarChart: FC<ChartPropType> = ({ data: actionsHistory }) => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { singleStat } = useSelector(selectStats)
-	const { stat, actionsHistory } = singleStat
 
 	if (singleStat.isLoading) {
 		return <Loading />
@@ -82,14 +81,14 @@ export const RadarChart: FC<PropType> = (props) => {
 	})
 	datasets[0].hidden = false
 
-	const data = {
+	const radarData = {
 		labels: ["Просмотров", "Покупок", "В закладках", "Возвратов"],
 		datasets: datasets.reverse(),
 	}
 
 	return (
 		<Radar
-			data={data}
+			data={radarData}
 			options={
 				{
 					scales: {

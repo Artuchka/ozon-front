@@ -11,15 +11,14 @@ import { setActionsHistory } from "../store/features/stats/statsSlice"
 import { toast } from "react-toastify"
 import { ProductItem } from "../components/ProductItem"
 import { ProductCard } from "../components/ProductCard"
+import { StatGraphs } from "../components/StatGraphs"
 
 export const SingleStat = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { singleStat } = useSelector(selectStats)
-	const { stat, isLoading } = singleStat
+	const { stat, isLoading, actionsHistory: actionsHistoryReady } = singleStat
 	const { product, visits, refunded, bought, bookmarked } = stat
 	const { productId } = useParams()
-
-	const [graph, setGraph] = useState("linear")
 
 	const oneDay = 1000 * 60 * 60 * 24
 	const calculatedDataNow = [visits, bought, bookmarked, refunded]
@@ -38,12 +37,6 @@ export const SingleStat = () => {
 			)
 		})
 		actionsHistory.push(newCalculatedData)
-	}
-
-	const handleGraphToggle = () => {
-		setGraph((prev) => {
-			return prev === "linear" ? "radar" : "linear"
-		})
 	}
 
 	useEffect(() => {
@@ -74,15 +67,7 @@ export const SingleStat = () => {
 			<div className="product-card">
 				<ProductCard {...product} />
 			</div>
-			<button
-				className="btn btn--contained btn--tall"
-				onClick={handleGraphToggle}
-			>
-				{graph === "radar" && "Показать линейный"}
-				{graph === "linear" && "Показать радарный"}
-			</button>
-			{graph === "radar" && <RadarChart />}
-			{graph === "linear" && <AreaChart />}
+			<StatGraphs data={actionsHistoryReady} />
 		</div>
 	)
 }

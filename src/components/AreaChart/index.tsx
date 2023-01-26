@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC } from "react"
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux"
 import { cloneDeep } from "lodash"
 import style from "./style.module.scss"
 import { selectStats } from "../../store/features/stats/selectors"
+import { ActionHistoryType } from "../../store/features/stats/statsSlice"
 
 ChartJS.register(
 	CategoryScale,
@@ -85,10 +86,10 @@ optionsBookmarked.scales.x.grid.color = "rgba(239, 182, 28, 0.25)"
 optionsRefunded.scales.y.grid.color = "rgba(255, 0, 0, 0.25)"
 optionsRefunded.scales.x.grid.color = "rgba(255, 0, 0, 0.25)"
 
-export const AreaChart = () => {
-	const { singleStat } = useSelector(selectStats)
-	const { actionsHistory } = singleStat
-
+export type ChartPropType = {
+	data: ActionHistoryType
+}
+export const AreaChart: FC<ChartPropType> = ({ data: actionsHistory }) => {
 	const labels = []
 	for (let index = 0; index < actionsHistory.length; index++) {
 		if (index === 0) {

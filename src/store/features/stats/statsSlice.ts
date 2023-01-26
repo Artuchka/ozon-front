@@ -16,18 +16,20 @@ type StatsType = {
 	bookmarked: ActionsDetails[]
 }
 
+export type ActionHistoryType = [
+	ActionsDetails[],
+	ActionsDetails[],
+	ActionsDetails[],
+	ActionsDetails[]
+][]
+
 type StatInitialStateType = {
 	isLoading: boolean
 	stats: StatsType[]
 	singleStat: {
 		isLoading: boolean
 		stat: StatsType
-		actionsHistory: [
-			ActionsDetails[],
-			ActionsDetails[],
-			ActionsDetails[],
-			ActionsDetails[]
-		][]
+		actionsHistory: ActionHistoryType
 	}
 }
 
