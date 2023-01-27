@@ -6,65 +6,25 @@ import { BsHandbag, BsBoxSeam } from "react-icons/bs"
 import { StatusLink } from "../../StatusLink"
 import { Logo } from "../../Logo"
 import { LoginModal } from "../../LoginModal"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { selectAuth } from "../../../store/features/auth/selectors"
-import { selectFilters } from "../../../store/features/filter/selector"
-import { AppDispatch } from "../../../store/store"
-import { updateFilters } from "../../../store/features/filter/filterSlice"
-import { useLocation, useNavigate } from "react-router-dom"
-import { debounce } from "lodash"
 import { selectOrder } from "../../../store/features/order/selector"
 import { selectBookmarks } from "../../../store/features/bookmark/selector"
+import { SearchBar } from "../../SearchBar"
 
 export const Header = () => {
 	const [open, setOpen] = useState(false)
-	const [search, setSearch] = useState("")
-	const dispatch = useDispatch<AppDispatch>()
 	const { order, allOrders } = useSelector(selectOrder)
 	const { bookmarks } = useSelector(selectBookmarks)
 	const auth = useSelector(selectAuth)
 	const user = auth.role !== null
 	const { role } = auth
 
-	const navigate = useNavigate()
-	const { pathname } = useLocation()
-	const { title } = useSelector(selectFilters)
-
-	const debouncedChange = useCallback(
-		debounce((obj) => {
-			dispatch(updateFilters(obj))
-		}, 1000),
-		[]
-	)
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		e.preventDefault()
-		const { name, value } = e.target
-		setSearch((prev) => value)
-		debouncedChange({ name, value })
-	}
-
-	const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		if (pathname == "/products") return
-
-		navigate("/products")
-	}
-
 	return (
 		<header className={styles.header}>
+			<LoginModal open={open} setOpen={setOpen} />
 			<Logo className={styles.logo} />
-			<form onSubmit={handleSubmit} className={styles.searchBarWrapper}>
-				<div className={styles.searchBar}>
-					<input
-						type="text"
-						placeholder="Искать на Ozon"
-						value={search}
-						name="title"
-						onChange={handleChange}
-					/>
-					<AiOutlineSearch />
-				</div>
-			</form>
+			<SearchBar />
 			<nav>
 				{user ? (
 					<StatusLink
@@ -115,7 +75,6 @@ export const Header = () => {
 					</>
 				)}
 			</nav>
-			<LoginModal open={open} setOpen={setOpen} />
 		</header>
 	)
 }

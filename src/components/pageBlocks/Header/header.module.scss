@@ -5,10 +5,15 @@
 	justify-content: space-around;
 	flex-direction: column;
 	margin-bottom: 1rem;
+	background-color: #fff;
+	box-shadow: 0 0 0 100vmax #fff;
+	clip-path: inset(0 -100% 0.1rem -100%);
 
 	@media (min-width: 800px) {
 		gap: 2rem;
 		flex-direction: row;
+		position: sticky;
+		top: 0;
 		.logo {
 			height: 100px;
 			width: 100px;
@@ -29,41 +34,6 @@
 	height: 20px;
 	width: 200px;
 	object-fit: contain;
-}
-.searchBarWrapper {
-	flex-grow: 1;
-}
-.searchBar {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	padding: 0.1em;
-	border-radius: 0.3rem;
-
-	background-color: var(--primary-color);
-	input {
-		width: 100%;
-		flex-grow: 0;
-		min-width: 100px;
-		max-width: 250px;
-		border-radius: 0.3rem;
-		border: none;
-		outline: none;
-		font-size: 1rem;
-		padding: 0.5rem 1rem;
-		color: var(--text-color);
-		margin-block: 0.05em;
-		margin-left: 0.1em;
-		@media (min-width: 750px) {
-			flex-grow: 1;
-			max-width: 600px;
-		}
-	}
-	svg {
-		font-size: 1.5rem;
-		margin-inline: 1rem;
-		color: white;
-	}
 }
 
 nav {
