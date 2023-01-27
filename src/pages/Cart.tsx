@@ -125,145 +125,139 @@ export const Cart = () => {
 		console.log("after creating cart")
 	}, [])
 
+	if (order?.itemsLength === 0) {
+		return (
+			<div className="cart-page empty">
+				<h2>Корзина пуста</h2>
+				<p>Воспользуйтесь поиском, чтобы найти всё что нужно.</p>
+			</div>
+		)
+	}
+
 	return (
 		<div className="cart-page">
 			<header className="heading">
 				<h1>Корзина</h1>
 				<span>{formatPrice(order?.amountTotal)}</span>
 			</header>
-			{order?.itemsLength > 0 ? (
-				<>
-					<div className="action-tab">
-						<SingleCheckbox
-							name="selectAll"
-							onChange={handleAllSelectedToggle}
-							itemId="selectAll"
-							selected={allSelected ? ["selectAll"] : []}
-							title="Выбрать все"
+			<div className="action-tab">
+				<SingleCheckbox
+					name="selectAll"
+					onChange={handleAllSelectedToggle}
+					itemId="selectAll"
+					selected={allSelected ? ["selectAll"] : []}
+					title="Выбрать все"
+				/>
+				<button
+					className="btn btn--warn btn--content"
+					onClick={handleRemoveSelected}
+				>
+					Удалить выбранные
+				</button>
+			</div>
+			<div className="cart-list-wrapper">
+				<CartItemsList />
+			</div>
+			<div className="buy-card">
+				<div className="promocode">
+					<div className="oneline">
+						<input
+							type="text"
+							className="input input--rounded input--not-required"
+							placeholder="Введите промокод"
+							ref={promoInputRef}
+							onKeyUp={handlePromoKeyUp}
 						/>
 						<button
-							className="btn btn--warn btn--content"
-							onClick={handleRemoveSelected}
+							className="btn btn--contained btn--rounded btn--content"
+							onClick={handlePromoAdd}
 						>
-							Удалить выбранные
+							ок
 						</button>
 					</div>
-					<div className="cart-list-wrapper">
-						<CartItemsList />
+					{promoMessage && (
+						<small className="promo-message">{promoMessage}</small>
+					)}
+				</div>
+				<button
+					className="btn btn--contained btn--success btn--rounded btn--tall btn--text-small"
+					onClick={handleCheckout}
+				>
+					Перейти к оформлению
+				</button>
+				<small className="checkout-info">
+					Доступные способы и время доставки можно выбрать при
+					оформлении заказа
+				</small>
+				<div className="info">
+					<div className="buy-card-heading">
+						<h3>Ваша корзина</h3>
+						<span>{formatPrice(order?.amountTotal)} товара</span>
 					</div>
-					<div className="buy-card">
-						<div className="promocode">
-							<div className="oneline">
-								<input
-									type="text"
-									className="input input--rounded input--not-required"
-									placeholder="Введите промокод"
-									ref={promoInputRef}
-									onKeyUp={handlePromoKeyUp}
-								/>
-								<button
-									className="btn btn--contained btn--rounded btn--content"
-									onClick={handlePromoAdd}
-								>
-									ок
-								</button>
-							</div>
-							{promoMessage && (
-								<small className="promo-message">
-									{promoMessage}
-								</small>
-							)}
-						</div>
-						<button
-							className="btn btn--contained btn--success btn--rounded btn--tall btn--text-small"
-							onClick={handleCheckout}
-						>
-							Перейти к оформлению
-						</button>
-						<small className="checkout-info">
-							Доступные способы и время доставки можно выбрать при
-							оформлении заказа
-						</small>
-						<div className="info">
-							<div className="buy-card-heading">
-								<h3>Ваша корзина</h3>
-								<span>
-									{formatPrice(order?.amountTotal)} товара
-								</span>
-							</div>
-							<small className="subtotal">
-								<span className="title">
-									Товары ( {formatPrice(order?.amountTotal)} )
-								</span>
-								<span className="value">
-									{formatPrice(order.subtotal)} ₽
-								</span>
-							</small>
-							{order?.discounts?.length > 0 && (
-								<small className="discounts">
-									<span>Скидка</span>
-									<div className="list">
-										{order?.discounts?.map((item) => {
-											let discountValue = ""
-											if (item.type === "percentage") {
-												discountValue = `${
-													100 - item.value * 100
-												} %`
-											} else {
-												discountValue = `${item.value} ₽`
-											}
+					<small className="subtotal">
+						<span className="title">
+							Товары ( {formatPrice(order?.amountTotal)} )
+						</span>
+						<span className="value">
+							{formatPrice(order.subtotal)} ₽
+						</span>
+					</small>
+					{order?.discounts?.length > 0 && (
+						<small className="discounts">
+							<span>Скидка</span>
+							<div className="list">
+								{order?.discounts?.map((item) => {
+									let discountValue = ""
+									if (item.type === "percentage") {
+										discountValue = `${
+											100 - item.value * 100
+										} %`
+									} else {
+										discountValue = `${item.value} ₽`
+									}
 
-											return (
-												<div
-													className="discount-item"
-													key={item.name}
-												>
-													<span className="discount-name">
-														- {discountValue} за `
-														{item.name}`
-													</span>
-													<strong
-														onClick={() =>
-															handleDiscountRemove(
-																item.name
-															)
-														}
-													>
-														&times;
-													</strong>
-												</div>
-											)
-										})}
-										<span className="value">
-											{formatPrice(
-												order.total - order.subtotal
-											)}{" "}
-											₽
-										</span>
-									</div>
-								</small>
-							)}
-							<div className="total">
-								<h3 className="title">Общая стоимость</h3>
-								<div className="value">
-									{formatPrice(order.total)} ₽
-								</div>
+									return (
+										<div
+											className="discount-item"
+											key={item.name}
+										>
+											<span className="discount-name">
+												- {discountValue} за `
+												{item.name}`
+											</span>
+											<strong
+												onClick={() =>
+													handleDiscountRemove(
+														item.name
+													)
+												}
+											>
+												&times;
+											</strong>
+										</div>
+									)
+								})}
+								<span className="value">
+									{formatPrice(order.total - order.subtotal)}{" "}
+									₽
+								</span>
 							</div>
-							<div className="discount-total">
-								<small className="title">Со скидкой</small>
-								<div className="value">
-									{formatPrice(order.total)} ₽
-								</div>
-							</div>
+						</small>
+					)}
+					<div className="total">
+						<h3 className="title">Общая стоимость</h3>
+						<div className="value">
+							{formatPrice(order.total)} ₽
 						</div>
 					</div>
-				</>
-			) : (
-				<>
-					<h1>Я пуста</h1>
-					<p>Наполни меня, прошу =*</p>
-				</>
-			)}
+					<div className="discount-total">
+						<small className="title">Со скидкой</small>
+						<div className="value">
+							{formatPrice(order.total)} ₽
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	)
 }

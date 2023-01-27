@@ -4,6 +4,9 @@
 	gap: 0.5rem;
 	margin-bottom: 1rem;
 	background-color: #fff;
+
+	z-index: 2;
+
 	@media (min-width: 800px) {
 		position: sticky;
 		top: 0;
@@ -84,4 +87,36 @@ nav {
 	justify-content: flex-end;
 	gap: 1rem;
 	padding-top: 0.5rem;
+}
+
+.suggestion {
+	position: fixed;
+	background-color: #fff;
+	top: 6rem;
+	z-index: -1;
+	opacity: 0;
+	pointer-events: none;
+
+	&.suggesting {
+		z-index: 2;
+		opacity: 1;
+		pointer-events: initial;
+	}
+}
+
+.suggestion-bg {
+	background-color: var(--suggest-bg);
+	position: fixed;
+	inset: 0;
+
+	z-index: -100;
+	width: 0;
+	height: 0;
+
+	&.suggesting {
+		z-index: 1;
+		opacity: 1;
+		width: initial;
+		height: initial;
+	}
 }

@@ -1,9 +1,70 @@
-.searchBar {
+.wrapper {
+	z-index: 120;
+	position: relative;
+	background-color: #fff;
+
+	&.suggesting {
+		.suggestion {
+			opacity: 1;
+			pointer-events: initial;
+		}
+		.suggestion-bg {
+			background-color: black;
+			opacity: 0.5;
+			pointer-events: initial;
+		}
+	}
+
+	&::after {
+		position: absolute;
+		content: "";
+		border-radius: 2em;
+		width: 120%;
+		left: -10%;
+		top: -40%;
+		bottom: calc(-100vh + 6rem);
+
+		background-color: white;
+	}
+}
+
+.suggestion {
+	position: absolute;
+	// border-radius: 0.5em;
+	width: 100%;
+	background-color: #fff;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 2;
+
+	transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+	overflow-y: auto;
+	max-height: calc(100vh - 6rem);
+}
+
+.suggestion-bg {
+	position: fixed;
+	inset: 0;
+	opacity: 0;
+	pointer-events: none;
+	z-index: -1;
+
+	transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.form {
+	flex-grow: 1;
+}
+
+.search-bar {
+	position: relative;
+	z-index: 10;
+
 	width: 100%;
 	display: flex;
 	align-items: center;
-	padding: 0.1em;
-	border-radius: 0.3rem;
+	border-radius: 0.5rem;
 
 	background-color: var(--primary-color);
 	input {
@@ -11,11 +72,13 @@
 		flex-grow: 0;
 		min-width: 100px;
 		max-width: 250px;
-		border-radius: 0.3rem;
+		border-radius: 0.5rem;
 		border: none;
 		outline: none;
 		font-size: 1rem;
 		padding: 0.5rem 1rem;
+		border: 2px solid var(--primary-color);
+		background-color: #fff;
 		color: var(--text-color);
 		margin-block: 0.05em;
 		margin-left: 0.1em;
@@ -31,46 +94,14 @@
 	}
 }
 
-.searchBarWrapper {
-	flex-grow: 1;
-	position: relative;
-	&.suggesting {
-		border-radius: 0.2em;
-		z-index: var(--z-suggestion-window);
+// .search-bar-bg {
+// 	position: absolute;
+// 	inset: 0;
+// 	z-index: 5;
+// 	background-color: var(--suggest-bg);
+// 	box-shadow: 0 0 0 100vmax var(--suggest-bg);
+// 	clip-path: inset(0 -100%);
 
-		&::after,
-		.suggsestionWrapper::after {
-			content: "";
-			position: absolute;
-			background-color: white;
-			top: 0;
-			bottom: 0;
-			left: -2rem;
-			right: -2rem;
-			height: 100%;
-			z-index: -1;
-		}
-
-		.suggsestionWrapper {
-			display: block;
-		}
-	}
-}
-
-.suggsestionWrapper {
-	background-color: #fff;
-	width: 100%;
-	padding: 1.5rem;
-	display: none;
-	position: absolute;
-	bottom: 0;
-	transform: translateY(100%);
-}
-
-.suggestionBg {
-	// position: absolute;
-	// inset: 0;
-	// background-color: rgba(0, 0, 0, 0.862);
-	// z-index: var(--z-suggestion-bg);
-	// transform: translateY(90%);
-}
+// 	width: 0;
+// 	height: 0;
+// }
