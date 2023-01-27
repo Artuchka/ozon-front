@@ -1,0 +1,25 @@
+.all-stats-page {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	h2 {
+		font-weight: 500;
+		font-size: 2rem;
+	}
+
+	.link {
+		a {
+			text-decoration: none;
+		}
+	}
+	.main-stat {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		border: 1px solid var(--primary-color);
+		padding: 1rem;
+		.star {
+			color: var(--star-color);
+		}
+	}
+}

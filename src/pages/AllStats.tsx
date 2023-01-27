@@ -7,12 +7,19 @@ import { ActionsDetails, StatsType } from "../store/features/stats/statsSlice"
 import { Loading } from "../components/Loading"
 import { StatGraphs } from "../components/StatGraphs"
 import { setAllActionsHistory } from "../store/features/stats/statsSlice"
+import { getMyProducts } from "../store/features/product/thunks"
+import { selectProducts } from "../store/features/product/selectors"
+import { ProductType } from "../store/features/product/productSlice"
+import { formatPrice } from "../utils/intl"
+import { AiFillStar } from "react-icons/ai"
+import { Link } from "react-router-dom"
 
 export const AllStats = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { allStats } = useSelector(selectStats)
-
+	const { myProducts } = useSelector(selectProducts)
 	useEffect(() => {
+		dispatch(getMyProducts())
 		dispatch(getAllStats())
 	}, [])
 
@@ -20,6 +27,15 @@ export const AllStats = () => {
 		() => getActionsHistory(allStats?.stats),
 		[allStats?.stats]
 	)
+
+	const {
+		totalPrice,
+		averagePrice,
+		productsAmount,
+		averageImagesAmount,
+		averageRating,
+		averageNumOfReviews,
+	} = useMemo(() => getMyProductTotals(myProducts), [myProducts])
 
 	useEffect(() => {
 		dispatch(setAllActionsHistory(actionsHistory))
@@ -29,7 +45,42 @@ export const AllStats = () => {
 		return <Loading />
 	}
 	return (
-		<div>
+		<div className="all-stats-page">
+			<h2>Общая статистика по вашим товарам</h2>
+			<div className="link">
+				<Link to="/my/products" className="btn btn--light">
+					Посмотреть детальную статистику для каждого товара
+				</Link>
+			</div>
+			<div className="main-stat">
+				<div className="count-amount">
+					<span>У вас товаров: </span>
+					<strong>{productsAmount || 0} шт.</strong>
+				</div>
+				<div className="price-total">
+					<span>На общую сумму: </span>
+					<strong>{formatPrice(totalPrice || 0)} ₽</strong>
+				</div>
+				<div className="price-average">
+					<span>На общую сумму: </span>
+					<strong>{formatPrice(averagePrice || 0)} ₽</strong>
+				</div>
+				<div className="rating-average">
+					<span>Средняя оценка на все товары: </span>
+					<strong>
+						{averageRating}
+						<AiFillStar className="star" />
+					</strong>
+				</div>
+				<div className="rating-average">
+					<span>Среднее число отзывов на товаре: </span>
+					<strong>{averageNumOfReviews}</strong>
+				</div>
+				<div className="rating-average">
+					<span>Среднее число фото на товаре: </span>
+					<strong>{averageImagesAmount}</strong>
+				</div>
+			</div>
 			<StatGraphs data={allStats?.actionsHistory} />
 		</div>
 	)
@@ -38,8 +89,6 @@ export const AllStats = () => {
 const oneDay = 1000 * 60 * 60 * 24
 const daysAmount = 5
 function getActionsHistory(stats: StatsType[]) {
-	console.log("before = ", { stats })
-
 	const { visits, bought, bookmarked, refunded } = stats?.reduce(
 		(agg, cur) => {
 			return {
@@ -73,4 +122,38 @@ function getActionsHistory(stats: StatsType[]) {
 		actionsHistory.push(newCalculatedData)
 	}
 	return actionsHistory
+}
+
+function getMyProductTotals(products: ProductType[]) {
+	let totalPrice = 0
+	let totalAverageRating = 0
+	let totalNumOfReviews = 0
+	let productsAmount = products?.length
+	let totalImagesAmount = 0
+
+	for (let index = 0; index < productsAmount; index++) {
+		const { price, averageRating, numOfReviews, images } = products[index]
+
+		totalPrice += price
+		totalImagesAmount += images?.length
+		totalAverageRating += averageRating
+		totalNumOfReviews += numOfReviews
+	}
+	let averagePrice = totalPrice / productsAmount
+	let averageImagesAmount = totalImagesAmount / productsAmount
+	let averageRating = totalAverageRating / productsAmount
+	let averageNumOfReviews = totalNumOfReviews / productsAmount
+
+	averagePrice = parseFloat(averagePrice.toFixed(2))
+	averageImagesAmount = parseFloat(averageImagesAmount.toFixed(2))
+	averageRating = parseFloat(averageRating.toFixed(2))
+	averageNumOfReviews = parseFloat(averageNumOfReviews.toFixed(2))
+	return {
+		totalPrice,
+		averagePrice,
+		productsAmount,
+		averageImagesAmount,
+		averageRating,
+		averageNumOfReviews,
+	}
 }

@@ -57,7 +57,7 @@ export type SingleProductType = {
 	updatedAt: string
 }
 
-type ProductType = {
+export type ProductType = {
 	images: string[]
 	title: string
 	price: number
