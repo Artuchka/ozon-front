@@ -1,19 +1,27 @@
+.header-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+	background-color: #fff;
+	@media (min-width: 800px) {
+		position: sticky;
+		top: 0;
+	}
+}
+
 .header {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
 	justify-content: space-around;
 	flex-direction: column;
-	margin-bottom: 1rem;
 	background-color: #fff;
-	box-shadow: 0 0 0 100vmax #fff;
-	clip-path: inset(0 -100% 0.1rem -100%);
 
 	@media (min-width: 800px) {
 		gap: 2rem;
 		flex-direction: row;
-		position: sticky;
-		top: 0;
+
 		.logo {
 			height: 100px;
 			width: 100px;
@@ -27,6 +35,28 @@
 			padding: 0;
 		}
 	}
+}
+
+.header-bg {
+	box-shadow: 0 0 0 100vmax white;
+	clip-path: inset(0 -100% 0 -100%);
+	z-index: -1;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+}
+
+.separator {
+	--height: 0.005rem;
+	position: absolute;
+	box-shadow: 0 0 0 100vmax var(--gray-text);
+	background-color: var(--gray-text);
+	clip-path: inset(0 -100% calc(-1 * var(--height)) -100%);
+	z-index: 1;
+	width: 100%;
+	height: var(--height);
+	bottom: calc(-1 * var(--height));
 }
 
 .logo {
@@ -47,4 +77,11 @@ nav {
 	align-items: center;
 	z-index: 100;
 	padding: 1rem;
+}
+
+.action-tab {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	padding-top: 0.5rem;
 }

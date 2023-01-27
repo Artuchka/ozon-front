@@ -52,6 +52,16 @@
 			color: var(--primary-color);
 		}
 	}
+	&--low-active {
+		cursor: pointer;
+		padding: 0;
+		transition: color 0.1s ease;
+		color: var(--gray-text);
+		font-size: 0.9rem;
+		&:hover {
+			color: var(--primary-color);
+		}
+	}
 	&--middle {
 		// padding: 0;
 		// transition: color 0.1s ease;
@@ -63,6 +73,12 @@
 	}
 	&--transparent {
 		background: transparent;
+	}
+	&--bubble {
+		background-color: var(--primary-color-pale);
+		border-radius: 100vmax;
+		padding: 0.1rem 0.8rem;
+		color: var(--gray-text);
 	}
 
 	&--text-small {

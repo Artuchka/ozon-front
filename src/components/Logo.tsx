@@ -5,7 +5,12 @@ import { Link } from "react-router-dom"
 export const Logo = (props: any) => {
 	return (
 		<Link to="/">
-			<img src={logo} alt="" {...props} />
+			<img
+				src={logo}
+				alt=""
+				{...props}
+				style={{ objectFit: "contain", height: "60px" }}
+			/>
 		</Link>
 	)
 }
