@@ -1,28 +1,115 @@
-import React, { FC } from "react"
+import React, { Dispatch, FC, useEffect } from "react"
 import style from "./style.module.scss"
+import { useDispatch, useSelector } from "react-redux"
+import { selectProducts } from "../../store/features/product/selectors"
+import { AppDispatch } from "../../store/store"
+import { getAllProducts } from "../../store/features/product/thunks"
+import { Link } from "react-router-dom"
+import {
+	updateFilters,
+	PayloadUpdateType,
+} from "../../store/features/filter/filterSlice"
 
-export const SearchSuggestions: FC = () => {
+type PropType = {
+	search: string
+	setIsSuggesting: Dispatch<React.SetStateAction<boolean>>
+}
+
+export const SearchSuggestions: FC<PropType> = ({
+	search,
+	setIsSuggesting,
+}) => {
+	const { products, details } = useSelector(selectProducts)
+	const dispatch = useDispatch<AppDispatch>()
+	useEffect(() => {
+		// dispatch(getAllProducts())
+	}, [])
+
+	const handleClick = ({ name, value }: { name: string; value: string }) => {
+		dispatch(
+			updateFilters({ name, value, checked: true } as PayloadUpdateType)
+		)
+		setIsSuggesting(false)
+	}
+
+	const filteredCompanies = details?.companies?.filter((item) =>
+		item.includes(search)
+	)
+
+	const filteredTags = details?.tags?.filter((item) => item.includes(search))
+
+	const filteredCategories = details?.categories?.filter((item) =>
+		item.includes(search)
+	)
+
 	return (
 		<div className={style.wrapper}>
-			<p>1 Lorem, ipsum dolor.</p>
-			<p>2 morel, Lorem ipsum dolor sit amet.</p>
-			<p>3 Lorem, ipsum sit amet.dolor.</p>
-			<p>4 Lorem, dolor.</p>
-			<p>5 sit amet., ipsum dolor.</p>
-			<p>6 sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
-			<p>sit amet., ipsum dolor.</p>
+			{filteredCategories.length > 0 && (
+				<div className={style.categories}>
+					<h5 className={style.title}>Категории</h5>
+					<div className={style.list}>
+						{filteredCategories?.map((item) => {
+							return (
+								<Link
+									onClick={() =>
+										handleClick({
+											name: "categories",
+											value: item,
+										})
+									}
+									to={`/products/?category=${item}`}
+								>
+									{item}
+								</Link>
+							)
+						})}
+					</div>
+				</div>
+			)}
+			{filteredTags.length > 0 && (
+				<div className={style.tags}>
+					<h5 className={style.title}>Теги</h5>
+					<div className={style.list}>
+						{filteredTags?.map((item) => {
+							return (
+								<Link
+									onClick={() =>
+										handleClick({
+											name: "tags",
+											value: item,
+										})
+									}
+									to={`/products/?tags=${item}`}
+								>
+									#{item}
+								</Link>
+							)
+						})}
+					</div>
+				</div>
+			)}
+			{filteredCompanies.length > 0 && (
+				<div className={style.companies}>
+					<h5 className={style.title}>Компания</h5>
+					<div className={style.list}>
+						{filteredCompanies?.map((item) => {
+							return (
+								<Link
+									onClick={() =>
+										handleClick({
+											name: "companies",
+											value: item,
+										})
+									}
+									to={`/products/?companies=${item}`}
+								>
+									{item}
+								</Link>
+							)
+						})}
+					</div>
+				</div>
+			)}
 		</div>
 	)
 }

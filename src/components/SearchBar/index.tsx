@@ -35,10 +35,14 @@ export const SearchBar = () => {
 		const { name, value } = e.target
 		setSearch((prev) => value)
 		debouncedChange({ name, value })
+		if (!isSuggesting) {
+			setIsSuggesting(true)
+		}
 	}
 
 	const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		setIsSuggesting(false)
 		if (pathname == "/products") return
 
 		navigate("/products")
@@ -60,7 +64,6 @@ export const SearchBar = () => {
 				isSuggesting ? style.suggesting : ""
 			}`}
 			onFocus={handleOnFocusIn}
-			// onBlur={handleOnFocusOut}
 			onClick={handleClickOutside}
 		>
 			<form onSubmit={handleSubmit} className={style["form"]}>
@@ -76,7 +79,10 @@ export const SearchBar = () => {
 				</div>
 			</form>
 			<div className={style.suggestion}>
-				<SearchSuggestions />
+				<SearchSuggestions
+					search={search}
+					setIsSuggesting={setIsSuggesting}
+				/>
 			</div>
 			<div className={style["suggestion-bg"]} ref={suggestionBgRef}></div>
 		</div>

@@ -1,4 +1,5 @@
 .wrapper {
+	flex-grow: 1;
 	z-index: 120;
 	position: relative;
 	background-color: #fff;
@@ -13,6 +14,10 @@
 			opacity: 0.5;
 			pointer-events: initial;
 		}
+		&::after {
+			pointer-events: initial;
+			opacity: 1;
+		}
 	}
 
 	&::after {
@@ -25,22 +30,26 @@
 		bottom: calc(-100vh + 6rem);
 
 		background-color: white;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.2s ease-in-out;
 	}
 }
 
 .suggestion {
 	position: absolute;
-	// border-radius: 0.5em;
 	width: 100%;
 	background-color: #fff;
 	opacity: 0;
 	pointer-events: none;
 	z-index: 2;
 
-	transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	transition: opacity 0.2s ease-in-out;
 
 	overflow-y: auto;
-	max-height: calc(100vh - 6rem);
+	max-height: calc(100vh - 8rem);
+
+	margin-top: 1rem;
 }
 
 .suggestion-bg {
@@ -50,11 +59,7 @@
 	pointer-events: none;
 	z-index: -1;
 
-	transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-.form {
-	flex-grow: 1;
+	transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .search-bar {

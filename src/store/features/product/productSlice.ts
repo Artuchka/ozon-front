@@ -92,7 +92,7 @@ type EditType = {
 
 type InitState = {
 	singleProduct: SingleProductType
-	products: ProductType[]
+	products: SingleProductType[]
 	isLoading: boolean
 	myProducts: ProductType[]
 	myIsLoading: boolean
