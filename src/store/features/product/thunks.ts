@@ -86,6 +86,27 @@ export const getAllProducts = createAsyncThunk(
 		}
 	}
 )
+export const getSuggestedProducts = createAsyncThunk(
+	"product/getSuggestedProducts",
+	async (_, thunkAPI) => {
+		try {
+			const {
+				filter: { title },
+			} = thunkAPI.getState() as RootState
+
+			const queryParams = createQueryParams({
+				title,
+				limit: 10,
+			} as FilterType)
+
+			const { data } = await ozonAPI(`/products${queryParams}`)
+			return data
+		} catch (error: any) {
+			console.log("error caight = ", error)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
 // new changes
 export const getMyProducts = createAsyncThunk(
 	"product/getMyProducts",
@@ -171,13 +192,13 @@ const createQueryParams = (params: FilterType) => {
 	if (numericFilters !== "&numericFilters=") {
 		query += numericFilters
 	}
-	if (companies.length > 0) {
+	if (companies?.length > 0) {
 		query += `&companies=${companies.join(",")}`
 	}
-	if (tags.length > 0) {
+	if (tags?.length > 0) {
 		query += `&tags=${tags.join(",")}`
 	}
-	if (categories.length > 0 && categories[0] !== "любая") {
+	if (categories?.length > 0 && categories[0] !== "любая") {
 		query += `&categories=${categories.join(",")}`
 	}
 

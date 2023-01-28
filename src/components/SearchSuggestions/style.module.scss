@@ -1,4 +1,13 @@
 .wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.details {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
 }
 
 .categories,
@@ -24,4 +33,10 @@
 			}
 		}
 	}
+}
+
+.products {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
 }

@@ -6,6 +6,7 @@ import {
 	getMyProducts,
 	getProductDetails,
 	getSingleProduct,
+	getSuggestedProducts,
 	updateProduct,
 	uploadImages,
 } from "./thunks"
@@ -28,7 +29,7 @@ export type SingleProductType = {
 	description: string
 	_id: string
 	images: string[]
-	numOfReviews: string
+	numOfReviews: number
 	price: number
 	reviews: [
 		{
@@ -93,6 +94,7 @@ type EditType = {
 type InitState = {
 	singleProduct: SingleProductType
 	products: SingleProductType[]
+	suggestedProducts: SingleProductType[]
 	isLoading: boolean
 	myProducts: ProductType[]
 	myIsLoading: boolean
@@ -171,6 +173,22 @@ export const productSlice = createSlice({
 			state.isLoading = false
 		})
 		builder.addCase(getAllProducts.rejected, (state, action) => {
+			if (typeof action.payload === "string") toast.error(action.payload)
+			state.isLoading = false
+		})
+
+		builder.addCase(getSuggestedProducts.pending, (state, action) => {
+			state.isLoading = true
+		})
+		builder.addCase(
+			getSuggestedProducts.fulfilled,
+			(state, { payload }) => {
+				const { products, details } = payload
+				state.suggestedProducts = products
+				state.isLoading = false
+			}
+		)
+		builder.addCase(getSuggestedProducts.rejected, (state, action) => {
 			if (typeof action.payload === "string") toast.error(action.payload)
 			state.isLoading = false
 		})

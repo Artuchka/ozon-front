@@ -20,6 +20,7 @@ import { SlideImageViewer } from "../SlideImageViewer"
 import { MdQueryStats } from "react-icons/md"
 
 export type ProductItemType = {
+	_id: string
 	images: string[]
 	title: string
 	price: number
@@ -27,7 +28,6 @@ export type ProductItemType = {
 	numOfReviews: number
 	editable?: boolean
 	stats?: boolean
-	_id: string
 	amount?: number
 }
 // crossorigin=anonymos should work for images
