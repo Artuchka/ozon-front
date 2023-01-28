@@ -75,6 +75,7 @@ export const SearchSuggestions: FC<PropType> = ({
 											})
 										}
 										to={`/products/?category=${item}`}
+										key={item}
 									>
 										{item}
 									</Link>
@@ -97,6 +98,7 @@ export const SearchSuggestions: FC<PropType> = ({
 											})
 										}
 										to={`/products/?tags=${item}`}
+										key={item}
 									>
 										#{item}
 									</Link>
@@ -119,6 +121,7 @@ export const SearchSuggestions: FC<PropType> = ({
 											})
 										}
 										to={`/products/?companies=${item}`}
+										key={item}
 									>
 										{item}
 									</Link>
@@ -141,7 +144,7 @@ export const SearchSuggestions: FC<PropType> = ({
 					</>
 				) : (
 					filteredProducts?.map((item) => {
-						return <ProductItem {...item} />
+						return <ProductItem key={item._id} {...item} />
 					})
 				)}
 			</div>

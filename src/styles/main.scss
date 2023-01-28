@@ -32,7 +32,7 @@
 .default-layout {
 	min-height: 120vh;
 	padding: 0 2rem;
-	max-width: 900px;
+	max-width: 1000px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
@@ -40,7 +40,6 @@
 	main.main {
 		flex-grow: 1;
 		padding-bottom: 5rem;
-		// height: 10000px;
 	}
 }
 

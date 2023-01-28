@@ -88,7 +88,7 @@ export const Header = () => {
 								<StatusLink
 									icon={<AiFillHeart />}
 									link="/bookmarks"
-									title="Избранное"
+									title="Loved"
 									color="var(--heart-color)"
 									data={bookmarks?.length || 0}
 								/>
