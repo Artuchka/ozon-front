@@ -15,7 +15,7 @@ export const Products = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { details } = useSelector(selectProducts)
 	const { title } = useSelector(selectFilters)
-	const { loading: gettingUser } = useSelector(selectAuth)
+	const { isLoading: gettingUser } = useSelector(selectAuth)
 	const amount = details.productsFound
 
 	useEffect(() => {

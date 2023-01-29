@@ -11,8 +11,7 @@ import {
 	uploadImages,
 } from "./thunks"
 import { toast } from "react-toastify"
-import { ProductItemType } from "../../../components/ProductItem"
-import { AuthType } from "../auth/authSlice"
+import { UserType } from "../auth/authSlice"
 
 const product = {
 	description: "",
@@ -54,7 +53,7 @@ export type SingleProductType = {
 	companies: string[]
 	title: string
 	types: []
-	vendor: AuthType
+	vendor: UserType
 	updatedAt: string
 }
 

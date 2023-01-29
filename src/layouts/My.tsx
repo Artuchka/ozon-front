@@ -9,7 +9,9 @@ export const My = () => {
 		{ path: "/my/reviews", name: "Мои отзывы" },
 		{ path: "/my/orders", name: "Мои заказы" },
 	]
-	const { role } = useSelector(selectAuth)
+	const {
+		user: { role },
+	} = useSelector(selectAuth)
 	if (role === "vendor") {
 		links.push({ path: "/my/products", name: "Мои товары" })
 		links.push({ path: "/my/stats", name: "Общая cтатистика" })

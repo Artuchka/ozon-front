@@ -18,8 +18,10 @@ export const Header = () => {
 	const { order, allOrders } = useSelector(selectOrder)
 	const { bookmarks } = useSelector(selectBookmarks)
 	const auth = useSelector(selectAuth)
-	const user = auth.role !== null
-	const { role } = auth
+	const user = auth?.user?._id !== ""
+	const {
+		user: { role },
+	} = auth
 
 	return (
 		<>
@@ -83,7 +85,7 @@ export const Header = () => {
 								title="+Товар"
 							/>
 						)}
-						{!!user && (
+						{user && (
 							<>
 								<StatusLink
 									icon={<AiFillHeart />}

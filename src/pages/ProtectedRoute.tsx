@@ -13,10 +13,10 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 	outlet,
 	roles = [],
 }) => {
-	const isAuthenticated = !!user.email
+	const isAuthenticated = !!user.user.email
 	let isGoodRole = true
 	if (roles.length !== 0) {
-		isGoodRole = roles.includes(user.role || "")
+		isGoodRole = roles.includes(user.user.role || "")
 	}
 	if (!isAuthenticated || !isGoodRole) {
 		return (

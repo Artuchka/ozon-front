@@ -30,7 +30,9 @@ export const Cart = () => {
 	const dispatch = useDispatch<AppDispatch>()
 
 	const { order, selectedInCart } = useSelector(selectOrder)
-	const { username } = useSelector(selectAuth)
+	const {
+		user: { username },
+	} = useSelector(selectAuth)
 	const [promoMessage, setPromoMessage] = useState("")
 	const promoInputRef = useRef(document.createElement("input"))
 

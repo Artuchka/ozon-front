@@ -15,7 +15,9 @@ import { getProductDetails } from "../store/features/product/thunks"
 
 export const Default = () => {
 	const dispatch = useDispatch<AppDispatch>()
-	const { username } = useSelector(selectAuth)
+	const {
+		user: { username },
+	} = useSelector(selectAuth)
 	const { haveTried, order } = useSelector(selectOrder)
 
 	useEffect(() => {

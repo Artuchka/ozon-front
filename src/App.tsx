@@ -21,6 +21,7 @@ import { Orders } from "./pages/Orders"
 import { SingleOrder } from "./pages/SingleOrder"
 import { AllStats } from "./pages/AllStats"
 import { SingleStat } from "./pages/SingleStat"
+import { EmailVerify } from "./pages/EmailVerify"
 
 function App() {
 	const user = useSelector(selectAuth)
@@ -112,6 +113,7 @@ function App() {
 						}
 					/>
 					<Route path="/products" element={<Products />} />
+					<Route path="/email" element={<EmailVerify />} />
 					<Route path="/products/:id" element={<SingleProduct />} />
 					<Route path="*" element={<NotFound />} />
 				</Route>

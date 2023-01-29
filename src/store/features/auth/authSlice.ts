@@ -1,9 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { login, loginJWT, logout, register, updateUser } from "./thunks"
+import {
+	login,
+	loginJWT,
+	loginPasswordless,
+	logout,
+	register,
+	registerPasswordless,
+	updateUser,
+	verifyPasswordless,
+} from "./thunks"
 import { toast } from "react-toastify"
 
 export type UserType = {
-	token: string
 	_id: string
 	username: string
 	firstName: string
@@ -16,27 +24,33 @@ export type UserType = {
 	birthday: string
 	avatar: string
 	location: string
-	loading: true
 }
 
-const initialState = {
-	token: null,
-	_id: null,
-	username: null,
+export type AuthType = {
+	token: string
+	user: UserType
+	isLoading: boolean
+}
+
+const userPlaceholder = {
+	_id: "",
+	username: "",
 	firstName: "",
 	lastName: "",
-	email: null,
-	phone: null,
-	createdAt: null,
-	gender: null,
-	role: null,
-	birthday: null,
-	avatar: null,
-	location: null,
-	loading: true,
+	email: "",
+	phone: "",
+	createdAt: "",
+	gender: "",
+	role: "",
+	birthday: "",
+	avatar: "",
+	location: "",
 }
-
-export type AuthType = typeof initialState
+const initialState = {
+	token: "",
+	user: userPlaceholder,
+	isLoading: true,
+} as AuthType
 
 export const authSlice = createSlice({
 	name: "auth",
@@ -44,69 +58,116 @@ export const authSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(login.pending, (state, action) => {
-			state.loading = true
+			state.isLoading = true
 		})
 		builder.addCase(login.fulfilled, (state, action) => {
 			const { msg, user } = action.payload
 			toast(msg)
-			return { ...user, loading: false }
+			state.isLoading = false
+			state.user = user
 		})
 		builder.addCase(login.rejected, (state, action) => {
 			if (typeof action.payload === "string") {
 				toast.error(action?.payload)
 			}
 
-			state.loading = false
+			state.isLoading = false
 		})
+
 		builder.addCase(loginJWT.pending, (state, action) => {
-			state.loading = true
+			state.isLoading = true
 		})
 		builder.addCase(loginJWT.fulfilled, (state, action) => {
 			const { msg, user } = action.payload
 			// toast(msg)
-			return { ...user, loading: false }
+			state.isLoading = false
+			state.user = user
 		})
 		builder.addCase(loginJWT.rejected, (state, action) => {
-			state.loading = false
+			state.isLoading = false
 			// only dev state
 			toast.error("couldnt auto login")
 		})
+
+		builder.addCase(verifyPasswordless.pending, (state, action) => {
+			state.isLoading = true
+		})
+		builder.addCase(verifyPasswordless.fulfilled, (state, action) => {
+			const { msg, user } = action.payload
+
+			state.isLoading = false
+			state.user = user
+		})
+		builder.addCase(verifyPasswordless.rejected, (state, { payload }) => {
+			state.isLoading = false
+			// only dev state
+			toast.error(payload as string)
+		})
+
 		builder.addCase(logout.pending, (state, action) => {
-			state.loading = true
+			state.isLoading = true
 		})
 		builder.addCase(logout.fulfilled, (state, action) => {
 			const { msg } = action.payload
+			state.isLoading = false
+			state.user = userPlaceholder
 			toast(msg)
-			return { ...initialState }
 		})
 		builder.addCase(logout.rejected, (state) => {
-			state.loading = false
+			state.isLoading = false
 		})
 
 		builder.addCase(register.pending, (state, action) => {
-			state.loading = true
+			state.isLoading = true
 		})
 		builder.addCase(register.fulfilled, (state, action) => {
 			const { msg } = action.payload
+			state.isLoading = false
 			toast(msg)
-			return { ...initialState }
 		})
 		builder.addCase(register.rejected, (state, action: any) => {
 			toast.error(action.payload)
-			state.loading = false
+			state.isLoading = false
+		})
+
+		builder.addCase(registerPasswordless.pending, (state, action) => {
+			state.isLoading = true
+		})
+		builder.addCase(registerPasswordless.fulfilled, (state, action) => {
+			const { msg } = action.payload
+			toast(msg)
+			state.isLoading = false
+		})
+		builder.addCase(registerPasswordless.rejected, (state, action: any) => {
+			toast.error(action.payload)
+			state.isLoading = false
+		})
+
+		builder.addCase(loginPasswordless.pending, (state, action) => {
+			state.isLoading = true
+		})
+		builder.addCase(loginPasswordless.fulfilled, (state, action) => {
+			const { msg } = action.payload
+			toast(msg)
+			state.isLoading = false
+		})
+		builder.addCase(loginPasswordless.rejected, (state, action: any) => {
+			toast.error(action.payload)
+			state.isLoading = false
 		})
 
 		builder.addCase(updateUser.pending, (state, action) => {
-			state.loading = true
+			state.isLoading = true
 		})
 		builder.addCase(updateUser.fulfilled, (state, action) => {
 			const { msg, user } = action.payload
 			toast(msg)
-			return { ...state, ...user, loading: false }
+			state.isLoading = false
+			state.user = user
 		})
 		builder.addCase(updateUser.rejected, (state, action: any) => {
 			toast.error(action.payload)
-			state.loading = false
+			state.isLoading = false
 		})
 	},
 })

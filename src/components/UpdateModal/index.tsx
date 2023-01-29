@@ -28,7 +28,9 @@ export const UpdateModal: FC<proptype> = ({
 }) => {
 	const [answer, setAnswer] = useState<updateDataType>(defaultAnswer)
 	const dispatch = useDispatch<AppDispatch>()
-	const { gender } = useSelector(selectAuth)
+	const {
+		user: { gender },
+	} = useSelector(selectAuth)
 	let body = (
 		<>
 			<h1>update</h1>

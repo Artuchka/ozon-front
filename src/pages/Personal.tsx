@@ -22,15 +22,17 @@ export const Personal = () => {
 	}
 
 	const {
-		lastName,
-		firstName,
-		email,
-		birthday,
-		username,
-		phone,
-		location,
-		gender,
-		loading: isLoading,
+		user: {
+			lastName,
+			firstName,
+			email,
+			birthday,
+			username,
+			phone,
+			location,
+			gender,
+		},
+		isLoading,
 	} = useSelector(selectAuth)
 
 	const avatar = `https://avatars.dicebear.com/api/croodles/${gender}/${

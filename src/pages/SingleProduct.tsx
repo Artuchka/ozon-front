@@ -29,7 +29,9 @@ import { GrNext } from "react-icons/gr"
 
 export const SingleProduct = () => {
 	const { id } = useParams()
-	const { _id: userId } = useSelector(selectAuth)
+	const {
+		user: { _id: userId },
+	} = useSelector(selectAuth)
 	const { singleProduct } = useSelector(selectProducts)
 	const { edit } = useSelector(selectReviews)
 	const { order } = useSelector(selectOrder)
