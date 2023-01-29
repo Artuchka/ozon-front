@@ -10,12 +10,13 @@
 
 	&:disabled {
 		opacity: 0.3;
+		cursor: not-allowed;
 	}
 
 	&:valid {
 		border-color: var(--success-color);
 	}
-	&:not(&--not-required) {
+	&:not(:is(&--not-required, &:disabled)) {
 		&:not(:valid),
 		&:placeholder-shown {
 			border-color: var(--error-color);

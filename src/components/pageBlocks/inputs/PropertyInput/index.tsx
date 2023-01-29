@@ -12,8 +12,9 @@ export type SpecType = {
 type propsType = {
 	props: SpecType[]
 	setProps: Dispatch<SetStateAction<SpecType[]>>
+	disabled?: boolean
 }
-export const PropertyInput: FC<propsType> = ({ props, setProps }) => {
+export const PropertyInput: FC<propsType> = ({ props, setProps, disabled }) => {
 	const handleAddSpec = () => {
 		setProps((prev) => [
 			...prev,
@@ -70,6 +71,7 @@ export const PropertyInput: FC<propsType> = ({ props, setProps }) => {
 										onChange={(e) =>
 											handleChangeSpec(e, id)
 										}
+										disabled={disabled}
 									/>
 								)
 							})}

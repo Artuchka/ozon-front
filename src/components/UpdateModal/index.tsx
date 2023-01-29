@@ -30,6 +30,7 @@ export const UpdateModal: FC<proptype> = ({
 	const dispatch = useDispatch<AppDispatch>()
 	const {
 		user: { gender },
+		isLoading,
 	} = useSelector(selectAuth)
 	let body = (
 		<>
@@ -108,6 +109,7 @@ export const UpdateModal: FC<proptype> = ({
 						answer.firstName || defaultAnswer.firstName || "temp"
 					}
 					onChange={handleChange}
+					disabled={isLoading}
 				/>
 				<input
 					type="text"
@@ -116,6 +118,7 @@ export const UpdateModal: FC<proptype> = ({
 					name="lastName"
 					value={answer.lastName || defaultAnswer.lastName || "temp"}
 					onChange={handleChange}
+					disabled={isLoading}
 				/>
 			</>
 		)
@@ -129,6 +132,7 @@ export const UpdateModal: FC<proptype> = ({
 				name="phone"
 				value={answer["phone"] || defaultAnswer["phone"] || "temp"}
 				onChange={handleChange}
+				disabled={isLoading}
 			/>
 		)
 	}
@@ -141,6 +145,7 @@ export const UpdateModal: FC<proptype> = ({
 				name="email"
 				value={answer.email || defaultAnswer.email || "temp"}
 				onChange={handleChange}
+				disabled={isLoading}
 			/>
 		)
 	}
@@ -156,6 +161,7 @@ export const UpdateModal: FC<proptype> = ({
 					"1969-08-21T00:01"
 				}
 				onChange={handleChange}
+				disabled={isLoading}
 			/>
 		)
 	}
@@ -167,6 +173,7 @@ export const UpdateModal: FC<proptype> = ({
 				<button
 					type="submit"
 					className={`${style.btn} btn btn--rounded btn--contained btn--tall`}
+					disabled={isLoading}
 				>
 					Сохранить
 				</button>

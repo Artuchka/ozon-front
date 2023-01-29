@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC, useRef, useState } from "react"
 import { Modal } from "../Modal"
 import style from "./style.module.scss"
 import ozonIDImage from "./../../assets/images/ozon-id-v2.svg"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {
 	getOrders,
 	login,
@@ -11,12 +11,14 @@ import {
 	registerPasswordless,
 } from "../../store/features/auth/thunks"
 import { AppDispatch } from "../../store/store"
+import { selectAuth } from "../../store/features/auth/selectors"
 
 type PropType = {
 	open: boolean
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
+	const { isLoading } = useSelector(selectAuth)
 	const emailRef = useRef<HTMLInputElement>(null)
 	const passwordRef = useRef<HTMLInputElement>(null)
 	type methodType = "login" | "register"
@@ -56,6 +58,7 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 						title="Почта"
 						required
 						ref={emailRef}
+						disabled={isLoading}
 					/>
 					{!passwordless && (
 						<input
@@ -66,11 +69,13 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 							required={!passwordless}
 							title="Длина пароля должна быть от 6 до 15 символов"
 							ref={passwordRef}
+							disabled={isLoading}
 						/>
 					)}
 					<button
 						type="submit"
 						className="btn btn--contained btn--rounded btn--tall"
+						disabled={isLoading}
 					>
 						{method === "login" ? "Войти" : "Зарегаться"}
 					</button>
@@ -83,6 +88,7 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 							prev === "login" ? "register" : "login"
 						)
 					}}
+					disabled={isLoading}
 				>
 					{method === "login"
 						? "У меня нет аккаунта"
@@ -94,6 +100,7 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 					onClick={() => {
 						setPaswordless((prev) => !prev)
 					}}
+					disabled={isLoading}
 				>
 					{passwordless ? "Вход с паролем" : "Вход без пароля"}
 				</button>

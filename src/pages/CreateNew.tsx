@@ -82,9 +82,9 @@ export const CreateNew = () => {
 		}
 	}, [edit.isLoading, edit.editId, editingId])
 
-	if (edit.isLoading || edit.isLoading) {
-		return <Loading />
-	}
+	// if (edit.isLoading || creating.isLoading) {
+	// 	return <Loading />
+	// }
 
 	if (edit.isError) {
 		return (
@@ -151,6 +151,7 @@ export const CreateNew = () => {
 					placeholder="Введите название"
 					name="title"
 					required
+					disabled={edit.isLoading || creating.isLoading}
 				/>
 				<input
 					className="input input--rounded"
@@ -158,6 +159,7 @@ export const CreateNew = () => {
 					placeholder="Введите описание"
 					name="description"
 					required
+					disabled={edit.isLoading || creating.isLoading}
 				/>
 				<input
 					type="number"
@@ -165,25 +167,33 @@ export const CreateNew = () => {
 					placeholder="Введите цену"
 					name="price"
 					required
+					disabled={edit.isLoading || creating.isLoading}
 				/>
-				<PropertyInput props={specs} setProps={setSpecs} />
+				<PropertyInput
+					props={specs}
+					setProps={setSpecs}
+					disabled={edit.isLoading || creating.isLoading}
+				/>
 				<InputMultiple
 					selected={companies}
 					setSelected={setCompanies}
 					options={companyOptions}
 					placeholder={"Введите компании изготовители"}
+					disabled={edit.isLoading || creating.isLoading}
 				/>
 				<InputMultiple
 					selected={categories}
 					setSelected={setCategories}
 					options={categoryOptions}
 					placeholder={"Введите категории"}
+					disabled={edit.isLoading || creating.isLoading}
 				/>
 				<InputMultiple
 					selected={tags}
 					setSelected={setTags}
 					options={tagOptions}
 					placeholder={"Введите теги"}
+					disabled={edit.isLoading || creating.isLoading}
 				/>
 				<input
 					type="file"
@@ -193,6 +203,7 @@ export const CreateNew = () => {
 					accept="image/*"
 					onChange={handleFileChange}
 					required={filePaths?.length === 0}
+					disabled={edit.isLoading || creating.isLoading}
 				/>
 				<div className="images-container">
 					{filePaths?.map((image, index) => (
@@ -207,6 +218,7 @@ export const CreateNew = () => {
 				<button
 					className="btn btn--contained btn--rounded btn--tall"
 					type="submit"
+					disabled={edit.isLoading || creating.isLoading}
 				>
 					{edit.isEditing ? "Сохранить" : "Создать"}
 				</button>
