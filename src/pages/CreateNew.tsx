@@ -36,6 +36,8 @@ import { Loading } from "../components/Loading"
 
 export const CreateNew = () => {
 	const formRef = useRef<HTMLFormElement>(null)
+	const imagesRef = useRef<HTMLInputElement>(document.createElement("input"))
+
 	const { details } = useSelector(selectProducts)
 	const {
 		tags: tagOptions,
@@ -105,9 +107,12 @@ export const CreateNew = () => {
 		if (
 			companies.length === 0 ||
 			categories.length === 0 ||
+			filePaths.length === 0 ||
 			tags.length === 0
 		) {
-			toast.error("Please fill companies, categories, specs, tags")
+			toast.error(
+				`Пожалуйста, заполните поля компаний, категорий, тегов и добавьте фотографий 🥺 👉👈`
+			)
 			return
 		}
 		let formData = new FormData(formRef.current || undefined)
@@ -124,6 +129,7 @@ export const CreateNew = () => {
 		} else {
 			dispatch(createProduct(formData))
 		}
+		imagesRef.current.value = ""
 	}
 
 	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -180,6 +186,7 @@ export const CreateNew = () => {
 					options={companyOptions}
 					placeholder={"Введите компании изготовители"}
 					disabled={edit.isLoading || creating.isLoading}
+					required={true}
 				/>
 				<InputMultiple
 					selected={categories}
@@ -187,6 +194,7 @@ export const CreateNew = () => {
 					options={categoryOptions}
 					placeholder={"Введите категории"}
 					disabled={edit.isLoading || creating.isLoading}
+					required={true}
 				/>
 				<InputMultiple
 					selected={tags}
@@ -194,8 +202,10 @@ export const CreateNew = () => {
 					options={tagOptions}
 					placeholder={"Введите теги"}
 					disabled={edit.isLoading || creating.isLoading}
+					required={true}
 				/>
 				<input
+					ref={imagesRef}
 					type="file"
 					className="input input--rounded"
 					multiple

@@ -14,6 +14,7 @@ type propType = {
 	placeholder?: string
 	setSelected: Dispatch<SetStateAction<string[]>>
 	disabled?: boolean
+	required?: boolean
 }
 
 export const InputMultiple: FC<propType> = ({
@@ -22,6 +23,7 @@ export const InputMultiple: FC<propType> = ({
 	placeholder = "Введите значение",
 	options = [],
 	disabled,
+	required,
 }) => {
 	const [value, setValue] = React.useState<string>("")
 	const [error, setError] = React.useState<{ isError: boolean; msg: string }>(
@@ -97,12 +99,17 @@ export const InputMultiple: FC<propType> = ({
 			<input
 				type="text"
 				list={datalistID}
-				className="input input--rounded input--not-required"
+				className={`input input--rounded ${
+					required && selected.length === 0
+						? ""
+						: "input--not-required"
+				}`}
 				value={value}
 				onChange={handleChange}
 				onKeyDown={handleEnter}
 				placeholder={placeholder}
 				disabled={disabled}
+				required={required && selected.length === 0}
 			/>
 			<datalist id={datalistID}>
 				{options.map((option) => {
