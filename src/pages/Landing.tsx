@@ -9,10 +9,13 @@ import { LongAd } from "../components/Ads/LongAd"
 import { ShortAd } from "../components/Ads/ShortAd"
 import { ImageSlider } from "../components/ImageSlider"
 import { HalfAd } from "../components/Ads/HalfAd"
+import { selectProducts } from "../store/features/product/selectors"
+import { ProductItem } from "../components/ProductItem"
 
 export const Landing = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { ads, isLoading } = useSelector(selectAds)
+	const { suggestedProducts } = useSelector(selectProducts)
 	useEffect(() => {
 		document.title = "OZON - Интернет-магазин"
 		dispatch(getAds())
@@ -32,6 +35,11 @@ export const Landing = () => {
 				<ShortAd {...short?.[0]} />
 				<ShortAd {...short?.[1]} />
 				<ShortAd {...short?.[2]} />
+			</div>
+			<div className="products">
+				{suggestedProducts?.slice(0, 6)?.map((item) => {
+					return <ProductItem key={item._id} {...item} />
+				})}
 			</div>
 			<LongAd {...long?.[1]} />
 			<div className="short">
