@@ -2,6 +2,7 @@
 	--image-width: 900px;
 	--image-height: 250px;
 	width: var(--image-width);
+	max-width: 100%;
 	height: var(--image-height);
 	overflow: hidden;
 	margin: 0 auto;

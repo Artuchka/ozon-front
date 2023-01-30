@@ -8,6 +8,7 @@ import { Loading } from "../components/Loading"
 import { LongAd } from "../components/Ads/LongAd"
 import { ShortAd } from "../components/Ads/ShortAd"
 import { ImageSlider } from "../components/ImageSlider"
+import { HalfAd } from "../components/Ads/HalfAd"
 
 export const Landing = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -28,11 +29,20 @@ export const Landing = () => {
 			<ImageSlider images={longTall} />
 			<LongAd {...long?.[0]} />
 			<div className="short">
+				<ShortAd {...short?.[0]} />
 				<ShortAd {...short?.[1]} />
 				<ShortAd {...short?.[2]} />
-				<ShortAd {...short?.[3]} />
 			</div>
 			<LongAd {...long?.[1]} />
+			<div className="short">
+				<ShortAd {...short?.[3]} />
+				<ShortAd {...short?.[4]} />
+				<ShortAd {...short?.[5]} />
+			</div>
+			<div className="half">
+				<HalfAd {...half?.[0]} />
+				<HalfAd {...half?.[1]} />
+			</div>
 		</div>
 	)
 }

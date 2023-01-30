@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React, { FC, useEffect, useRef, useState } from "react"
 import style from "./style.module.scss"
 import { AdType } from "../../store/features/ads/adsSlice"
 import { Link } from "react-router-dom"
@@ -10,6 +10,7 @@ type PropType = {
 }
 export const ImageSlider: FC<PropType> = ({ images }) => {
 	const [activeIndex, setActiveIndex] = useState(0)
+	const wrapperRef = useRef(document.createElement("div"))
 
 	const handleNext = () => {
 		setActiveIndex((prev) => {
@@ -27,10 +28,12 @@ export const ImageSlider: FC<PropType> = ({ images }) => {
 			return prev - 1
 		})
 	}
-	console.log({ activeIndex })
+	// useEffect(() => {
+	// 	wrapperRef.
+	// }, [])
 
 	return (
-		<div className={style.wrapper}>
+		<div ref={wrapperRef} className={style.wrapper}>
 			<div
 				className={style["images-container"]}
 				style={{
