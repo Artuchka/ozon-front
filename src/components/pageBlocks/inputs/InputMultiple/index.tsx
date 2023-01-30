@@ -108,6 +108,7 @@ export const InputMultiple: FC<propType> = ({
 				onChange={handleChange}
 				onKeyDown={handleEnter}
 				placeholder={placeholder}
+				title={placeholder}
 				disabled={disabled}
 				required={required && selected.length === 0}
 			/>

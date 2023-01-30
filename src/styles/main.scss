@@ -64,8 +64,13 @@
 }
 
 .landing {
-	.grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	.short {
+		display: flex;
+		gap: 1rem;
+		justify-content: space-between;
 	}
 }

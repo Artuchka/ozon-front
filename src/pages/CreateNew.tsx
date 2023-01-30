@@ -184,7 +184,7 @@ export const CreateNew = () => {
 					selected={companies}
 					setSelected={setCompanies}
 					options={companyOptions}
-					placeholder={"Введите компании изготовители"}
+					placeholder={"Введите компании изготовители через Enter ⏎"}
 					disabled={edit.isLoading || creating.isLoading}
 					required={true}
 				/>
@@ -192,7 +192,7 @@ export const CreateNew = () => {
 					selected={categories}
 					setSelected={setCategories}
 					options={categoryOptions}
-					placeholder={"Введите категории"}
+					placeholder={"Введите категории через Enter ⏎"}
 					disabled={edit.isLoading || creating.isLoading}
 					required={true}
 				/>
@@ -200,7 +200,7 @@ export const CreateNew = () => {
 					selected={tags}
 					setSelected={setTags}
 					options={tagOptions}
-					placeholder={"Введите теги"}
+					placeholder={"Введите теги через Enter ⏎"}
 					disabled={edit.isLoading || creating.isLoading}
 					required={true}
 				/>
