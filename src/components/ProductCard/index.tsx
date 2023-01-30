@@ -1,32 +1,13 @@
 import React, { FC } from "react"
 import style from "./style.module.scss"
-import defaultImage from "./../../assets/images/ozon-logo.png"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { AiOutlineStar } from "react-icons/ai"
-import { serverURL } from "../../axios/customFetch"
-import { AiFillHeart } from "react-icons/ai"
-import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch } from "../../store/store"
-import {
-	addBookmark,
-	deleteBookmark,
-	getAllBookmarks,
-} from "../../store/features/bookmark/thunks"
-import { selectBookmarks } from "../../store/features/bookmark/selector"
-import {
-	SingleProductType,
-	setEdit,
-} from "../../store/features/product/productSlice"
-import { addToCart, updateOrder } from "../../store/features/order/thunks"
-import { selectOrder } from "../../store/features/order/selector"
-import { OrderItemType, OrderType } from "../../store/features/order/orderSlice"
+
+import { SingleProductType } from "../../store/features/product/productSlice"
 import { formatPrice, getIntlDate } from "../../utils/intl"
 import { SlideImageViewer } from "../SlideImageViewer"
-import { MdQueryStats } from "react-icons/md"
 
 export const ProductCard: FC<SingleProductType> = (props) => {
-	const dispatch = useDispatch<AppDispatch>()
-	const navigate = useNavigate()
 	const {
 		images,
 		price,
@@ -37,13 +18,12 @@ export const ProductCard: FC<SingleProductType> = (props) => {
 		createdAt,
 		updatedAt,
 	} = props
-	const preparedImages = images.map((item: string) => serverURL + item)
 
 	return (
 		<div className={`${style.product}`}>
 			<div className={style.image}>
 				<Link to={`/products/${_id}`}>
-					<SlideImageViewer images={preparedImages} />
+					<SlideImageViewer images={images} />
 				</Link>
 			</div>
 

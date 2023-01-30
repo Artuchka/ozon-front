@@ -10,7 +10,6 @@ type PropType = {
 }
 export const ImageSlider: FC<PropType> = ({ images }) => {
 	const [activeIndex, setActiveIndex] = useState(0)
-	const wrapperRef = useRef(document.createElement("div"))
 
 	const handleNext = () => {
 		setActiveIndex((prev) => {
@@ -28,12 +27,9 @@ export const ImageSlider: FC<PropType> = ({ images }) => {
 			return prev - 1
 		})
 	}
-	// useEffect(() => {
-	// 	wrapperRef.
-	// }, [])
 
 	return (
-		<div ref={wrapperRef} className={style.wrapper}>
+		<div className={style.wrapper}>
 			<div
 				className={style["images-container"]}
 				style={{

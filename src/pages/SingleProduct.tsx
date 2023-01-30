@@ -8,7 +8,6 @@ import { VerticalScroll } from "../components/VerticalScroll"
 import defaultImg from "./../assets/images/ozon-logo.png"
 import { setActiveImage } from "../store/features/product/productSlice"
 import { SelectRadio } from "../components/pageBlocks/inputs/SelectRadio"
-import { serverURL } from "../axios/customFetch"
 import { ReviewModal } from "../components/ReviewModal"
 import {
 	setEditReview,
@@ -156,21 +155,14 @@ export const SingleProduct = () => {
 			<VerticalScroll images={images} />
 
 			<img
-				src={activeImage ? serverURL + activeImage : defaultImg}
+				src={activeImage ? activeImage : defaultImg}
 				alt=""
 				className="active-image"
 			/>
 
 			<div className="info">
 				<div className="vendor">
-					<img
-						src={
-							vendor?.avatar
-								? serverURL + vendor?.avatar
-								: defaultImg
-						}
-						alt=""
-					/>
+					<img src={vendor?.avatar || defaultImg} alt="" />
 					<div className="username">{vendor?.username}</div>
 				</div>
 				<form className="types" ref={orderConfigRef}>
@@ -275,12 +267,6 @@ export const SingleProduct = () => {
 							videos,
 							_id,
 						}) => {
-							const preparedImages = images.map(
-								(item) => serverURL + item
-							)
-							const preparedVideos = videos.map(
-								(item) => serverURL + item
-							)
 							return (
 								<article
 									className={`review-item ${
@@ -312,19 +298,15 @@ export const SingleProduct = () => {
 									</div>
 									<img
 										className="avatar"
-										src={
-											avatar
-												? serverURL + avatar
-												: defaultImg
-										}
+										src={avatar || defaultImg}
 										alt=""
 									/>
 
 									<div className="images-wrapper">
 										{images.length > 0 && (
 											<ImageVideoViewer
-												images={preparedImages}
-												videos={preparedVideos}
+												images={images}
+												videos={videos}
 											/>
 										)}
 									</div>

@@ -17,7 +17,6 @@ import {
 	uploadImagesReview,
 	uploadVideosReview,
 } from "../../store/features/review/thunks"
-import { serverURL } from "../../axios/customFetch"
 
 export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 	const { isModalOpen, edit, isLoading } = useSelector(selectReviews)
@@ -155,7 +154,7 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 					/>
 					<div className={style["preview-images"]}>
 						{showingImages?.map((item) => {
-							return <img src={serverURL + item} alt="" />
+							return <img src={item} alt="" />
 						})}
 					</div>
 					<input
@@ -171,12 +170,7 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 
 					<div className={style["preview-videos"]}>
 						{showingVideos?.map((item) => {
-							return (
-								<video
-									src={serverURL + item}
-									autoPlay={false}
-								/>
-							)
+							return <video src={item} autoPlay={false} />
 						})}
 					</div>
 				</div>

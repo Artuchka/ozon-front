@@ -2,7 +2,6 @@ import React, { FC } from "react"
 import style from "./style.module.scss"
 import { OrderItemType } from "../../store/features/order/orderSlice"
 import { Link } from "react-router-dom"
-import { serverURL } from "../../axios/customFetch"
 import { formatPrice } from "../../utils/intl"
 import { AiFillHeart, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai"
 import { useDispatch, useSelector } from "react-redux"
@@ -57,7 +56,7 @@ export const OrderDetailsListItem: FC<OrderItemType> = (props) => {
 			<div className={style.card}>
 				<div className={style.image}>
 					<Link to={`/products/${productId}`}>
-						<img src={serverURL + images?.[0]} alt={images?.[0]} />
+						<img src={images?.[0]} alt={images?.[0]} />
 					</Link>
 				</div>
 				<div className={style.title}>

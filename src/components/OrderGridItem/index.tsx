@@ -2,7 +2,6 @@ import React, { FC } from "react"
 import style from "./style.module.scss"
 import { OrderType } from "../../store/features/order/orderSlice"
 import { getIntlDate } from "../../utils/intl"
-import { serverURL } from "../../axios/customFetch"
 import { Link } from "react-router-dom"
 
 const statusMap = {
@@ -63,10 +62,7 @@ export const OrderGridItem: FC<OrderType> = (props) => {
 						return (
 							<div className={style.item} key={item._id}>
 								<Link to={`/products/${item.product._id}`}>
-									<img
-										src={serverURL + item.product.images[0]}
-										alt=""
-									/>
+									<img src={item.product.images[0]} alt="" />
 									<span>x{item.amount}</span>
 								</Link>
 							</div>

@@ -1,9 +1,7 @@
 import React, { FC } from "react"
 import style from "./style.module.scss"
-import defaultImage from "./../../assets/images/ozon-logo.png"
 import { Link, useNavigate } from "react-router-dom"
 import { AiOutlineStar } from "react-icons/ai"
-import { serverURL } from "../../axios/customFetch"
 import { AiFillHeart } from "react-icons/ai"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
@@ -47,8 +45,6 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 		amount,
 		stats = null,
 	} = props
-	const image = images[0] === "" ? defaultImage : serverURL + images[0]
-	const preparedImages = images.map((item) => serverURL + item)
 
 	const { order } = useSelector(selectOrder)
 
@@ -114,7 +110,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 				/>
 				<Link to={`/products/${_id}`}>
 					{/* <img src={image} alt="product image" /> */}
-					<SlideImageViewer images={preparedImages} />
+					<SlideImageViewer images={images} />
 				</Link>
 			</div>
 			<div className={style.price}>{formatPrice(price)} ₽</div>

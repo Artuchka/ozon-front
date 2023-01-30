@@ -16,7 +16,6 @@ import {
 	updateProduct,
 	uploadImages,
 } from "../store/features/product/thunks"
-import { ozonAPI, serverURL } from "../axios/customFetch"
 import { selectProducts } from "../store/features/product/selectors"
 import {
 	PropertyInput,
@@ -219,7 +218,7 @@ export const CreateNew = () => {
 					{filePaths?.map((image, index) => (
 						<img
 							key={index}
-							src={`${serverURL}${image}`}
+							src={image}
 							alt={image}
 							onClick={handleImageRemove}
 						/>

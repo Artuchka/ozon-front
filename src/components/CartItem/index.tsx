@@ -6,7 +6,6 @@ import {
 	unselectOrderItemById,
 } from "../../store/features/order/orderSlice"
 import defaultImage from "./../../assets/images/404bg.jpeg"
-import { serverURL } from "../../axios/customFetch"
 import { SelectDropdown } from "../pageBlocks/inputs/SelectDropdown"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
@@ -96,7 +95,7 @@ export const CartItem: FC<OrderItemType> = (props) => {
 				className={style.selectInput}
 			/>
 			<Link to={`/products/${productId}`} className={style.image}>
-				<img src={image ? serverURL + image : defaultImage} alt="" />
+				<img src={image || defaultImage} alt="" />
 			</Link>
 			<div className={style.title}>
 				{title?.slice(0, 30)}
