@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectReviews } from "../store/features/review/selectors"
 import { AppDispatch } from "../store/store"
 import { deleteReview, getMyReviews } from "../store/features/review/thunks"
-import { serverURL } from "../axios/customFetch"
 import { Link } from "react-router-dom"
 import { HashLink } from "react-router-hash-link"
 import {
@@ -52,7 +51,7 @@ export const Reviews = () => {
 			<ReviewModal />
 			<div className="reviews">
 				{myReviews.map((review) => {
-					const image = serverURL + review.product?.images[0]
+					const image = review.product?.images[0]
 					return (
 						<article key={review._id} className="review">
 							<div className="title">

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { setActiveImage } from "../../store/features/product/productSlice"
 import { selectProducts } from "../../store/features/product/selectors"
-import { serverURL } from "../../axios/customFetch"
 
 export const VerticalScroll: FC<{ images: string[] }> = ({ images }) => {
 	const {
@@ -31,7 +30,7 @@ export const VerticalScroll: FC<{ images: string[] }> = ({ images }) => {
 					return (
 						<img
 							key={img}
-							src={serverURL + img}
+							src={img}
 							alt="product"
 							onClick={() => dispatch(setActiveImage(img))}
 							className={activeImage === img ? style.active : ""}
