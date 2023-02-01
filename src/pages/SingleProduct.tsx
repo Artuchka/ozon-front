@@ -15,7 +15,7 @@ import {
 } from "../store/features/review/reviewSlice"
 import { AiFillStar, AiOutlineHeart } from "react-icons/ai"
 import { BsStarHalf } from "react-icons/bs"
-import { getIntlDate } from "../utils/intl"
+import { formatPrice, getIntlDate } from "../utils/intl"
 import { HashLink } from "react-router-hash-link"
 import { selectAuth } from "../store/features/auth/selectors"
 import { selectReviews } from "../store/features/review/selectors"
@@ -38,6 +38,8 @@ export const SingleProduct = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const orderConfigRef = useRef(document.createElement("form"))
 	const playerRef = React.useRef(null)
+
+	const [hasReview, setHasReview] = useState(false)
 
 	useEffect(() => {
 		if (id) {
@@ -165,7 +167,7 @@ export const SingleProduct = () => {
 					<img src={vendor?.avatar || defaultImg} alt="" />
 					<div className="username">{vendor?.username}</div>
 				</div>
-				<form className="types" ref={orderConfigRef}>
+				{/* <form className="types" ref={orderConfigRef}>
 					<SelectRadio
 						name="type"
 						title="Тип"
@@ -173,10 +175,10 @@ export const SingleProduct = () => {
 						onChange={() => {}}
 						selected={radioTypes[0].value}
 					/>
-				</form>
+				</form> */}
 				<div className="specs-short">
 					{specs
-						.slice(0, 2)
+						.slice(0, 3)
 						.map(({ title, value, link, _id: specId }) => {
 							return (
 								<div className="spec" id={specId} key={specId}>
@@ -196,16 +198,18 @@ export const SingleProduct = () => {
 
 			<div className="buy-card">
 				<div className="price">
-					<div className="value">{price} ₽</div>
+					<div className="value">{formatPrice(price)} ₽</div>
 					со скидкой
 				</div>
 				<div className="oldprice">
-					<div className="value">{Math.floor(price * 1.1)} ₽</div>
+					<div className="value">
+						{formatPrice(Math.floor(price * 1.1))} ₽
+					</div>
 					старая цена
 				</div>
 				<div className="credit">
-					<span>{Math.floor(price / 6)} ₽</span> &times; 6 месяцев в
-					FakeOzon Рассрочку
+					<span>{formatPrice(Math.floor(price / 6))} ₽</span> &times;
+					6 месяцев в FakeOzon Рассрочку
 				</div>
 				{amount === 0 && (
 					<button
@@ -248,13 +252,15 @@ export const SingleProduct = () => {
 
 			<div className="reviews-wrapper" id="reviews">
 				<h3>Отзывы</h3>
-				<button
-					type="button"
-					className="btn btn--rounded btn--contained btn--short btn--content"
-					onClick={() => dispatch(setOpenReviewModal(true))}
-				>
-					Добавить отзыв
-				</button>
+				{!hasReview && (
+					<button
+						type="button"
+						className="btn btn--rounded btn--contained btn--short btn--content"
+						onClick={() => dispatch(setOpenReviewModal(true))}
+					>
+						Добавить отзыв
+					</button>
+				)}
 				<div className="reviews">
 					{reviews.map(
 						({
@@ -267,10 +273,15 @@ export const SingleProduct = () => {
 							videos,
 							_id,
 						}) => {
+							const isCurrentUserReview = authorID === userId
+							if (isCurrentUserReview) {
+								setHasReview(true)
+							}
+
 							return (
 								<article
 									className={`review-item ${
-										authorID === userId ? "active" : ""
+										isCurrentUserReview ? "active" : ""
 									}`}
 									id={`review-${_id}`}
 									key={_id}

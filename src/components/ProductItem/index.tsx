@@ -116,7 +116,10 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 			<div className={style.price}>{formatPrice(price)} ₽</div>
 
 			<Link to={`/products/${_id}`} className={style.name}>
-				<div>{title}</div>
+				<div>
+					{title?.slice(0, 40)}
+					{title.length > 40 && "..."}
+				</div>
 			</Link>
 			<div className={style.rating}>
 				{averageRating || 0} <AiOutlineStar className={style["star"]} />
