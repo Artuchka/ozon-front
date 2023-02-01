@@ -56,7 +56,6 @@ export const Filters = () => {
 				}
 			}
 		})
-		// setSearch({ ...params, new: "123" })
 	}, [])
 
 	useEffect(() => {
@@ -95,16 +94,6 @@ export const Filters = () => {
 	}
 	const handleRangeChange = (e: RangeType) => {
 		const { name, value } = e
-
-		// console.log("---------")
-
-		// console.log("trying to update from")
-		// console.log({ minPriceSelected, maxPriceSelected })
-
-		// console.log("to")
-		// console.log({ name, value })
-
-		// console.log("---------")
 
 		if (
 			(name === "minPrice" && value === minPriceSelected) ||

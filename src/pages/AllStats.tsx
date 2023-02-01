@@ -62,7 +62,7 @@ export const AllStats = () => {
 					<strong>{formatPrice(totalPrice || 0)} ₽</strong>
 				</div>
 				<div className="price-average">
-					<span>На общую сумму: </span>
+					<span>Со средней ценой: </span>
 					<strong>{formatPrice(averagePrice || 0)} ₽</strong>
 				</div>
 				<div className="rating-average">

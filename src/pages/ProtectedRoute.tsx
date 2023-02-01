@@ -1,6 +1,7 @@
 import React, { FC } from "react"
 import { Link } from "react-router-dom"
 import { AuthType } from "../store/features/auth/authSlice"
+import { NotAllowed } from "./NotAllowed"
 
 export type ProtectedRouteProps = {
 	roles?: string[]
@@ -19,12 +20,7 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 		isGoodRole = roles.includes(user.user.role || "")
 	}
 	if (!isAuthenticated || !isGoodRole) {
-		return (
-			<div>
-				<h1>you are not allowed here</h1>
-				<Link to="/">back home</Link>
-			</div>
-		)
+		return <NotAllowed />
 	}
 	return outlet
 }
