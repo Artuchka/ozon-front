@@ -65,7 +65,7 @@ export const SearchSuggestions: FC<PropType> = ({
 					<div className={style.categories}>
 						<h5 className={style.title}>Категории</h5>
 						<div className={style.list}>
-							{filteredCategories?.map((item) => {
+							{filteredCategories?.slice(0, 5)?.map((item) => {
 								return (
 									<Link
 										onClick={() =>
@@ -88,7 +88,7 @@ export const SearchSuggestions: FC<PropType> = ({
 					<div className={style.tags}>
 						<h5 className={style.title}>Теги</h5>
 						<div className={style.list}>
-							{filteredTags?.map((item) => {
+							{filteredTags?.slice(0, 5)?.map((item) => {
 								return (
 									<Link
 										onClick={() =>
@@ -111,7 +111,7 @@ export const SearchSuggestions: FC<PropType> = ({
 					<div className={style.companies}>
 						<h5 className={style.title}>Компания</h5>
 						<div className={style.list}>
-							{filteredCompanies?.map((item) => {
+							{filteredCompanies?.slice(0, 5)?.map((item) => {
 								return (
 									<Link
 										onClick={() =>

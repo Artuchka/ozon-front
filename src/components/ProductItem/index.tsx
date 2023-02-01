@@ -110,7 +110,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 				/>
 				<Link to={`/products/${_id}`}>
 					{/* <img src={image} alt="product image" /> */}
-					<SlideImageViewer images={images} />
+					<SlideImageViewer images={images?.slice(0, 5)} />
 				</Link>
 			</div>
 			<div className={style.price}>{formatPrice(price)} ₽</div>
