@@ -1,0 +1,37 @@
+@mixin scrollbar-reset($width: 3rem, $style: "rectangle") {
+	&::-webkit-scrollbar {
+		width: 0;
+	}
+
+	&::-webkit-scrollbar {
+		all: unset;
+		width: $width;
+		background-color: rgba(162, 162, 162, 0.306);
+	}
+
+	&::-webkit-scrollbar-button {
+		display: block;
+		background-color: var(--secondary-color);
+		box-shadow: inset 0px 0px 0px 20px rgba(255, 255, 255, 0.3);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--primary-color);
+		@if $style == "rounded" {
+			border-radius: 100vmax;
+		}
+	}
+
+	&::-webkit-scrollbar-button:hover {
+		box-shadow: inset 0px 0px 0px 20px rgba(128, 128, 128, 0.5);
+	}
+
+	&::-webkit-scrollbar-button:active {
+		box-shadow: inset 0px 0px 0px 20px rgba(128, 128, 128, 0.7);
+	}
+
+	&::-webkit-scrollbar-button:vertical:start,
+	&::-webkit-scrollbar-button:vertical:end {
+		display: none;
+	}
+}

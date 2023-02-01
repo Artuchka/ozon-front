@@ -1,13 +1,17 @@
+@import "./../../../../styles/mixins.scss";
+
 .selectList {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 
 	.list {
+		@include scrollbar-reset(0.5rem, "rounded");
+
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		max-height: 400px;
+		max-height: 200px;
 		overflow-y: auto;
 		padding-left: 0.5rem;
 		padding-top: 0.5rem;

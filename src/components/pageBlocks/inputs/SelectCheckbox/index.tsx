@@ -22,7 +22,7 @@ export const SelectCheckbox: FC<PropTypes> = ({
 	return (
 		<div className={`${className} ${styles.selectList}`}>
 			{!!title && <h4 className={styles.title}>{title}</h4>}
-			<ul className={styles.list}>
+			<ul className={`${styles.list} scrollable`}>
 				{items.map((value) => {
 					return (
 						<div className={styles.row} key={value}>
