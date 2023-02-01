@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useRef, useState } from "react"
 import { Modal } from "../Modal"
 import style from "./style.module.scss"
-import ozonIDImage from "./../../assets/images/ozon-id-v2.svg"
+import ozonIDImage from "./../../assets/images/ozon-id2-v2.png"
 import { useDispatch, useSelector } from "react-redux"
 import {
 	getOrders,
