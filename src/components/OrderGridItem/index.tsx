@@ -23,6 +23,7 @@ export const OrderGridItem: FC<OrderType> = (props) => {
 		itemsLength,
 		paidAt,
 		createdAt,
+		refundedAt,
 	} = props
 
 	return (
@@ -51,6 +52,12 @@ export const OrderGridItem: FC<OrderType> = (props) => {
 						Дата доставки:
 						<span> {getIntlDate(Date.now())}</span>
 					</div>
+					{refundedAt && (
+						<div className={style["delivery-date"]}>
+							Дата возврата:
+							<span> {getIntlDate(refundedAt)}</span>
+						</div>
+					)}
 					<div
 						className={`${style.rate} btn btn--middle btn--content btn--rounded btn--bold btn--text-small `}
 					>

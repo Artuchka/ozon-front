@@ -81,6 +81,7 @@ export type OrderType = {
 	user: UserType
 	createdAt: Date
 	updatedAt: Date
+	refundedAt: Date
 	paidAt: Date
 	deliveryCoordinates: [number, number]
 	isCustomCoordinates: boolean

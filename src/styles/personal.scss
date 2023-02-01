@@ -1,6 +1,5 @@
 .personal-page {
 	.main-info {
-		margin-top: 2rem;
 		display: flex;
 		gap: 1rem;
 		align-items: stretch;
@@ -13,14 +12,39 @@
 			justify-content: center;
 			background-color: var(--gray-bg);
 			width: 10rem;
+			position: relative;
+			cursor: pointer;
 			img {
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
+				border-radius: 50%;
 			}
 			.placeholder {
 				color: var(--primary-color);
 				font-size: 5rem;
+			}
+			.hidden {
+				position: absolute;
+				inset: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 3rem;
+				border-radius: 50%;
+				color: var(--primary-color);
+				background-color: white;
+				opacity: 0;
+				transition: opacity 0.3s ease-in-out,
+					background-color 0.3s ease-in-out;
+			}
+
+			transition: background-color 0.3s ease-in-out;
+			&:hover {
+				.hidden {
+					opacity: 0.5;
+					background-color: var(--gray-text);
+				}
 			}
 		}
 

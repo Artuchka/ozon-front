@@ -7,6 +7,7 @@ import { AppDispatch } from "../store/store"
 import { logout } from "../store/features/auth/thunks"
 import { UpdateModal, typeVariants } from "../components/UpdateModal"
 import { MyMainSkeleton } from "../components/pageBlocks/Skeletons/MyMainSkeleton"
+import { ImUpload } from "react-icons/im"
 
 export const Personal = () => {
 	// const avatar = "/"
@@ -31,13 +32,10 @@ export const Personal = () => {
 			phone,
 			location,
 			gender,
+			avatar,
 		},
 		isLoading,
 	} = useSelector(selectAuth)
-
-	const avatar = `https://avatars.dicebear.com/api/croodles/${gender}/${
-		lastName + firstName
-	}.svg?mood[]=happy&backgroundColor=%333999`
 
 	useEffect(() => {
 		document.title = `${username} Личный кабинет - OZON`
@@ -57,12 +55,18 @@ export const Personal = () => {
 				setDefaultAnswer={setDefaultAns}
 			/>
 			<div className="main-info">
-				<div className="avatar">
+				<div
+					className="avatar"
+					onClick={() => handleUpdateOpen("avatar", { avatar })}
+				>
 					{!avatar || avatar == "/" ? (
 						<BiFace className="placeholder" />
 					) : (
 						<img src={avatar || "/"} alt="avatar" />
 					)}
+					<div className="hidden">
+						<ImUpload />
+					</div>
 				</div>
 				<div className="desc">
 					<div className="full-name">
@@ -134,6 +138,18 @@ export const Personal = () => {
 						<button
 							className="change"
 							onClick={() => handleUpdateOpen("email", { email })}
+						>
+							Изменить
+						</button>
+					</div>
+					<div className="grid-item">
+						<small className="title">Никнейм</small>
+						<div className="value">{username}</div>
+						<button
+							className="change"
+							onClick={() =>
+								handleUpdateOpen("username", { username })
+							}
 						>
 							Изменить
 						</button>

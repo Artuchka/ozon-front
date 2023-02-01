@@ -1,15 +1,26 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react"
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 import { Modal } from "../Modal"
 import { SelectRadio } from "../pageBlocks/inputs/SelectRadio"
 import style from "./style.module.scss"
 import { toast } from "react-toastify"
 import equal from "fast-deep-equal"
 import { useDispatch, useSelector } from "react-redux"
-import { updateDataType, updateUser } from "../../store/features/auth/thunks"
+import {
+	updateDataType,
+	updateUser,
+	uploadImages,
+} from "../../store/features/auth/thunks"
 import { AppDispatch } from "../../store/store"
 import { selectAuth } from "../../store/features/auth/selectors"
 
-export type typeVariants = "names" | "birthday" | "email" | "phone" | "gender"
+export type typeVariants =
+	| "names"
+	| "birthday"
+	| "email"
+	| "phone"
+	| "gender"
+	| "username"
+	| "avatar"
 
 type proptype = {
 	open: boolean
@@ -29,9 +40,12 @@ export const UpdateModal: FC<proptype> = ({
 	const [answer, setAnswer] = useState<updateDataType>(defaultAnswer)
 	const dispatch = useDispatch<AppDispatch>()
 	const {
-		user: { gender },
+		user: { gender, firstName, lastName },
+		imagePath,
 		isLoading,
 	} = useSelector(selectAuth)
+
+	const imageRef = useRef(document.createElement("input"))
 	let body = (
 		<>
 			<h1>update</h1>
@@ -62,6 +76,12 @@ export const UpdateModal: FC<proptype> = ({
 		}
 	}, [open])
 
+	useEffect(() => {
+		handleChange({
+			target: { name: "avatar", value: imagePath },
+		} as ChangeEvent<HTMLInputElement>)
+	}, [imagePath])
+
 	// storing actual input values
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target
@@ -69,6 +89,18 @@ export const UpdateModal: FC<proptype> = ({
 		setAnswer((prev) => {
 			return { ...prev, [name]: value }
 		})
+	}
+
+	const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault()
+
+		const files = e.target.files || []
+
+		let formData = new FormData()
+		for (let i = 0; i < files.length; i++) {
+			formData.append("images", files[i])
+		}
+		dispatch(uploadImages(formData))
 	}
 
 	// sending redux thunk to update user
@@ -144,6 +176,51 @@ export const UpdateModal: FC<proptype> = ({
 				placeholder="Введите почту"
 				name="email"
 				value={answer.email || defaultAnswer.email || "temp"}
+				onChange={handleChange}
+				disabled={isLoading}
+			/>
+		)
+	}
+	if (type === "avatar") {
+		const createdAvatar = `https://avatars.dicebear.com/api/croodles/${gender}/${
+			lastName + firstName
+		}.svg?mood[]=happy&backgroundColor=%333999`
+		body = (
+			<>
+				<input
+					ref={imageRef}
+					type="file"
+					className="input input--rounded"
+					placeholder="Выберите аватарку"
+					title="Выберите аватарку"
+					name="file"
+					accept="image/*"
+					onChange={handleFileChange}
+					disabled={isLoading}
+				/>
+				<h2 className={style.separator}>ИЛИ</h2>
+				<img
+					className={style.createdAvatar}
+					src={createdAvatar}
+					alt="createdAvatar"
+					onClick={() => {
+						setAnswer((prev) => {
+							return { ...prev, avatar: createdAvatar }
+						})
+					}}
+				/>
+				<small>Сгенерированный аватар Вашего профиля</small>
+			</>
+		)
+	}
+	if (type === "username") {
+		body = (
+			<input
+				type="text"
+				className="input input--rounded"
+				placeholder="Введите никнейм"
+				name="username"
+				value={answer.username || defaultAnswer.username || "temp"}
 				onChange={handleChange}
 				disabled={isLoading}
 			/>

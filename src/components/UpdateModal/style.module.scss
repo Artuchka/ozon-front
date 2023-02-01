@@ -10,3 +10,22 @@ form {
 .btn {
 	margin-top: 1rem;
 }
+
+.createdAvatar {
+	cursor: pointer;
+	transition: opacity 0.3s ease-in-out;
+	background-color: var(--gray-bg);
+	border-radius: 50%;
+	width: 10rem;
+	margin: 0 auto;
+	&:hover {
+		opacity: 0.6;
+	}
+	& + small {
+		text-align: center;
+	}
+}
+
+.separator {
+	text-align: center;
+}

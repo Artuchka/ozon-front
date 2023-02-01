@@ -46,6 +46,7 @@
 .my-layout {
 	display: grid;
 	grid-template-columns: 170px auto;
+	margin-top: 1rem;
 	.sidebar {
 		ul {
 			display: flex;

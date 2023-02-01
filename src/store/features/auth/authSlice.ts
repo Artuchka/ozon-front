@@ -7,6 +7,7 @@ import {
 	register,
 	registerPasswordless,
 	updateUser,
+	uploadImages,
 	verifyPasswordless,
 } from "./thunks"
 import { toast } from "react-toastify"
@@ -30,6 +31,7 @@ export type AuthType = {
 	token: string
 	user: UserType
 	isLoading: boolean
+	imagePath: string
 }
 
 const userPlaceholder = {
@@ -49,7 +51,8 @@ const userPlaceholder = {
 const initialState = {
 	token: "",
 	user: userPlaceholder,
-	isLoading: true,
+	isLoading: false,
+	imagePath: "",
 } as AuthType
 
 export const authSlice = createSlice({
@@ -166,6 +169,20 @@ export const authSlice = createSlice({
 			state.user = user
 		})
 		builder.addCase(updateUser.rejected, (state, action: any) => {
+			toast.error(action.payload)
+			state.isLoading = false
+		})
+
+		builder.addCase(uploadImages.pending, (state, action) => {
+			state.isLoading = true
+		})
+		builder.addCase(uploadImages.fulfilled, (state, action) => {
+			const { msg, paths } = action.payload
+			toast(msg)
+			state.isLoading = false
+			state.imagePath = paths?.[0]
+		})
+		builder.addCase(uploadImages.rejected, (state, action: any) => {
 			toast.error(action.payload)
 			state.isLoading = false
 		})

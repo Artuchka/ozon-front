@@ -49,7 +49,7 @@ export const ProductItem: FC<ProductItemType> = (props) => {
 	const { order } = useSelector(selectOrder)
 
 	const { bookmarks } = useSelector(selectBookmarks)
-	const isBookmarked = !!bookmarks.find((item) => item.product._id === _id)
+	const isBookmarked = !!bookmarks.find((item) => item?.product?._id === _id)
 
 	const handleAddBookmark = () => {
 		if (isBookmarked) {

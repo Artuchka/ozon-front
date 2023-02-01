@@ -13,6 +13,7 @@ export type updateDataType = {
 	birthday?: string
 	location?: string
 	email?: string
+	avatar?: string
 }
 
 export const updateUser = createAsyncThunk(
@@ -124,6 +125,22 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 		console.log(error.response.data.msg)
 	}
 })
+
+export const uploadImages = createAsyncThunk(
+	"auth/uploadImages",
+	async (formData: any, thunkAPI: any) => {
+		try {
+			const resp = await ozonAPI.post("/products/uploadImage", formData, {
+				headers: { "content-type": "multipart/form-data" },
+			})
+			console.log("RESP = ", resp)
+			return resp.data
+		} catch (error: any) {
+			console.log("error caight = ", error)
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
 
 export const getOrders = createAsyncThunk("auth/login", async (_, thunkAPI) => {
 	try {
