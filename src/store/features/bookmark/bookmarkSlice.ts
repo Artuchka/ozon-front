@@ -34,7 +34,9 @@ const BookmarkSlice = createSlice({
 		})
 		builder.addCase(getAllBookmarks.rejected, (state, { payload }) => {
 			state.isLoading = false
-			toast.error(payload as string)
+			if (process.env.NODE_ENV === "development") {
+				toast.error(payload as string)
+			}
 		})
 
 		builder.addCase(deleteBookmark.pending, (state) => {

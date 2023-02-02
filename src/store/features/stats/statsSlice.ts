@@ -24,11 +24,20 @@ export type ActionHistoryType = [
 	ActionsDetails[]
 ][]
 
+type ProductsTotalsType = {
+	totalPrice: number
+	averagePrice: number
+	productsAmount: number
+	averageImagesAmount: number
+	averageRating: number
+	averageNumOfReviews: number
+}
 type StatInitialStateType = {
 	allStats: {
 		isLoading: boolean
 		stats: StatsType[]
 		actionsHistory: ActionHistoryType
+		productsTotals: ProductsTotalsType
 	}
 	singleStat: {
 		isLoading: boolean
@@ -42,6 +51,7 @@ const initialState = {
 		stats: [],
 		isLoading: false,
 		actionsHistory: [],
+		productsTotals: {} as ProductsTotalsType,
 	},
 	singleStat: {
 		stat: {} as StatsType,
@@ -89,8 +99,9 @@ const statsSlice = createSlice({
 			state.allStats.isLoading = true
 		})
 		builder.addCase(getAllStats.fulfilled, (state, { payload }) => {
-			const { msg, stats } = payload
+			const { msg, stats, productsTotals } = payload
 			state.allStats.stats = stats
+			state.allStats.productsTotals = productsTotals
 			state.allStats.isLoading = false
 			// console.log({ stats })
 		})

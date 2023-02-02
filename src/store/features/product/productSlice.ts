@@ -152,9 +152,10 @@ export const productSlice = createSlice({
 			console.log("pending")
 			state.creating.isLoading = true
 		})
-		builder.addCase(createProduct.fulfilled, (state) => {
+		builder.addCase(createProduct.fulfilled, (state, { payload }) => {
+			const { msg } = payload
 			state.creating.isLoading = false
-			toast.success("created product")
+			toast.success(msg)
 		})
 		builder.addCase(createProduct.rejected, (state, action) => {
 			state.creating.isLoading = false
@@ -198,7 +199,6 @@ export const productSlice = createSlice({
 		builder.addCase(getProductDetails.fulfilled, (state, { payload }) => {
 			const { details } = payload
 			state.details = { ...state.details, ...details }
-			// console.log({ details })
 			state.isLoading = false
 		})
 		builder.addCase(getProductDetails.rejected, (state, action) => {
@@ -218,6 +218,7 @@ export const productSlice = createSlice({
 			if (typeof action.payload === "string") toast.error(action.payload)
 			state.myIsLoading = false
 		})
+
 		builder.addCase(getSingleProduct.pending, (state, action) => {
 			state.singleProduct.isLoading = true
 		})
@@ -236,9 +237,9 @@ export const productSlice = createSlice({
 		})
 		builder.addCase(uploadImages.fulfilled, (state, { payload }) => {
 			const { msg, paths } = payload
-			toast.success(msg)
 			state.creating.paths = paths
 			state.creating.isLoading = false
+			toast.success(msg)
 		})
 		builder.addCase(uploadImages.rejected, (state, action) => {
 			state.creating.isLoading = false
@@ -250,24 +251,25 @@ export const productSlice = createSlice({
 		})
 		builder.addCase(fetchEdit.fulfilled, (state, { payload }) => {
 			const { msg, product } = payload
-			toast.success(msg)
 			state.edit.product = product
 			state.edit.isError = false
 			state.edit.isLoading = false
+			toast.success(msg)
 		})
 		builder.addCase(fetchEdit.rejected, (state, { payload }) => {
 			state.edit.isLoading = false
 			state.edit.isError = true
 			if (typeof payload === "string") toast.error(payload)
 		})
+
 		builder.addCase(updateProduct.pending, (state, action) => {
 			state.edit.isLoading = true
 		})
 		builder.addCase(updateProduct.fulfilled, (state, { payload }) => {
 			const { msg, product } = payload
-			toast.success(msg)
 			state.edit.isError = false
 			state.edit.isLoading = false
+			toast.success(msg)
 		})
 		builder.addCase(updateProduct.rejected, (state, { payload }) => {
 			state.edit.isLoading = false

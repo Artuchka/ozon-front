@@ -8,7 +8,6 @@ import {
 	getAllMyOrders,
 	getByOrderId,
 	getCart,
-	getOrderByPaymentSecret,
 	getSingleOrder,
 	updateOrder,
 } from "./thunks"
@@ -193,7 +192,6 @@ const orderSlice = createSlice({
 
 			if (order.status === "paid" || order.status === "delivered") {
 				state.lastOrders[order._id] = order
-				console.log("GETTING", order.status)
 			} else {
 				state.order = order
 			}
@@ -215,12 +213,16 @@ const orderSlice = createSlice({
 			state.isLoading = false
 			state.haveTried = true
 			state.order = order
-			toast.success(msg)
+			if (process.env.NODE_ENV === "development") {
+				toast.success(msg)
+			}
 		})
 		builder.addCase(getCart.rejected, (state, { payload }) => {
 			state.haveTried = true
 			state.isLoading = false
-			toast.error(payload as string)
+			if (process.env.NODE_ENV === "development") {
+				toast.error(payload as string)
+			}
 		})
 
 		builder.addCase(createOrder.pending, (state, { payload }) => {
@@ -230,11 +232,15 @@ const orderSlice = createSlice({
 			const { msg, order } = payload
 			state.isLoading = false
 			state.order = order
-			toast.success(msg)
+			if (process.env.NODE_ENV === "development") {
+				toast.success(msg)
+			}
 		})
 		builder.addCase(createOrder.rejected, (state, { payload }) => {
 			state.isLoading = false
-			toast.error(payload as string)
+			if (process.env.NODE_ENV === "development") {
+				toast.error(payload as string)
+			}
 		})
 
 		builder.addCase(addToCart.pending, (state, { payload }) => {
@@ -289,7 +295,6 @@ const orderSlice = createSlice({
 			const { msg, order } = payload
 			state.singleOrder.isLoading = false
 			state.singleOrder.order = order
-			console.log({ order })
 
 			toast.success(msg)
 		})
@@ -297,27 +302,6 @@ const orderSlice = createSlice({
 			state.singleOrder.isLoading = false
 			toast.error(payload as string)
 		})
-
-		builder.addCase(getOrderByPaymentSecret.pending, (state) => {
-			state.isLoading = true
-		})
-		builder.addCase(
-			getOrderByPaymentSecret.fulfilled,
-			(state, { payload }) => {
-				const { msg, order } = payload
-				state.isLoading = false
-				state.lastOrders[order._id] = order
-
-				toast.success(msg)
-			}
-		)
-		builder.addCase(
-			getOrderByPaymentSecret.rejected,
-			(state, { payload }) => {
-				state.isLoading = false
-				toast.error(payload as string)
-			}
-		)
 
 		builder.addCase(getByOrderId.pending, (state) => {
 			state.isLoading = true
@@ -343,11 +327,16 @@ const orderSlice = createSlice({
 			state.allOrders.orders = orders
 			state.allOrders.details = details
 
-			toast.success(msg)
+			if (process.env.NODE_ENV === "development") {
+				toast.success(msg as string)
+			}
 		})
 		builder.addCase(getAllMyOrders.rejected, (state, { payload }) => {
 			state.allOrders.isLoading = false
-			toast.error(payload as string)
+
+			if (process.env.NODE_ENV === "development") {
+				toast.error(payload as string)
+			}
 		})
 
 		builder.addCase(getSingleOrder.pending, (state) => {
@@ -359,11 +348,15 @@ const orderSlice = createSlice({
 			state.singleOrder.order = order
 			state.singleOrder.address = address
 
-			toast.success(msg)
+			if (process.env.NODE_ENV === "development") {
+				toast.success(msg)
+			}
 		})
 		builder.addCase(getSingleOrder.rejected, (state, { payload }) => {
 			state.singleOrder.isLoading = false
-			toast.error(payload as string)
+			if (process.env.NODE_ENV === "development") {
+				toast.error(payload as string)
+			}
 		})
 	},
 })
