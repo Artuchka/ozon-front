@@ -213,16 +213,10 @@ const orderSlice = createSlice({
 			state.isLoading = false
 			state.haveTried = true
 			state.order = order
-			if (process.env.NODE_ENV === "development") {
-				toast.success(msg)
-			}
 		})
 		builder.addCase(getCart.rejected, (state, { payload }) => {
 			state.haveTried = true
 			state.isLoading = false
-			if (process.env.NODE_ENV === "development") {
-				toast.error(payload as string)
-			}
 		})
 
 		builder.addCase(createOrder.pending, (state, { payload }) => {
@@ -232,15 +226,9 @@ const orderSlice = createSlice({
 			const { msg, order } = payload
 			state.isLoading = false
 			state.order = order
-			if (process.env.NODE_ENV === "development") {
-				toast.success(msg)
-			}
 		})
 		builder.addCase(createOrder.rejected, (state, { payload }) => {
 			state.isLoading = false
-			if (process.env.NODE_ENV === "development") {
-				toast.error(payload as string)
-			}
 		})
 
 		builder.addCase(addToCart.pending, (state, { payload }) => {
@@ -326,17 +314,9 @@ const orderSlice = createSlice({
 			state.allOrders.isLoading = false
 			state.allOrders.orders = orders
 			state.allOrders.details = details
-
-			if (process.env.NODE_ENV === "development") {
-				toast.success(msg as string)
-			}
 		})
 		builder.addCase(getAllMyOrders.rejected, (state, { payload }) => {
 			state.allOrders.isLoading = false
-
-			if (process.env.NODE_ENV === "development") {
-				toast.error(payload as string)
-			}
 		})
 
 		builder.addCase(getSingleOrder.pending, (state) => {
@@ -347,16 +327,9 @@ const orderSlice = createSlice({
 			state.singleOrder.isLoading = false
 			state.singleOrder.order = order
 			state.singleOrder.address = address
-
-			if (process.env.NODE_ENV === "development") {
-				toast.success(msg)
-			}
 		})
 		builder.addCase(getSingleOrder.rejected, (state, { payload }) => {
 			state.singleOrder.isLoading = false
-			if (process.env.NODE_ENV === "development") {
-				toast.error(payload as string)
-			}
 		})
 	},
 })

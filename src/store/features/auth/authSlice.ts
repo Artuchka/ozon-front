@@ -87,9 +87,6 @@ export const authSlice = createSlice({
 		})
 		builder.addCase(loginJWT.rejected, (state, action) => {
 			state.isLoading = false
-			if (process.env.NODE_ENV === "development") {
-				toast.error("couldnt auto login")
-			}
 		})
 
 		builder.addCase(verifyPasswordless.pending, (state, action) => {
@@ -104,9 +101,6 @@ export const authSlice = createSlice({
 		})
 		builder.addCase(verifyPasswordless.rejected, (state, { payload }) => {
 			state.isLoading = false
-			if (process.env.NODE_ENV === "development") {
-				toast.error(payload as string)
-			}
 		})
 
 		builder.addCase(logout.pending, (state, action) => {
