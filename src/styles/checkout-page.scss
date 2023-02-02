@@ -2,7 +2,9 @@
 	// box-shadow: 0 0 0 100vmax var(--gray-bg-light);
 	// clip-path: inset(0 -100% -12rem -100%);
 	// background-color: var(--gray-bg-light);
-
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 	&.skeletons {
 		svg {
 			width: 500px;

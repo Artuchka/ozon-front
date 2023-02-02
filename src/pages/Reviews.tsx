@@ -46,6 +46,18 @@ export const Reviews = () => {
 		)
 	}
 
+	if (myReviews.length === 0) {
+		return (
+			<div className="my-reviews-page">
+				<h1>Вы пока не оставили отзывы на товарах</h1>
+				<p>
+					Расскажите Ваш опыт пользования продуктом на странице
+					определенного товара!
+				</p>
+			</div>
+		)
+	}
+
 	return (
 		<div className="my-reviews-page">
 			<ReviewModal />
