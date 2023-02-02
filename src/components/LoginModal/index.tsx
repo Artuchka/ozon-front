@@ -12,6 +12,7 @@ import {
 } from "../../store/features/auth/thunks"
 import { AppDispatch } from "../../store/store"
 import { selectAuth } from "../../store/features/auth/selectors"
+import { BiHide, BiShow } from "react-icons/bi"
 
 type PropType = {
 	open: boolean
@@ -19,11 +20,17 @@ type PropType = {
 }
 export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 	const { isLoading } = useSelector(selectAuth)
-	const emailRef = useRef<HTMLInputElement>(null)
-	const passwordRef = useRef<HTMLInputElement>(null)
+	const emailRef = useRef<HTMLInputElement>(document.createElement("input"))
+	const passwordRef = useRef<HTMLInputElement>(
+		document.createElement("input")
+	)
 	type methodType = "login" | "register"
 	const [method, setMethod] = useState<methodType>("login")
 	const [passwordless, setPaswordless] = useState(false)
+	const [passwordShown, setPasswordShown] = useState(false)
+	const togglePassword = () => {
+		setPasswordShown((prev) => !prev)
+	}
 
 	const dispatch = useDispatch<AppDispatch>()
 
@@ -45,8 +52,17 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 		}
 	}
 
+	const handleVendorLogin = () => {
+		emailRef.current.value = "vendor@gmail.com"
+		passwordRef.current.value = "123456"
+		// yes, that's not secret information...
+	}
+	const handleOrdinaryUserLogin = () => {
+		emailRef.current.value = "user@gmail.com"
+		passwordRef.current.value = "123456"
+	}
 	return (
-		<Modal open={open} setOpen={setOpen}>
+		<Modal open={open} setOpen={setOpen} width="medium">
 			<form className={style.modal} onSubmit={handleSubmit}>
 				<img src={ozonIDImage} alt="ozon id" className={style.logo} />
 				<h2>Введите ваши данные</h2>
@@ -61,16 +77,25 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 						disabled={isLoading}
 					/>
 					{!passwordless && (
-						<input
-							type="password"
-							placeholder="Введите пароль"
-							className="input input--rounded input--tall"
-							pattern=".{6,15}"
-							required={!passwordless}
-							title="Длина пароля должна быть от 6 до 15 символов"
-							ref={passwordRef}
-							disabled={isLoading}
-						/>
+						<div className={style["password-input-wrapper"]}>
+							<input
+								type={passwordShown ? "text" : "password"}
+								placeholder="Введите пароль"
+								className="input input--rounded input--tall"
+								pattern=".{6,15}"
+								required={!passwordless}
+								title="Длина пароля должна быть от 6 до 15 символов"
+								ref={passwordRef}
+								disabled={isLoading}
+							/>
+							<button
+								type="button"
+								className="btn btn--content btn--transparent btn--square btn--no-padding"
+								onClick={togglePassword}
+							>
+								{passwordShown ? <BiShow /> : <BiHide />}
+							</button>
+						</div>
 					)}
 					<button
 						type="submit"
@@ -94,15 +119,50 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 						? "У меня нет аккаунта"
 						: "У меня уже есть аккаунт"}
 				</button>
+				<div className={style["default-logins"]}>
+					<div className={style.heading}>Зайти как:</div>
+					<div className={style.options}>
+						<button
+							type="button"
+							className="btn btn--black btn--contained btn--rounded btn--tooltip btn--tooltip-left"
+							onClick={handleVendorLogin}
+						>
+							Продавец
+							<data>
+								У продавца ЕСТЬ функции добавления\изменения
+								товара, просмотра его статистики
+							</data>
+						</button>
+						<button
+							type="button"
+							className="btn btn--black btn--contained btn--rounded btn--tooltip btn--tooltip-right"
+							onClick={handleOrdinaryUserLogin}
+						>
+							Обычный пользователь
+							<data>
+								У обычного юзера НЕТ функций
+								добавления\изменения товара, просмотра его
+								статистики
+							</data>
+						</button>
+					</div>
+				</div>
 				<button
 					type="button"
-					className="btn btn--black btn--contained btn--rounded btn--tall"
+					className="btn btn--black btn--contained btn--rounded btn--tall btn--tooltip  btn--tooltip-right"
 					onClick={() => {
+						console.log({ thisObj: this })
+						console.log(123)
+
 						setPaswordless((prev) => !prev)
 					}}
-					disabled={isLoading}
+					disabled={true}
 				>
 					{passwordless ? "Вход с паролем" : "Вход без пароля"}
+					<data>
+						сервисы рассылки Email запрещают своё использование на
+						этом сайте, ведь он 'фишинговый'{" "}
+					</data>
 				</button>
 			</form>
 		</Modal>

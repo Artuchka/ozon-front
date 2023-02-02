@@ -123,4 +123,41 @@
 		opacity: 0.3;
 		cursor: not-allowed;
 	}
+
+	&--tooltip,
+	&--tooltip:disabled {
+		position: relative;
+		transition: opacity 0.3s ease-in-out;
+		&:hover {
+			opacity: 0.9;
+			data {
+				opacity: 1;
+			}
+		}
+
+		data {
+			position: absolute;
+			top: 50%;
+
+			background-color: var(--error-color);
+			padding: 0.5rem 1rem;
+			border-radius: 0.1em;
+
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.3s ease-in-out;
+		}
+	}
+	&--tooltip-right {
+		data {
+			right: -1rem;
+			translate: 100% -50%;
+		}
+	}
+	&--tooltip-left {
+		data {
+			left: -1rem;
+			translate: -100% -50%;
+		}
+	}
 }

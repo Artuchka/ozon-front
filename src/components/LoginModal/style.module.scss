@@ -18,4 +18,27 @@
 		flex-direction: column;
 		gap: 0.5rem;
 	}
+
+	.password-input-wrapper {
+		position: relative;
+		button {
+			position: absolute;
+			right: 1rem;
+			top: 50%;
+			translate: 0 -43%;
+			font-size: 1.5rem;
+			color: var(--gray-text);
+		}
+	}
+
+	.default-logins {
+		.heading {
+			text-align: center;
+			margin-bottom: 0.2rem;
+		}
+		.options {
+			display: flex;
+			gap: 1rem;
+		}
+	}
 }
