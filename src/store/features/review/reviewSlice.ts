@@ -86,8 +86,9 @@ const reviewSlice = createSlice({
 			state.isLoading = true
 		})
 		builder.addCase(createReview.fulfilled, (state, { payload }) => {
-			toast.success(payload.msg)
+			const { msg } = payload
 			state.isLoading = false
+			toast.success(msg)
 		})
 		builder.addCase(createReview.rejected, (state, { payload }) => {
 			state.isLoading = false
@@ -158,11 +159,10 @@ const reviewSlice = createSlice({
 		})
 		builder.addCase(uploadImagesReview.fulfilled, (state, { payload }) => {
 			const { msg, paths } = payload
-			toast.success(msg)
-			console.log({ paths })
 
 			state.edit.imagePaths = paths
 			state.edit.isLoading = false
+			toast.success(msg)
 		})
 		builder.addCase(uploadImagesReview.rejected, (state, action) => {
 			state.edit.isLoading = false
@@ -174,11 +174,10 @@ const reviewSlice = createSlice({
 		})
 		builder.addCase(uploadVideosReview.fulfilled, (state, { payload }) => {
 			const { msg, paths } = payload
-			toast.success(msg)
-			console.log({ paths })
 
 			state.edit.videoPaths = paths
 			state.edit.isLoading = false
+			toast.success(msg)
 		})
 		builder.addCase(uploadVideosReview.rejected, (state, action) => {
 			state.edit.isLoading = false

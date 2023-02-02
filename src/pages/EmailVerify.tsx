@@ -10,6 +10,10 @@ export const EmailVerify = () => {
 	console.log({ tokn: searchParams.get("token") })
 
 	useEffect(() => {
+		document.title = "Подтверждение почты - OZON"
+	}, [])
+
+	useEffect(() => {
 		dispatch(
 			verifyPasswordless({ token: searchParams.get("token") } as {
 				token: string

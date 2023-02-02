@@ -36,6 +36,10 @@ export const Cart = () => {
 	const [promoMessage, setPromoMessage] = useState("")
 	const promoInputRef = useRef(document.createElement("input"))
 
+	useEffect(() => {
+		document.title = `Корзина (${order?.amountTotal}) - OZON`
+	}, [order?.amountTotal])
+
 	const orderIds = order?.items?.map((item) => {
 		return item.product._id
 	})

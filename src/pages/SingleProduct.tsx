@@ -50,7 +50,9 @@ export const SingleProduct = () => {
 	useEffect(() => {
 		if (!singleProduct.isLoading) {
 			dispatch(setActiveImage(images[0]))
-			document.title = `${title.slice(0, 10)} - OZON`
+			document.title = `${title?.slice(0, 10)}${
+				title?.length > 10 && "..."
+			} - OZON`
 		}
 	}, [singleProduct.images])
 

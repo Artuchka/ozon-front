@@ -9,6 +9,7 @@ import { AiFillCheckCircle } from "react-icons/ai"
 import { SlCreditCard } from "react-icons/sl"
 import { Link } from "react-router-dom"
 import { formatPrice } from "../utils/intl"
+import { PaymentSuccessSkeleton } from "../components/pageBlocks/Skeletons/PaymentSuccessSkeleton"
 
 export const PaymentSuccess = () => {
 	const { search } = useLocation()
@@ -26,6 +27,10 @@ export const PaymentSuccess = () => {
 	console.log({ paidOrder })
 
 	useEffect(() => {
+		document.title = "Итоги оплаты - OZON"
+	}, [])
+
+	useEffect(() => {
 		if (status === "succeeded") {
 			dispatch(
 				updateOrder({
@@ -37,8 +42,9 @@ export const PaymentSuccess = () => {
 	}, [])
 
 	if (!paidOrder || Object.keys(paidOrder).length === 0) {
-		return <h1>smth went wrong</h1>
+		return <PaymentSuccessSkeleton />
 	}
+
 	return (
 		<div className="payment-success-page">
 			<h2 className="heading">

@@ -41,6 +41,10 @@ export const SingleOrder = () => {
 		dispatch(getSingleOrder(orderId as string))
 	}, [])
 
+	useEffect(() => {
+		document.title = `Детализация заказа - OZON`
+	}, [])
+
 	if (singleOrder.isLoading) {
 		return (
 			<div className="single-order-page">

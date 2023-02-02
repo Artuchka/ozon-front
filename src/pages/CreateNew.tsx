@@ -83,6 +83,14 @@ export const CreateNew = () => {
 		}
 	}, [edit.isLoading, edit.editId, editingId])
 
+	useEffect(() => {
+		if (edit.isEditing) {
+			document.title = "Изменить товар - OZON"
+		} else {
+			document.title = "Новый товар - OZON"
+		}
+	}, [edit.isEditing])
+
 	// if (edit.isLoading || creating.isLoading) {
 	// 	return <Loading />
 	// }

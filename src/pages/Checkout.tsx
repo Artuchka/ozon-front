@@ -31,6 +31,10 @@ export const Checkout = () => {
 		dispatch(createPaymentIntent(order._id))
 	}, [])
 
+	useEffect(() => {
+		document.title = "Оплата - OZON"
+	}, [])
+
 	const appearance: appereanceType = {
 		theme: "stripe",
 		// theme: "night",

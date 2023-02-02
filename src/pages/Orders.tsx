@@ -11,6 +11,11 @@ export const Orders = () => {
 	useEffect(() => {
 		dispatch(getAllMyOrders())
 	}, [])
+
+	useEffect(() => {
+		document.title = "Заказы - OZON"
+	}, [])
+
 	return (
 		<div className="orders-page">
 			<OrderFilters />

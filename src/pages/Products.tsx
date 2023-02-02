@@ -29,7 +29,7 @@ export const Products = () => {
 		document.title = "Товары"
 		if (amount > 0) {
 			document.title = `Нашли ${amount} товаров`
-		} else {
+		} else if (amount === 0) {
 			document.title = `Не нашли товаров`
 		}
 	}, [amount])

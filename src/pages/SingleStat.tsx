@@ -22,6 +22,13 @@ export const SingleStat = () => {
 	const { productId } = useParams()
 
 	useEffect(() => {
+		const productTitle = singleStat?.stat?.product?.title
+		document.title = `Статистика (${productTitle?.slice(0, 10)}${
+			productTitle?.length > 10 && "..."
+		}) - OZON`
+	}, [])
+
+	useEffect(() => {
 		dispatch(getSingleStatByProductId(productId as string))
 
 		toast("Разные виды чартов дают лучшее представление о успехах продаж!")
