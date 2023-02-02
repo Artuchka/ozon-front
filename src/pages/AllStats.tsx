@@ -13,6 +13,7 @@ import { ProductType } from "../store/features/product/productSlice"
 import { formatPrice } from "../utils/intl"
 import { AiFillStar } from "react-icons/ai"
 import { Link } from "react-router-dom"
+import { AllStatsSkeleton } from "../components/pageBlocks/Skeletons/AllStatsSkeleton"
 
 export const AllStats = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -46,7 +47,11 @@ export const AllStats = () => {
 	}, [actionsHistory])
 
 	if (allStats.isLoading) {
-		return <Loading />
+		return (
+			<div className="all-stats-page">
+				<AllStatsSkeleton />
+			</div>
+		)
 	}
 	return (
 		<div className="all-stats-page">

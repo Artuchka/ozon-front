@@ -13,6 +13,7 @@ import { toast } from "react-toastify"
 import { ProductItem } from "../components/ProductItem"
 import { ProductCard } from "../components/ProductCard"
 import { StatGraphs } from "../components/StatGraphs"
+import { SingleStatSkeleton } from "../components/pageBlocks/Skeletons/SingleStatSkeleton"
 
 export const SingleStat = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -40,7 +41,7 @@ export const SingleStat = () => {
 	}, [actionsHistory])
 
 	if (isLoading) {
-		return <Loading />
+		return <SingleStatSkeleton />
 	}
 	if (product?._id !== productId) {
 		return (
