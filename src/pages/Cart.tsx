@@ -25,6 +25,7 @@ import {
 	selectManyInCart,
 } from "../store/features/order/orderSlice"
 import { SingleCheckbox } from "../components/pageBlocks/inputs/SingleCheckbox"
+import { toast } from "react-toastify"
 
 export const Cart = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -36,6 +37,9 @@ export const Cart = () => {
 	const [promoMessage, setPromoMessage] = useState("")
 	const promoInputRef = useRef(document.createElement("input"))
 
+	useEffect(() => {
+		toast("Друг, попробуй промокды `ZIMA` и `LETO`", { autoClose: 6000 })
+	}, [])
 	useEffect(() => {
 		document.title = `Корзина (${order?.amountTotal}) - OZON`
 	}, [order?.amountTotal])
