@@ -2,7 +2,6 @@ import React, { FC, useEffect, useRef, useState } from "react"
 import style from "./style.module.scss"
 import { AdType } from "../../store/features/ads/adsSlice"
 import { Link } from "react-router-dom"
-import { serverURL } from "../../axios/customFetch"
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr"
 
 type PropType = {
@@ -45,7 +44,7 @@ export const ImageSlider: FC<PropType> = ({ images }) => {
 						>
 							<img
 								// className={style["image-item"]}
-								src={serverURL + item.src}
+								src={item.src}
 								alt={`go to ${item.url}`}
 							/>
 						</Link>
