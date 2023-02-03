@@ -1,7 +1,5 @@
 import React, { FC, ReactNode, useEffect } from "react"
 import style from "./style.module.scss"
-import { useDispatch } from "react-redux"
-import { AppDispatch } from "../../store/store"
 
 type PropType = {
 	open: boolean
@@ -23,8 +21,6 @@ export const Modal: FC<PropType> = ({
 	className,
 	width = "low",
 }) => {
-	const dispatch = useDispatch<AppDispatch>()
-
 	useEffect(() => {
 		const closeIfOutside = (e: MouseEvent) => {
 			let outside = false
