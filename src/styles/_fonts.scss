@@ -1,32 +1,57 @@
 @font-face {
 	font-family: "main";
 	font-weight: 200;
-	src: url("./../assets/fonts/gteestiprodisplay_thin.otf");
+	src: url("./../assets/fonts/web/gteestiprodisplay_thin-webfont.woff2")
+			format("woff2"),
+		url("./../assets/fonts/web/gteestiprodisplay_thin-webfont.woff")
+			format("woff"),
+		url("./../assets/fonts/otf/gteestiprodisplay_thin.otf") format("otf");
 }
 @font-face {
 	font-family: "main";
 	font-weight: 300;
-	src: url("./../assets/fonts/gteestiprodisplay_light.otf");
+	src: url("./../assets/fonts/web/gteestiprodisplay_light-webfont.woff2")
+			format("woff2"),
+		url("./../assets/fonts/web/gteestiprodisplay_light-webfont.woff")
+			format("woff"),
+		url("./../assets/fonts/otf/gteestiprodisplay_light.otf") format("otf");
 }
 @font-face {
 	font-family: "main";
 	font-weight: 400;
-	src: url("./../assets/fonts/gteestiprodisplay_regular.otf");
+	src: url("./../assets/fonts/web/gteestiprodisplay_regular-webfont.woff2")
+			format("woff2"),
+		url("./../assets/fonts/web/gteestiprodisplay_regular-webfont.woff")
+			format("woff"),
+		url("./../assets/fonts/otf/gteestiprodisplay_regular.otf") format("otf");
 }
 
 @font-face {
 	font-family: "main";
 	font-weight: 500;
-	src: url("./../assets/fonts/gteestiprodisplay_medium.otf");
+	src: url("./../assets/fonts/web/gteestiprodisplay_medium-webfont.woff2")
+			format("woff2"),
+		url("./../assets/fonts/web/gteestiprodisplay_medium-webfont.woff")
+			format("woff"),
+		url("./../assets/fonts/otf/gteestiprodisplay_medium.otf") format("otf");
 }
 @font-face {
 	font-family: "main";
 	font-weight: 600;
-	src: url("./../assets/fonts/gteestiprodisplay_bold.otf");
+	src: url("./../assets/fonts/web/gteestiprodisplay_bold-webfont.woff2")
+			format("woff2"),
+		url("./../assets/fonts/web/gteestiprodisplay_bold-webfont.woff")
+			format("woff"),
+		url("./../assets/fonts/otf/gteestiprodisplay_bold.otf") format("otf");
 }
 
 @font-face {
 	font-family: "main";
 	font-weight: 700;
-	src: url("./../assets/fonts/gteestiprodisplay_ultrabold.otf");
+	src: url("./../assets/fonts/web/gteestiprodisplay_ultrabold-webfont.woff2")
+			format("woff2"),
+		url("./../assets/fonts/web/gteestiprodisplay_ultrabold-webfont.woff")
+			format("woff"),
+		url("./../assets/fonts/otf/gteestiprodisplay_ultrabold.otf")
+			format("otf");
 }
