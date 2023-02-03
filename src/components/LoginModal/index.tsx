@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FC, useRef, useState } from "react"
 import { Modal } from "../Modal"
 import style from "./style.module.scss"
-import ozonIDImage from "./../../assets/images/ozon-id2-v2.png"
 import { useDispatch, useSelector } from "react-redux"
 import {
 	getOrders,
@@ -18,6 +17,8 @@ type PropType = {
 	open: boolean
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
+const ozonIDImage =
+	"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675457948/OZON_DEFAULT/ozon-id2-v2_n5rjec.png"
 export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 	const { isLoading } = useSelector(selectAuth)
 	const emailRef = useRef<HTMLInputElement>(document.createElement("input"))

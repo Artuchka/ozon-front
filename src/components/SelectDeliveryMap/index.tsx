@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useCallback } from "react"
 import style from "./style.module.scss"
-import imageHomePin from "./../../assets/images/pin2.png"
 
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps"
 import { SelectRadio } from "../pageBlocks/inputs/SelectRadio"
@@ -18,6 +17,8 @@ import { debounce } from "lodash"
 import { updateOrder } from "../../store/features/order/thunks"
 import { isCoordsEqual } from "../../utils/coords"
 
+const imageHomePin =
+	"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675458156/OZON_DEFAULT/pin2_gqegto.png"
 export const SelectDeliveryMap = () => {
 	const dispatch = useDispatch<AppDispatch>()
 	const { order, deliveryCoords, isCustomCoord, customCoord } =

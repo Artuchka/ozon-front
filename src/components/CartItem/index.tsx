@@ -5,7 +5,6 @@ import {
 	selectOrderItemById,
 	unselectOrderItemById,
 } from "../../store/features/order/orderSlice"
-import defaultImage from "./../../assets/images/404bg.jpeg"
 import { SelectDropdown } from "../pageBlocks/inputs/SelectDropdown"
 import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
@@ -32,6 +31,8 @@ const selectAmountOptions = [
 	{ value: 9, label: "9" },
 	{ value: 10, label: "10" },
 ]
+const defaultImage =
+	"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675457948/OZON_DEFAULT/404bg_ao0puo.jpg"
 
 export const CartItem: FC<OrderItemType> = (props) => {
 	const { amount, product } = props

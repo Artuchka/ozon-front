@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import imgNotAllowed from "./../assets/images/notAllowed.jpg"
 import { Link } from "react-router-dom"
 
 export const NotAllowed = () => {
@@ -11,7 +10,12 @@ export const NotAllowed = () => {
 		<div className="not-allowed-page">
 			<h1>Вход только для авторизированных пользователей</h1>
 			<Link to="/">Вернуться на Главную</Link>
-			<img src={imgNotAllowed} alt="" />
+			<img
+				src={
+					"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675457950/OZON_DEFAULT/notAllowed_icios1.jpg"
+				}
+				alt=""
+			/>
 		</div>
 	)
 }
