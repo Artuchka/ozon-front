@@ -5,7 +5,6 @@ import { AppDispatch } from "../store/store"
 import { getSingleProduct } from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
 import { VerticalScroll } from "../components/VerticalScroll"
-import defaultImg from "./../assets/images/ozon-logo.png"
 import { setActiveImage } from "../store/features/product/productSlice"
 import { SelectRadio } from "../components/pageBlocks/inputs/SelectRadio"
 import { ReviewModal } from "../components/ReviewModal"
@@ -26,20 +25,20 @@ import { SingleProductSkeleton } from "../components/pageBlocks/Skeletons/Single
 import { Link } from "react-router-dom"
 import { GrNext } from "react-icons/gr"
 
+const defaultImg =
+	"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675457950/OZON_DEFAULT/ozon-logo_xtpjwq.webp"
+
 export const SingleProduct = () => {
 	const { id } = useParams()
 	const {
 		user: { _id: userId },
 	} = useSelector(selectAuth)
 	const { singleProduct } = useSelector(selectProducts)
-	const { edit } = useSelector(selectReviews)
 	const { order } = useSelector(selectOrder)
 
 	const dispatch = useDispatch<AppDispatch>()
-	const orderConfigRef = useRef(document.createElement("form"))
-	const playerRef = React.useRef(null)
 
-	const [hasReview, setHasReview] = useState(false)
+	const hasReview = useRef(false)
 
 	useEffect(() => {
 		if (id) {
@@ -169,15 +168,7 @@ export const SingleProduct = () => {
 					<img src={vendor?.avatar || defaultImg} alt="" />
 					<div className="username">{vendor?.username}</div>
 				</div>
-				{/* <form className="types" ref={orderConfigRef}>
-					<SelectRadio
-						name="type"
-						title="Тип"
-						items={radioTypes}
-						onChange={() => {}}
-						selected={radioTypes[0].value}
-					/>
-				</form> */}
+
 				<div className="specs-short">
 					{specs
 						.slice(0, 3)
@@ -254,7 +245,7 @@ export const SingleProduct = () => {
 
 			<div className="reviews-wrapper" id="reviews">
 				<h3>Отзывы</h3>
-				{!hasReview && (
+				{!hasReview.current && (
 					<button
 						type="button"
 						className="btn btn--rounded btn--contained btn--short btn--content"
@@ -277,7 +268,7 @@ export const SingleProduct = () => {
 						}) => {
 							const isCurrentUserReview = authorID === userId
 							if (isCurrentUserReview) {
-								setHasReview(true)
+								hasReview.current = true
 							}
 
 							return (
