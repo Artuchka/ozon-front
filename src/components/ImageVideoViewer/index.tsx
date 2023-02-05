@@ -64,31 +64,32 @@ export const ImageVideoViewer: FC<PropType> = ({
 	}, [])
 	return (
 		<div className={style.wrapper}>
-			{items?.map(({ type, src }: ItemType, index) => {
-				if (type === "video") {
+			<div className={style.items}>
+				{items?.map(({ type, src }: ItemType, index) => {
+					if (type === "video") {
+						return (
+							<VideoPlayer
+								src={src}
+								controls={[]}
+								colorTheme="primary"
+								className="videos-item"
+								onClick={() => handleClick(index)}
+								key={src}
+								shouldPlay={false}
+							/>
+						)
+					}
 					return (
-						<VideoPlayer
-							src={src}
-							controls={[]}
-							colorTheme="primary"
-							className="videos-item"
-							onClick={() => handleClick(index)}
+						<img
 							key={src}
-							shouldPlay={false}
+							src={src}
+							alt={src}
+							className="image-item"
+							onClick={() => handleClick(index)}
 						/>
 					)
-				}
-				return (
-					<img
-						key={src}
-						src={src}
-						alt={src}
-						className="image-item"
-						onClick={() => handleClick(index)}
-					/>
-				)
-			})}
-
+				})}
+			</div>
 			<Modal
 				open={isBigScreen}
 				setOpen={setIsBigScreen}

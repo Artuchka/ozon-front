@@ -176,6 +176,9 @@ export const VideoPlayer: FC<PropType> = ({
 		}
 	}, [shouldPlay])
 
+	const shouldVolumeRange =
+		controls.includes("volume-range-on-full") && isFullscreen
+
 	// UNCOMMENT FOR KEYBOARD ACCESS
 	// useEffect(() => {
 	// 	const onKeyUp = (e: any) => {
@@ -262,20 +265,17 @@ export const VideoPlayer: FC<PropType> = ({
 									)}
 									{volumeLevel > 50 && <FiVolume2 />}
 								</div>
-								{!controls.includes("volume-range-on-full") ||
-									(controls.includes(
-										"volume-range-on-full"
-									) &&
-										isFullscreen && (
-											<SingleRange
-												colorTheme={colorTheme}
-												name="volumeLevel"
-												min={0}
-												max={100}
-												value={volumeLevel}
-												onChange={handleVolumeChange}
-											/>
-										))}
+								{(!controls.includes("volume-range-on-full") ||
+									shouldVolumeRange) && (
+									<SingleRange
+										colorTheme={colorTheme}
+										name="volumeLevel"
+										min={0}
+										max={100}
+										value={volumeLevel}
+										onChange={handleVolumeChange}
+									/>
+								)}
 							</div>
 						)}
 						{controls.includes("pip") && (

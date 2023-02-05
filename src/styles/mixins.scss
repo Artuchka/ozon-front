@@ -1,12 +1,19 @@
-@mixin scrollbar-reset($width: 3rem, $style: "rectangle") {
+@mixin scrollbar-reset($width: 3rem, $style: "rectangle", $axis: "x") {
 	&::-webkit-scrollbar {
 		width: 0;
 	}
 
 	&::-webkit-scrollbar {
 		all: unset;
-		width: $width;
+		@if ($axis== "x") {
+			width: $width;
+		} @else if ($axis== "y") {
+			height: $width;
+		}
 		background-color: rgba(162, 162, 162, 0.306);
+		@if $style == "rounded" {
+			border-radius: 1rem;
+		}
 	}
 
 	&::-webkit-scrollbar-button {
@@ -32,6 +39,10 @@
 
 	&::-webkit-scrollbar-button:vertical:start,
 	&::-webkit-scrollbar-button:vertical:end {
+		display: none;
+	}
+	&::-webkit-scrollbar-button:horizontal:start,
+	&::-webkit-scrollbar-button:horizontal:end {
 		display: none;
 	}
 }
