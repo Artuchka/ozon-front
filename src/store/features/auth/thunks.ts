@@ -14,6 +14,7 @@ export type updateDataType = {
 	location?: string
 	email?: string
 	avatar?: string
+	role?: string
 }
 
 export const updateUser = createAsyncThunk(

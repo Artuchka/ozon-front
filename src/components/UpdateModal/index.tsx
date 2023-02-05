@@ -12,6 +12,8 @@ import {
 } from "../../store/features/auth/thunks"
 import { AppDispatch } from "../../store/store"
 import { selectAuth } from "../../store/features/auth/selectors"
+import { SingleCheckbox } from "../pageBlocks/inputs/SingleCheckbox"
+import { Switch } from "../pageBlocks/inputs/Switch"
 
 export type typeVariants =
 	| "names"
@@ -21,6 +23,7 @@ export type typeVariants =
 	| "gender"
 	| "username"
 	| "avatar"
+	| "become-vendor"
 
 type proptype = {
 	open: boolean
@@ -40,7 +43,7 @@ export const UpdateModal: FC<proptype> = ({
 	const [answer, setAnswer] = useState<updateDataType>(defaultAnswer)
 	const dispatch = useDispatch<AppDispatch>()
 	const {
-		user: { gender, firstName, lastName },
+		user: { gender, firstName, lastName, role },
 		imagePath,
 		isLoading,
 	} = useSelector(selectAuth)
@@ -84,8 +87,16 @@ export const UpdateModal: FC<proptype> = ({
 
 	// storing actual input values
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target
-
+		let { name, value, checked } = e.target
+		console.log({ checked })
+		if (name === "role") {
+			if (checked) {
+				value = "vendor"
+			} else {
+				value = "user"
+			}
+		}
+		console.log({ name, value })
 		setAnswer((prev) => {
 			return { ...prev, [name]: value }
 		})
@@ -116,6 +127,10 @@ export const UpdateModal: FC<proptype> = ({
 		setDefaultAnswer(answer)
 		setOpen(false)
 	}
+
+	const isRoleVendor = answer?.role
+		? answer.role === "vendor"
+		: defaultAnswer.role === "vendor"
 
 	if (type === "gender") {
 		body = (
@@ -226,6 +241,17 @@ export const UpdateModal: FC<proptype> = ({
 			/>
 		)
 	}
+	if (type === "become-vendor") {
+		body = (
+			<Switch
+				title={`Роль: ${isRoleVendor ? "Продавец" : "Юзер"}`}
+				name="role"
+				onChange={handleChange}
+				selected={isRoleVendor}
+				className={style.customSwitch}
+			/>
+		)
+	}
 	if (type === "birthday") {
 		body = (
 			<input
@@ -243,7 +269,7 @@ export const UpdateModal: FC<proptype> = ({
 		)
 	}
 	return (
-		<Modal open={open} setOpen={setOpen}>
+		<Modal open={open} setOpen={setOpen} tryPreventClosing={isLoading}>
 			<form onSubmit={handleSubmit}>
 				<h3>Главное - правильно</h3>
 				{body}

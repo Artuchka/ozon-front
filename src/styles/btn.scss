@@ -70,6 +70,21 @@
 		&:hover {
 			background-color: var(--primary-color-lighter);
 		}
+
+		&-warn {
+			color: white;
+			background-color: var(--error-color-light);
+			&:hover {
+				background-color: var(--error-color);
+			}
+		}
+		&-success {
+			color: white;
+			background-color: var(--success-color);
+			&:hover {
+				background-color: var(--success-color-dark);
+			}
+		}
 	}
 	&--transparent {
 		background: transparent;

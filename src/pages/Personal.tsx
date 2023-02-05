@@ -39,6 +39,7 @@ export const Personal = () => {
 			location,
 			gender,
 			avatar,
+			role,
 		},
 		isLoading,
 	} = useSelector(selectAuth)
@@ -47,7 +48,7 @@ export const Personal = () => {
 		document.title = `${username} Личный кабинет - OZON`
 	}, [])
 
-	if (isLoading) {
+	if (isLoading && !open) {
 		return <MyMainSkeleton />
 	}
 
@@ -199,6 +200,7 @@ export const Personal = () => {
 							: ""
 					}`}
 					id="becomeVendorButton"
+					onClick={() => handleUpdateOpen("become-vendor", { role })}
 				>
 					Стать продавцом
 				</button>
