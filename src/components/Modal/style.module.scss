@@ -35,6 +35,10 @@
 		display: flex;
 		flex-direction: column;
 		transition: max-width 0.3s ease-in-out;
+
+		.body {
+			overflow-y: auto;
+		}
 	}
 
 	.close {

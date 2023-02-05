@@ -43,6 +43,7 @@ export const SingleProduct = () => {
 	useEffect(() => {
 		if (id) {
 			dispatch(getSingleProduct(id))
+			hasReview.current = false
 		}
 	}, [id])
 
@@ -79,9 +80,9 @@ export const SingleProduct = () => {
 	const amountFound = order?.items?.filter((i) => i?.product?._id === _id)
 	const amount = amountFound?.length === 0 ? 0 : amountFound?.[0]?.amount
 
-	const radioTypes = types?.map((item: string) => {
-		return { label: item, value: item.trim() }
-	})
+	// const radioTypes = types?.map((item: string) => {
+	// 	return { label: item, value: item.trim() }
+	// })
 
 	const handleChangeReview = (reviewId: string) => {
 		dispatch(setEditReview(reviewId))
