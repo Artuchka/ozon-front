@@ -11,21 +11,44 @@ form {
 	margin-top: 1rem;
 }
 
-.createdAvatar {
-	cursor: pointer;
-	transition: opacity 0.3s ease-in-out;
-	background-color: var(--gray-bg);
-	border-radius: 50%;
-	width: 10rem;
-	margin: 0 auto;
-	&:hover {
-		opacity: 0.6;
+.avatar-body {
+	.options {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		justify-content: center;
+		padding-top: 1rem;
+		.avatarWrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+		}
 	}
-	& + small {
+	.avatar {
+		cursor: pointer;
+		transition: opacity 0.3s ease-in-out;
+		background-color: var(--gray-bg);
+		border-radius: 50%;
+		width: 10rem;
+		aspect-ratio: 1/1;
+		margin: 0 auto;
+
+		line-height: 10rem;
+		text-align: center;
+		&:hover {
+			opacity: 0.6;
+		}
+		& + small {
+			text-align: center;
+			width: 10rem;
+		}
+
+		&.active {
+			outline: 0.3rem solid var(--success-color);
+		}
+	}
+
+	.separator {
 		text-align: center;
 	}
-}
-
-.separator {
-	text-align: center;
 }

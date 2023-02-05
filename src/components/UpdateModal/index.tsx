@@ -201,7 +201,7 @@ export const UpdateModal: FC<proptype> = ({
 			lastName + firstName
 		}.svg?mood[]=happy&backgroundColor=%333999`
 		body = (
-			<>
+			<div className={style["avatar-body"]}>
 				<input
 					ref={imageRef}
 					type="file"
@@ -213,19 +213,45 @@ export const UpdateModal: FC<proptype> = ({
 					onChange={handleFileChange}
 					disabled={isLoading}
 				/>
-				<h2 className={style.separator}>ИЛИ</h2>
-				<img
-					className={style.createdAvatar}
-					src={createdAvatar}
-					alt="createdAvatar"
-					onClick={() => {
-						setAnswer((prev) => {
-							return { ...prev, avatar: createdAvatar }
-						})
-					}}
-				/>
-				<small>Сгенерированный аватар Вашего профиля</small>
-			</>
+				<div className={style.options}>
+					<div className={style.avatarWrapper}>
+						<img
+							className={`${style.avatar} ${
+								answer?.avatar === imagePath ? style.active : ""
+							}`}
+							src={imagePath}
+							alt="Загрузите фото"
+							title="Загрузите фото"
+							onClick={() => {
+								setAnswer((prev) => {
+									return { ...prev, avatar: imagePath }
+								})
+							}}
+						/>
+						<small>Загруженный аватар</small>
+					</div>
+
+					<h2 className={style.separator}>ИЛИ</h2>
+
+					<div className={style.avatarWrapper}>
+						<img
+							className={`${style.avatar} ${
+								answer?.avatar === createdAvatar
+									? style.active
+									: ""
+							}`}
+							src={createdAvatar}
+							alt="createdAvatar"
+							onClick={() => {
+								setAnswer((prev) => {
+									return { ...prev, avatar: createdAvatar }
+								})
+							}}
+						/>
+						<small>Сгенерированный аватар Вашего профиля</small>
+					</div>
+				</div>
+			</div>
 		)
 	}
 	if (type === "username") {
@@ -268,8 +294,23 @@ export const UpdateModal: FC<proptype> = ({
 			/>
 		)
 	}
+
+	const imageInputEmpty =
+		imageRef.current?.value === "" || imageRef.current?.value === undefined
+
+	const imageUploaded = imagePath !== ""
+
+	const shouldPreventClosing =
+		type === "avatar" && (imageUploaded || !imageInputEmpty)
+
+	const chosenWidth = type === "avatar" ? "medium" : "low"
 	return (
-		<Modal open={open} setOpen={setOpen} tryPreventClosing={isLoading}>
+		<Modal
+			open={open}
+			setOpen={setOpen}
+			tryPreventClosing={isLoading || shouldPreventClosing}
+			width={chosenWidth}
+		>
 			<form onSubmit={handleSubmit}>
 				<h3>Главное - правильно</h3>
 				{body}
