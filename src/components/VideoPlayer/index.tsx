@@ -109,7 +109,7 @@ export const VideoPlayer: FC<PropType> = ({
 	}
 
 	const handleVolumeToggle = () => {
-		volumeLevel > 0 ? setVolumeLevel(0) : setVolumeLevel(40)
+		volumeLevel > 0 ? setVolumeLevel(0) : setVolumeLevel(10)
 	}
 
 	const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -182,7 +182,6 @@ export const VideoPlayer: FC<PropType> = ({
 	// UNCOMMENT FOR KEYBOARD ACCESS
 	// useEffect(() => {
 	// 	const onKeyUp = (e: any) => {
-	// 		console.log(e)
 	// 		const tagName = e.target.tagName.toLowerCase()
 	// 		if (
 	// 			tagName === "input" ||

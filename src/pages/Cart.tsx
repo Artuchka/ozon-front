@@ -132,7 +132,6 @@ export const Cart = () => {
 		}
 
 		dispatch(createOrder({ status: "cart" }))
-		console.log("after creating cart")
 	}, [])
 
 	if (order?.itemsLength === 0) {

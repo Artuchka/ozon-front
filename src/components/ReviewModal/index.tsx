@@ -34,14 +34,11 @@ export const ReviewModal: FC<{ productId?: string }> = ({ productId }) => {
 			return
 		}
 
-		console.log("setting custom form ref")
 		presetInputs(formRef.current, edit.review)
 	}, [editId, isEdit, edit.isLoading])
 
 	useEffect(() => {
 		if (isEdit || !isModalOpen) return
-
-		console.log("setting default form ref")
 
 		presetInputs(formRef.current, {
 			title: "Хороший отзыв",

@@ -103,7 +103,6 @@ const statsSlice = createSlice({
 			state.allStats.stats = stats
 			state.allStats.productsTotals = productsTotals
 			state.allStats.isLoading = false
-			// console.log({ stats })
 		})
 		builder.addCase(getAllStats.rejected, (state, { payload }) => {
 			state.allStats.isLoading = false

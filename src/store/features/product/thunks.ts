@@ -9,10 +9,8 @@ export const uploadImagesController = async (formData: any, thunkAPI: any) => {
 		const resp = await ozonAPI.post("/products/uploadImage", formData, {
 			headers: { "content-type": "multipart/form-data" },
 		})
-		console.log("RESP = ", resp)
 		return resp.data
 	} catch (error: any) {
-		console.log("error caight = ", error)
 		return thunkAPI.rejectWithValue(error.response.data.msg)
 	}
 }
@@ -21,10 +19,8 @@ export const uploadVideosController = async (formData: any, thunkAPI: any) => {
 		const resp = await ozonAPI.post("/products/uploadVideo", formData, {
 			headers: { "content-type": "multipart/form-data" },
 		})
-		console.log("RESP = ", resp)
 		return resp.data
 	} catch (error: any) {
-		console.log("error caight = ", error)
 		return thunkAPI.rejectWithValue(error.response.data.msg)
 	}
 }
@@ -38,10 +34,8 @@ export const createProduct = createAsyncThunk(
 				method: "post",
 				headers: { "content-type": "multipart/form-data" },
 			})
-			console.log("RESP = ", resp)
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -56,10 +50,8 @@ export const updateProduct = createAsyncThunk(
 				method: "patch",
 				headers: { "content-type": "multipart/form-data" },
 			})
-			console.log("RESP = ", resp)
 			return resp.data
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -76,12 +68,10 @@ export const getAllProducts = createAsyncThunk(
 			const { filter } = thunkAPI.getState() as RootState
 
 			const queryParams = createQueryParams(filter)
-			// console.log({ queryParams })
 
 			const { data } = await ozonAPI(`/products${queryParams}`)
 			return data
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -102,7 +92,6 @@ export const getSuggestedProducts = createAsyncThunk(
 			const { data } = await ozonAPI(`/products${queryParams}`)
 			return data
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -115,7 +104,6 @@ export const getMyProducts = createAsyncThunk(
 			const { data } = await ozonAPI(`/products/my`)
 			return data
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -127,7 +115,6 @@ export const getProductDetails = createAsyncThunk(
 			const resp = await ozonAPI(`/products/getDetails`)
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -139,7 +126,6 @@ export const getSingleProduct = createAsyncThunk(
 			const { data } = await ozonAPI(`/products/${id}`)
 			return data
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -152,7 +138,6 @@ export const fetchEdit = createAsyncThunk(
 			const { data } = await ozonAPI(`/products/${id}`)
 			return data
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}

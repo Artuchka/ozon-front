@@ -32,8 +32,6 @@ export const updateOrder = createAsyncThunk(
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {
-			console.log({ error })
-
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -129,8 +127,6 @@ export const getByOrderId = createAsyncThunk(
 			const resp = await ozonAPI(`/orders/${orderId}`, {
 				method: "GET",
 			})
-
-			console.log({ data: resp.data })
 
 			return thunkAPI.fulfillWithValue(resp.data)
 		} catch (error: any) {

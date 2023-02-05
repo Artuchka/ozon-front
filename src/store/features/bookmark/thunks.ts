@@ -16,10 +16,8 @@ export const getAllBookmarks = createAsyncThunk(
 export const addBookmark = createAsyncThunk(
 	"bookmarks/addBookmark",
 	async (productId: string, thunkAPI) => {
-		console.log("getting")
 		try {
 			const resp = await ozonAPI.post("/bookmarks", { productId })
-			console.log(resp)
 
 			return resp.data
 		} catch (error: any) {
@@ -30,13 +28,11 @@ export const addBookmark = createAsyncThunk(
 export const deleteBookmark = createAsyncThunk(
 	"bookmarks/deleteBookmark",
 	async (productId: string, thunkAPI) => {
-		console.log("deleting")
 		try {
 			const resp = await ozonAPI("/bookmarks", {
 				method: "delete",
 				data: { productId },
 			})
-			console.log(resp)
 
 			return resp.data
 		} catch (error: any) {

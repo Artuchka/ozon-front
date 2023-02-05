@@ -41,7 +41,6 @@ export const SelectDeliveryMap = () => {
 
 	const handleCoordSelect = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value, checked } = e.target
-		console.log({ name, value })
 
 		let prepValue = null
 		if (name === "deliveryCoords") {

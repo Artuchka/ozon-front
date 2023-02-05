@@ -139,7 +139,6 @@ export const productSlice = createSlice({
 			state.edit.editId = payload.id
 		},
 		unsetEdit(state) {
-			console.log("unsetEdit worked")
 			state.creating.paths = []
 			state.edit.isEditing = false
 			state.edit.isError = false
@@ -149,7 +148,6 @@ export const productSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(createProduct.pending, (state) => {
-			console.log("pending")
 			state.creating.isLoading = true
 		})
 		builder.addCase(createProduct.fulfilled, (state, { payload }) => {

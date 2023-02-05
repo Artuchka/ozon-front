@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, useLocation } from "react-router-dom"
 import { Header } from "../components/pageBlocks/Header"
 import Footer from "../components/pageBlocks/Footer"
 import { ToastContainer } from "react-toastify"
@@ -19,6 +19,11 @@ export const Default = () => {
 		user: { username },
 	} = useSelector(selectAuth)
 	const { haveTried, order } = useSelector(selectOrder)
+
+	const location = useLocation()
+	useEffect(() => {
+		window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+	}, [location.pathname])
 
 	useEffect(() => {
 		dispatch(loginJWT())
@@ -40,8 +45,6 @@ export const Default = () => {
 			order.status === "checkout"
 		)
 			return
-
-		console.log("CREATING CART = ", { username }, order)
 
 		dispatch(createOrder({ status: "cart" }))
 	}, [haveTried])

@@ -156,7 +156,6 @@ const orderSlice = createSlice({
 		},
 		filterSelectedInCart(state, { payload }) {
 			const { itemsToDelete } = payload
-			console.log({ itemsToDelete })
 
 			state.selectedInCart = state.selectedInCart.filter((item) =>
 				itemsToDelete.includes(item)
@@ -167,7 +166,6 @@ const orderSlice = createSlice({
 		},
 		selectManyInCart(state, { payload }) {
 			const { itemsToAdd } = payload
-			console.log({ itemsToAdd })
 			state.selectedInCart = Array.from(
 				new Set([...state.selectedInCart, ...itemsToAdd])
 			)
@@ -188,7 +186,6 @@ const orderSlice = createSlice({
 		})
 		builder.addCase(updateOrder.fulfilled, (state, { payload }) => {
 			const { msg, order }: { msg: string; order: OrderType } = payload
-			console.log({ payload })
 
 			if (order.status === "paid" || order.status === "delivered") {
 				state.lastOrders[order._id] = order
@@ -199,8 +196,6 @@ const orderSlice = createSlice({
 			toast.success(msg)
 		})
 		builder.addCase(updateOrder.rejected, (state, { payload }) => {
-			console.log({ payload })
-
 			state.isLoading = false
 			toast.error(payload as string)
 		})

@@ -21,7 +21,6 @@ export const Reviews = () => {
 
 		dispatch(getMyReviews())
 	}, [])
-	console.log(myReviews)
 
 	const handleChangeReview = (reviewId: string) => {
 		dispatch(setEditReview(reviewId))

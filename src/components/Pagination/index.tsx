@@ -22,7 +22,6 @@ export const Pagination = () => {
 		<div className={`${style.paginator} pagination`}>
 			<div className={style.pages}>
 				{Array.from(Array(pagesFound)).map((_, ind) => {
-					console.log()
 					return (
 						<button
 							key={ind}

@@ -38,7 +38,6 @@ export const CheckoutForm = () => {
 			.retrievePaymentIntent(clientSecret)
 			.then((data: PaymentIntentResult) => {
 				const { paymentIntent } = data
-				console.log({ paymentIntent })
 
 				switch (paymentIntent?.status) {
 					case "succeeded":

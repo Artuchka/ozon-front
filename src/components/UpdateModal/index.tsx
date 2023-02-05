@@ -73,7 +73,6 @@ export const UpdateModal: FC<proptype> = ({
 	// clearing input values when modal is closing
 	useEffect(() => {
 		if (!open) {
-			console.log("clearing")
 			setDefaultAnswer({})
 			setAnswer({})
 		}
@@ -89,7 +88,6 @@ export const UpdateModal: FC<proptype> = ({
 	// storing actual input values
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		let { name, value, checked } = e.target
-		console.log({ checked })
 		if (name === "role") {
 			if (checked) {
 				value = "vendor"
@@ -97,7 +95,6 @@ export const UpdateModal: FC<proptype> = ({
 				value = "user"
 			}
 		}
-		console.log({ name, value })
 		setAnswer((prev) => {
 			return { ...prev, [name]: value }
 		})
@@ -118,12 +115,10 @@ export const UpdateModal: FC<proptype> = ({
 	// sending redux thunk to update user
 	const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		console.log("trying = ", answer)
 		if (Object.keys(answer).length === 0 || equal(defaultAnswer, answer)) {
 			toast.warn("Ничего не поменялось")
 			return
 		}
-		console.log("saving = ", answer)
 		dispatch(updateUser(answer))
 		setDefaultAnswer(answer)
 		setOpen(false)

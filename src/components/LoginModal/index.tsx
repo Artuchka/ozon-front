@@ -3,7 +3,6 @@ import { Modal } from "../Modal"
 import style from "./style.module.scss"
 import { useDispatch, useSelector } from "react-redux"
 import {
-	getOrders,
 	login,
 	loginPasswordless,
 	register,
@@ -152,9 +151,6 @@ export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 					type="button"
 					className="btn btn--black btn--contained btn--rounded btn--tall btn--tooltip  btn--tooltip-right"
 					onClick={() => {
-						console.log({ thisObj: this })
-						console.log(123)
-
 						setPaswordless((prev) => !prev)
 					}}
 					disabled={true}

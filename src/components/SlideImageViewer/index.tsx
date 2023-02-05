@@ -20,7 +20,6 @@ export const SlideImageViewer: FC<PropType> = ({ images, scroll }) => {
 			100
 		)
 		const index = Math.floor((images.length * part) / 100)
-		// console.log({ part, length: images.length, index })
 		setActiveIndex(index)
 	}
 

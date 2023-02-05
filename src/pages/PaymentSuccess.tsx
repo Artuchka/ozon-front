@@ -24,7 +24,6 @@ export const PaymentSuccess = () => {
 			return true
 		}
 	})?.[1]
-	console.log({ paidOrder })
 
 	useEffect(() => {
 		document.title = "Итоги оплаты - OZON"

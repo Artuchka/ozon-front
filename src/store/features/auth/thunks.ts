@@ -121,9 +121,9 @@ export const verifyPasswordless = createAsyncThunk(
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 	try {
 		const resp = await ozonAPI("/auth/logout")
-		return resp.data
+		return thunkAPI.fulfillWithValue(resp.data)
 	} catch (error: any) {
-		console.log(error.response.data.msg)
+		return thunkAPI.rejectWithValue(error.response.data.msg)
 	}
 })
 
@@ -134,20 +134,9 @@ export const uploadImages = createAsyncThunk(
 			const resp = await ozonAPI.post("/products/uploadImage", formData, {
 				headers: { "content-type": "multipart/form-data" },
 			})
-			console.log("RESP = ", resp)
 			return resp.data
 		} catch (error: any) {
-			console.log("error caight = ", error)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
 )
-
-export const getOrders = createAsyncThunk("auth/login", async (_, thunkAPI) => {
-	try {
-		const resp = await ozonAPI.get("/orders/allOrders")
-		console.log(resp)
-	} catch (error: any) {
-		console.log(error.response.data.msg)
-	}
-})

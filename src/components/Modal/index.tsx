@@ -69,7 +69,6 @@ export const Modal: FC<PropType> = ({
 	}
 
 	const handleClose = () => {
-		console.log({ tryPreventClosing })
 		if (!tryPreventClosing) {
 			return setOpen(false)
 		}

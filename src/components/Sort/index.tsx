@@ -15,10 +15,7 @@ export const Sort: FC = () => {
 	const { limit, sort } = useSelector(selectFilters)
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		console.log("clicked")
-
 		const { name, value } = e.target
-		// console.log({ name, value })
 
 		dispatch(updateFilters({ name, value } as PayloadUpdateType))
 	}

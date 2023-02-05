@@ -34,8 +34,6 @@ export const SingleOrder = () => {
 	const { isLoading, singleOrder, order } = useSelector(selectOrder)
 	const { orderId } = useParams()
 	const dispatch = useDispatch<AppDispatch>()
-	console.log({ orderId })
-	console.log({ singleOrder })
 
 	useEffect(() => {
 		dispatch(getSingleOrder(orderId as string))

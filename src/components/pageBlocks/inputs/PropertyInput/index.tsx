@@ -34,7 +34,6 @@ export const PropertyInput: FC<propsType> = ({ props, setProps, disabled }) => {
 		const { value } = e.target
 		const { name } = e.target.dataset
 		if (!name) return
-		console.log({ name, value })
 
 		setProps((prev) => {
 			const newSpecs = prev.map((spec) => {
