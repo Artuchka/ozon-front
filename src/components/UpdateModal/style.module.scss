@@ -46,6 +46,11 @@ form {
 		&.active {
 			outline: 0.3rem solid var(--success-color);
 		}
+		&.disabled {
+			outline: 0.2rem solid var(--error-color);
+			opacity: 0.3;
+			pointer-events: none;
+		}
 	}
 
 	.separator {

@@ -43,7 +43,7 @@ export const UpdateModal: FC<proptype> = ({
 	const [answer, setAnswer] = useState<updateDataType>(defaultAnswer)
 	const dispatch = useDispatch<AppDispatch>()
 	const {
-		user: { gender, firstName, lastName, role },
+		user: { gender, firstName, lastName, role, avatar },
 		imagePath,
 		isLoading,
 	} = useSelector(selectAuth)
@@ -80,6 +80,7 @@ export const UpdateModal: FC<proptype> = ({
 	}, [open])
 
 	useEffect(() => {
+		if (imagePath === "") return
 		handleChange({
 			target: { name: "avatar", value: imagePath },
 		} as ChangeEvent<HTMLInputElement>)
@@ -218,10 +219,12 @@ export const UpdateModal: FC<proptype> = ({
 						<img
 							className={`${style.avatar} ${
 								answer?.avatar === imagePath ? style.active : ""
-							}`}
+							} 
+							${imagePath === "" ? style.disabled : ""}
+							`}
 							src={imagePath}
-							alt="Загрузите фото"
-							title="Загрузите фото"
+							alt="Загрузите фото👆"
+							title="Загрузите фото👆"
 							onClick={() => {
 								setAnswer((prev) => {
 									return { ...prev, avatar: imagePath }
@@ -242,6 +245,7 @@ export const UpdateModal: FC<proptype> = ({
 							}`}
 							src={createdAvatar}
 							alt="createdAvatar"
+							title="Это фото сгенерировано с помощью `dicebear.com`"
 							onClick={() => {
 								setAnswer((prev) => {
 									return { ...prev, avatar: createdAvatar }
