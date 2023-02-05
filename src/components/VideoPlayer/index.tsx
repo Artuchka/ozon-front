@@ -33,7 +33,13 @@ type PropType = {
 	src: string
 	colorTheme?: colorThemeType
 	controls: Array<
-		"volume" | "play" | "fullscreen" | "theater" | "pip" | "progress"
+		| "volume"
+		| "volume-range-on-full"
+		| "play"
+		| "fullscreen"
+		| "theater"
+		| "pip"
+		| "progress"
 	>
 	onClick?: MouseEventHandler<HTMLDivElement>
 	shouldPlay?: boolean
@@ -53,9 +59,9 @@ export const VideoPlayer: FC<PropType> = ({
 	const [isFullscreen, setFullscreen] = useState(false)
 
 	const [videoLength, setVideoLength] = useState(0)
-	const [volumeLevel, setVolumeLevel] = useState(0)
+	const [volumeLevel, setVolumeLevel] = useState(50)
 	const [currentTime, setCurrentTime] = useState(0)
-	const prevVolumeLevel = usePrevious(volumeLevel)
+	// const prevVolumeLevel = usePrevious(volumeLevel)
 
 	const videoRef = useRef(document.createElement("video") as HTMLVideoElement)
 	const innerWrapperRef = useRef(
@@ -103,9 +109,7 @@ export const VideoPlayer: FC<PropType> = ({
 	}
 
 	const handleVolumeToggle = () => {
-		volumeLevel > 0
-			? setVolumeLevel(0)
-			: setVolumeLevel(prevVolumeLevel as number)
+		volumeLevel > 0 ? setVolumeLevel(0) : setVolumeLevel(40)
 	}
 
 	const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -224,6 +228,7 @@ export const VideoPlayer: FC<PropType> = ({
 					className={style.video}
 					ref={videoRef}
 					onClick={controls.length > 0 ? handlePlayToggle : () => {}}
+					onDoubleClick={handleFullscreenToggle}
 					onLoadedMetadata={handleOnLoadMetadata}
 					onTimeUpdate={handleTimeUpdate}
 				></video>
@@ -257,14 +262,20 @@ export const VideoPlayer: FC<PropType> = ({
 									)}
 									{volumeLevel > 50 && <FiVolume2 />}
 								</div>
-								<SingleRange
-									colorTheme={colorTheme}
-									name="volumeLevel"
-									min={0}
-									max={100}
-									value={volumeLevel}
-									onChange={handleVolumeChange}
-								/>
+								{!controls.includes("volume-range-on-full") ||
+									(controls.includes(
+										"volume-range-on-full"
+									) &&
+										isFullscreen && (
+											<SingleRange
+												colorTheme={colorTheme}
+												name="volumeLevel"
+												min={0}
+												max={100}
+												value={volumeLevel}
+												onChange={handleVolumeChange}
+											/>
+										))}
 							</div>
 						)}
 						{controls.includes("pip") && (

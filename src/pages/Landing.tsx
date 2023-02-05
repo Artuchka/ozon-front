@@ -38,6 +38,7 @@ export const Landing = () => {
 				<VideoPlayer
 					controls={[
 						"volume",
+						"volume-range-on-full",
 						"play",
 						"fullscreen",
 						"theater",
