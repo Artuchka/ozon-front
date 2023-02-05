@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { AppDispatch } from "../store/store"
 import { getSingleProduct } from "../store/features/product/thunks"
 import { selectProducts } from "../store/features/product/selectors"
@@ -37,6 +37,7 @@ export const SingleProduct = () => {
 	const { order } = useSelector(selectOrder)
 
 	const dispatch = useDispatch<AppDispatch>()
+	const { hash: routeHash } = useLocation()
 
 	const hasReview = useRef(false)
 
@@ -230,7 +231,12 @@ export const SingleProduct = () => {
 				<div className="text">{description}</div>
 			</div>
 
-			<div className="specs-full-wrapper" id="specs-full-wrapper">
+			<div
+				className={`specs-full-wrapper ${
+					routeHash === "#specs-full-wrapper" ? "hashed-element" : ""
+				}`}
+				id="specs-full-wrapper"
+			>
 				<h3>Характеристики</h3>
 				<div className="specs-full">
 					{specs.map(({ title, value, link, _id: specID }) => {
@@ -244,7 +250,12 @@ export const SingleProduct = () => {
 				</div>
 			</div>
 
-			<div className="reviews-wrapper" id="reviews">
+			<div
+				className={`reviews-wrapper ${
+					routeHash === "#reviews" ? "hashed-element" : ""
+				}`}
+				id="reviews"
+			>
 				<h3>Отзывы</h3>
 				{!hasReview.current && (
 					<button
@@ -276,6 +287,10 @@ export const SingleProduct = () => {
 								<article
 									className={`review-item ${
 										isCurrentUserReview ? "active" : ""
+									} ${
+										routeHash === `#review-${_id}`
+											? "hashed-element"
+											: ""
 									}`}
 									id={`review-${_id}`}
 									key={_id}

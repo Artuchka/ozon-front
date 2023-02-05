@@ -8,6 +8,7 @@ import { logout } from "../store/features/auth/thunks"
 import { UpdateModal, typeVariants } from "../components/UpdateModal"
 import { MyMainSkeleton } from "../components/pageBlocks/Skeletons/MyMainSkeleton"
 import { ImUpload } from "react-icons/im"
+import { useLocation } from "react-router-dom"
 
 export const Personal = () => {
 	// const avatar = "/"
@@ -16,11 +17,7 @@ export const Personal = () => {
 	const [type, setType] = useState<typeVariants>("phone")
 	const [defaultAns, setDefaultAns] = useState<{}>({})
 
-	const [routeHash, setRouteHash] = useState("")
-	console.log({ routeHash })
-	useEffect(() => {
-		setRouteHash(window.location.hash)
-	}, [])
+	const { hash: routeHash } = useLocation()
 
 	const handleUpdateOpen = (type: typeVariants, def: {}) => {
 		setDefaultAns(def)

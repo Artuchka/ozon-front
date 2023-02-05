@@ -1,3 +1,6 @@
 body {
 	@include scrollbar-reset(0.8rem, "rectangle");
 }
+html {
+	scroll-padding-top: 7em;
+}
