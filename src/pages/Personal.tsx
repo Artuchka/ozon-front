@@ -16,6 +16,12 @@ export const Personal = () => {
 	const [type, setType] = useState<typeVariants>("phone")
 	const [defaultAns, setDefaultAns] = useState<{}>({})
 
+	const [routeHash, setRouteHash] = useState("")
+	console.log({ routeHash })
+	useEffect(() => {
+		setRouteHash(window.location.hash)
+	}, [])
+
 	const handleUpdateOpen = (type: typeVariants, def: {}) => {
 		setDefaultAns(def)
 		setType(type)
@@ -186,6 +192,16 @@ export const Personal = () => {
 			</div>
 
 			<div className="actions">
+				<button
+					className={`change ${
+						routeHash === "#becomeVendorButton"
+							? "hashed-element"
+							: ""
+					}`}
+					id="becomeVendorButton"
+				>
+					Стать продавцом
+				</button>
 				<button
 					className="change"
 					onClick={() => {

@@ -12,9 +12,11 @@ import { selectOrder } from "../../../store/features/order/selector"
 import { selectBookmarks } from "../../../store/features/bookmark/selector"
 import { SearchBar } from "../../SearchBar"
 import { Link } from "react-router-dom"
+import { HashLink } from "react-router-hash-link"
 
 export const Header = () => {
-	const [open, setOpen] = useState(false)
+	const [loginOpen, setLoginOpen] = useState(false)
+
 	const { order, allOrders } = useSelector(selectOrder)
 	const { bookmarks } = useSelector(selectBookmarks)
 	const auth = useSelector(selectAuth)
@@ -31,11 +33,11 @@ export const Header = () => {
 				}`}
 			>
 				<div className={styles["action-tab"]}>
-					<Link className="link" to="/not-found">
+					<HashLink className="link" to="/my/main#becomeVendorButton">
 						<button className="btn btn--low-active btn--bubble btn--content ">
 							Стать продавцом
 						</button>
-					</Link>
+					</HashLink>
 					<Link className="link" to="/not-found">
 						<button className="btn btn--low-active btn--content">
 							Покупать как компания
@@ -57,7 +59,7 @@ export const Header = () => {
 				<div className={styles["separator"]}></div>
 
 				<header className={styles.header}>
-					<LoginModal open={open} setOpen={setOpen} />
+					<LoginModal open={loginOpen} setOpen={setLoginOpen} />
 					<Logo className={styles.logo} />
 					<SearchBar />
 					<nav>
@@ -73,7 +75,7 @@ export const Header = () => {
 								data={100}
 								icon={<BiFace />}
 								onClick={(e) => {
-									setOpen(true)
+									setLoginOpen(true)
 								}}
 								title="Войти"
 							/>

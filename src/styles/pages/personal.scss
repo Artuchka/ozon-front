@@ -135,3 +135,29 @@
 		align-items: flex-start;
 	}
 }
+
+.hashed-element {
+	animation-name: highlight;
+	animation-duration: 0.8s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 5;
+}
+
+@keyframes highlight {
+	0% {
+		outline: 0 solid transparent;
+		outline-offset: 0.5rem;
+	}
+	30% {
+		outline: 1px solid var(--error-color);
+		outline-offset: 1.5rem;
+	}
+	60% {
+		outline: 1px solid var(--error-color);
+		outline-offset: 1.5rem;
+	}
+	100% {
+		outline: 0 solid transparent;
+		outline-offset: 0.5rem;
+	}
+}
