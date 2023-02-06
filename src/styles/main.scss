@@ -30,6 +30,12 @@
 		flex-grow: 1;
 		padding-bottom: 5rem;
 	}
+
+	.move-to-top {
+		position: fixed;
+		left: 1rem;
+		bottom: 2rem;
+	}
 }
 
 .my-layout {

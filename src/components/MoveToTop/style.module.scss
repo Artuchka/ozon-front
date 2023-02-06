@@ -1,0 +1,9 @@
+.wrapper {
+	color: var(--primary-color-light);
+	cursor: pointer;
+	&:hover {
+		color: var(--primary-color);
+	}
+
+	font-size: 2rem;
+}

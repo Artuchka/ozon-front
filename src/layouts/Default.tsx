@@ -12,6 +12,7 @@ import { selectAuth } from "./../store/features/auth/selectors"
 import { getAllBookmarks } from "../store/features/bookmark/thunks"
 import { selectOrder } from "../store/features/order/selector"
 import { getProductDetails } from "../store/features/product/thunks"
+import { MoveToTop } from "../components/MoveToTop"
 
 export const Default = () => {
 	const dispatch = useDispatch<AppDispatch>()
@@ -57,6 +58,9 @@ export const Default = () => {
 
 	return (
 		<div className="default-layout">
+			<div className="move-to-top">
+				<MoveToTop />
+			</div>
 			<ToastContainer
 				position="top-right"
 				autoClose={5000}

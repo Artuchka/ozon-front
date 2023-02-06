@@ -51,7 +51,7 @@ export const VideoPlayer: FC<PropType> = ({
 	colorTheme = "default",
 	controls = ["play", "fullscreen"],
 	onClick = () => {},
-	shouldPlay = true,
+	shouldPlay = false,
 }) => {
 	const [isPlaying, setPlaying] = useState(false)
 	const [isTheater, setTheater] = useState(false)
