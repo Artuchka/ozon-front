@@ -17,7 +17,7 @@ type PropType = {
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 const ozonIDImage =
-	"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675457948/OZON_DEFAULT/ozon-id2-v2_n5rjec.png"
+	"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675661859/OZON_DEFAULT/zozo-id_y17jf6.png"
 export const LoginModal: FC<PropType> = ({ open, setOpen }) => {
 	const { isLoading } = useSelector(selectAuth)
 	const emailRef = useRef<HTMLInputElement>(document.createElement("input"))

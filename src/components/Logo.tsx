@@ -1,5 +1,5 @@
 import React from "react"
-import logo from "../assets/images/ozon-logo.png"
+
 import { Link } from "react-router-dom"
 
 export const Logo = (props: any) => {
@@ -7,7 +7,7 @@ export const Logo = (props: any) => {
 		<Link to="/">
 			<img
 				src={
-					"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675457950/OZON_DEFAULT/ozon-logo_xtpjwq.webp"
+					"https://res.cloudinary.com/dzy8xh83i/image/upload/v1675661859/OZON_DEFAULT/zozo-logo_nojlqo.png"
 				}
 				alt=""
 				{...props}
