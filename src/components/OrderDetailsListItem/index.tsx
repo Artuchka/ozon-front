@@ -50,7 +50,10 @@ export const OrderDetailsListItem: FC<OrderItemType> = (props) => {
 	}
 	return (
 		<div className={style.wrapper}>
-			<div className={style.vendor}>{vendor?.username}</div>
+			<div className={style.vendor}>
+				<small>продавец: </small>
+				{vendor?.username}
+			</div>
 			<div className={style.card}>
 				<div className={style.image}>
 					<Link to={`/products/${productId}`}>

@@ -21,8 +21,8 @@ import { OrderDetailsSkeleton } from "../components/pageBlocks/Skeletons/OrderDe
 import { OrderStatusType } from "../store/features/order/orderSlice"
 
 const statusMap = {
-	cart: "оплата идет",
-	pending: "оплата идет",
+	cart: "ожидается оплата",
+	pending: "ожидается оплата",
 	paid: "оплачен",
 	checkout: "ожидает оплаты",
 	delivered: "доставлен",
@@ -60,6 +60,7 @@ export const SingleOrder = () => {
 		createdAt,
 		updatedAt,
 		status,
+		refundedAt,
 	} = singleOrder.order
 
 	const handleCopyToClipboard = () => {
@@ -165,12 +166,14 @@ export const SingleOrder = () => {
 					>
 						Повторить заказ
 					</button>
-					<button
-						className="btn btn--transparent btn--content btn--light"
-						onClick={handleRefundOrder}
-					>
-						Вернуть товары
-					</button>
+					{paidAt && !refundedAt && (
+						<button
+							className="btn btn--transparent btn--content btn--light"
+							onClick={handleRefundOrder}
+						>
+							Вернуть товары
+						</button>
+					)}
 				</div>
 				{QRcodeShow && (
 					<QRCodeSVG

@@ -1,13 +1,12 @@
+@import "./../../styles/mixins.scss";
 .images-container {
+	@include scrollbar-reset(0.2rem, "rounded", "x");
 	padding-top: 0.1rem;
 	padding-bottom: 0.2rem;
 	--row-size: 60px;
 	display: grid;
 	overflow-y: scroll;
-	&::-webkit-scrollbar {
-		display: none;
-	}
-	scrollbar-width: none;
+	padding-inline: 0.3rem;
 	grid-auto-columns: 40px;
 	grid-auto-rows: var(--row-size);
 	grid-auto-flow: row;
