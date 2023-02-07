@@ -59,3 +59,7 @@ npm run dev
 
 Have you looked all screenshots? 🤯Damn....
 You should checkout [💀Full🔗](https://fake-ozon.vercel.app/)
+
+
+>### ©️License: 
+MIT license @Artuchka
