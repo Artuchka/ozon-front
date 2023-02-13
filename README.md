@@ -61,5 +61,11 @@ Have you looked all screenshots? 🤯Damn....
 You should checkout [💀Full🔗](https://fake-ozon.vercel.app/)
 
 
+>### 📝Credits: 
+Thanks to my teachers: 
+- Kyle from [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified)
+- John from [Coding Addict](https://www.youtube.com/@CodingAddict)
+- Jeff from [Fireship](https://www.youtube.com/@Fireship)
+
 >### ©️License: 
 MIT license @Artuchka
