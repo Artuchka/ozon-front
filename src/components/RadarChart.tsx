@@ -65,6 +65,8 @@ export const RadarChart: FC<ChartPropType> = ({ data: actionsHistory }) => {
 		} else {
 			label = `${index} дней назад`
 		}
+		item[0] /= 10
+
 		return {
 			label,
 			data: item,
@@ -81,7 +83,7 @@ export const RadarChart: FC<ChartPropType> = ({ data: actionsHistory }) => {
 	datasets[0].hidden = false
 
 	const radarData = {
-		labels: ["Просмотров", "Покупок", "В закладках", "Возвратов"],
+		labels: ["Просмотров, x10", "Покупок", "В закладках", "Возвратов"],
 		datasets: datasets.reverse(),
 	}
 
