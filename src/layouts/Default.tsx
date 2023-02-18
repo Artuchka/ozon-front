@@ -13,6 +13,9 @@ import { getAllBookmarks } from "../store/features/bookmark/thunks"
 import { selectOrder } from "../store/features/order/selector"
 import { getProductDetails } from "../store/features/product/thunks"
 import { MoveToTop } from "../components/MoveToTop"
+import { inject } from "@vercel/analytics"
+
+inject()
 
 export const Default = () => {
 	const dispatch = useDispatch<AppDispatch>()

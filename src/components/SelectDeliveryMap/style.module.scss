@@ -1,3 +1,5 @@
+@import "./../../styles/mixins.scss";
+
 .wrapper {
 	margin: 0 auto;
 	display: grid;
@@ -10,15 +12,10 @@
 		flex-direction: column;
 		gap: 2rem;
 		.prepared {
+			@include scrollbar-reset(0.8rem, "rectangle");
 			overflow-y: auto;
 			padding-left: 1rem;
 			max-height: 250px;
-			&::-webkit-scrollbar {
-				background-color: var(--primary-color-lighter);
-			}
-			&::-webkit-scrollbar-thumb {
-				background-color: var(--primary-color);
-			}
 		}
 		.customSwitch {
 			padding-left: 1rem;
